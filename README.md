@@ -3,15 +3,15 @@
 # Group Day-Time
 
 ## Members
-* xxxxx
-* xxxxx
-* xxxxx
-* xxxxx
+* s3788894 - Kartik Kumar
+* s3840619 - Aaron Fisher
+* s3805530 - Shrestha Ghosh
+* s3781403 - Oliver Hale
 
 ## Records
 
-* Github repository :https://github.com/xxx
-* jira Board : https://xxxx
+* Github repository : https://github.com/s3781403/SEPT2021_Group8 
+* jira Board : https://sept-group8.atlassian.net/jira/software/projects/SG/boards/1 
 * Google Docs : https://drive.google.com/xxxx
 
 	
