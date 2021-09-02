@@ -39,9 +39,10 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-
+/*
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
+        System.out.println("Im registering a user");
         // Validate passwords match
         userValidator.validate(user,result);
 
@@ -51,6 +52,12 @@ public class UserController {
         User newUser = userService.saveUser(user);
 
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+    }
+ */
+
+    @PostMapping("/register")
+    public void registerUser(){
+        System.out.println("Im registering a user");
     }
 
 
@@ -73,6 +80,9 @@ public class UserController {
                         loginRequest.getPassword()
                 )
         );
+
+        //Check password vs db here
+
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = TOKEN_PREFIX +  tokenProvider.generateToken(authentication);

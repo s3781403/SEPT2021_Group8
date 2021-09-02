@@ -1,55 +1,48 @@
-import React, { Component } from "react";
+import React, {Component, useEffect, useState} from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddPerson from "./components/Persons/AddPerson";
 import { Provider } from "react-redux";
 import store from "./store";
 
 import Landing from "./components/Layout/Landing";
 import Register from "./components/UserManagement/Register";
-import Login from "./components/UserManagement/Login";
+import Login from "./components/UserManagement/MyLogin";
+import MyHeader from "./components/Layout/Myheader";
+import BooksDisplay from "./components/Layout/BooksDisplay";
+import Registration from "./components/UserManagement/Registration";
 
-import jwt_decode from "jwt-decode";
-import setJWTToken from "./securityUtils/setJWTToken";
-import { SET_CURRENT_USER } from "./actions/types";
-import { logout } from "./actions/securityActions";
-import SecuredRoute from "./securityUtils/SecureRoute";
 
-const jwtToken = localStorage.jwtToken;
+function App()  {
 
-if (jwtToken) {
-  setJWTToken(jwtToken);
-  const decoded_jwtToken = jwt_decode(jwtToken);
-  store.dispatch({
-    type: SET_CURRENT_USER,
-    payload: decoded_jwtToken
-  });
+    const [user,setUser]=useState(null)
 
-  const currentTime = Date.now() / 1000;
-  if (decoded_jwtToken.exp < currentTime) {
-    store.dispatch(logout());
-    window.location.href = "/";
-  }
-}
+    useEffect(() => {
+        setTimeout(() => {
+            setUser({name: "Shrestha"})
+        }, 10_000)
+    }, [])
 
-class App extends Component {
-  render() {
     return (
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Header />
+            <MyHeader user={user} />
             {
               //Public Routes
             }
-           
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
 
+
+           <Switch>
+
+
+               <Route exact path="/" component={BooksDisplay} />
+            <Route exact path="/register" component={Registration} />
+            <Route exact path="/login" component={Login} />
+           </Switch>
             {
               //Private Routes
             }
@@ -60,6 +53,6 @@ class App extends Component {
         </Router>
       </Provider>
     );
-  }
+
 }
 export default App;
