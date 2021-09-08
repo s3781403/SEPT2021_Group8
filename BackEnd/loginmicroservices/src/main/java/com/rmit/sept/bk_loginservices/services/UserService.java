@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.save(newUser);
        */
         try{
+            newUser.setRole(newUser.getRole());
+            newUser.setABN(newUser.getABN());
+            newUser.setAddress(newUser.getAddress());
+            newUser.setPhoneNumber(newUser.getPhoneNumber());
             newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
             //Username has to be unique (exception)
             newUser.setUsername(newUser.getUsername());

@@ -23,8 +23,16 @@ public class User implements UserDetails {
     private String username;
     @NotBlank(message = "Please enter your full name")
     private String fullName;
+    @NotBlank(message = "Please enter a valid role")
+    private String role;
     @NotBlank(message = "Password field is required")
     private String password;
+    private String abn;
+    @NotBlank(message = "Please enter a valid Address")
+    private String address;
+    @NotBlank(message = "Please enter a valid phone number")
+    private String phoneNumber;
+
     @Transient
     private String confirmPassword;
     private Date create_At;
@@ -90,6 +98,23 @@ public class User implements UserDetails {
     public void setUpdate_At(Date update_At) {
         this.update_At = update_At;
     }
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
+
+    public String getABN() {return abn;}
+
+    public void setABN(String abn) {this.abn = abn;}
+
+    public String getAddress() {return address;}
+
+    public void setAddress(String address) {this.address = address;}
+
+    public String getPhoneNumber() {return phoneNumber;}
+
+    public void setPhoneNumber(String phoneNumber) {this.phoneNumber = phoneNumber;}
+
 
     @PrePersist
     protected void onCreate(){
