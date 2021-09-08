@@ -1,22 +1,25 @@
 package com.rmit.sept.booksmicroservices.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
+//import org.springframework.data.annotation.Id;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import javax.persistence.*;
+//import javax.validation.constraints.NotBlank;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import java.util.Collection;
+//import java.util.Date;
+
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
 
-
-//import javax.validation.constraints.Email;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-//import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import java.util.Collection;
 import java.util.Date;
 
-// should implement bookdetails from service
+// should implement bookdetails from service?
 @Entity
 public class Book {
     @Id
@@ -24,8 +27,9 @@ public class Book {
     private Long id;
 
     //Unsure if we should require ISBN, as not every book will have one necessarily
-    @NotBlank(message = "ISBN is required to add a new book")
-    private int ISBN;
+//    @NotBlank(message = "ISBN is required to add a new book")
+
+    private long isbn;
 
     @NotBlank(message = "Please enter a title")
     private String title;
@@ -35,7 +39,7 @@ public class Book {
     private String author;
     @NotBlank(message = "Please enter the books publisher")
     private String publisher;
-    @NotBlank(message = "Please enter the desired sale price")
+//    @NotBlank(message = "Please enter the desired sale price")
     private double price;
     @NotBlank(message = "Books type (ebook or physical) is required")
     private String type;
@@ -52,12 +56,12 @@ public class Book {
         this.id = id;
     }
 
-    public int getISBN() {
-        return ISBN;
+    public long getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(int ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(long isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitle() {

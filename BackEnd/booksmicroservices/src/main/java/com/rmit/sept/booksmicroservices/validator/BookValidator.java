@@ -15,16 +15,16 @@ public class BookValidator implements Validator{
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
+    public void validate(Object object, Errors errors) {
         Book book = (Book) object;
 
         //!=10 is to give legacy support for ISBNs created before 1 january 2007
         //Since january 1 2007 all ISBNs are 13 characters in length
-        if (Integer.toString(book.getISBN()).length() != 10 || Integer.toString(book.getISBN()).length() != 13) {
-            errors.rejectValue("ISBN", "Length", "ISBN must be 10 or 13 characters long");
+        if (String.valueOf(book.getIsbn()).length() != 13 && String.valueOf(book.getIsbn()).length() != 10) {
+            errors.rejectValue("isbn", "Length", "ISBN must be 10 or 13 characters long");
         }
 
-        if (!book.getType().equals("physical") || !book.getType().equals("ebook")) {
+        if (!book.getType().equals("physical") && !book.getType().equals("ebook")) {
             errors.rejectValue("type", "Mismatch", "Book type must be ebook or physical");
         }
 
