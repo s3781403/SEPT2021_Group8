@@ -1,18 +1,5 @@
 package com.rmit.sept.booksmicroservices.model;
 
-//import org.springframework.data.annotation.Id;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import javax.persistence.*;
-//import javax.validation.constraints.NotBlank;
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import java.util.Collection;
-//import java.util.Date;
-
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
