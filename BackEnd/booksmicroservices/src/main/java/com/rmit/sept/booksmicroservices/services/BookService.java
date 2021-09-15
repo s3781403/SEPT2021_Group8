@@ -87,7 +87,6 @@ public class BookService {
     }
 
     public void deleteBook(Book book) {
-
-
+        bookRepository.delete(book);
     }
 }

@@ -118,11 +118,9 @@ public class BookController {
     @DeleteMapping("/delete/{id}")
     public Map<String, Boolean> deleteBook(@PathVariable("id") Long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book with id '" + id + "' could be found to delete"));
-
         bookService.deleteBook(book);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
 }
