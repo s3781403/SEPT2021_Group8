@@ -1,6 +1,7 @@
 package com.rmit.sept.booksmicroservices.services;
 
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
+import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +39,9 @@ public class BookService {
             return bookRepository.save(newBook);
 
         } catch(Exception e) {
-//            throw new SomethingException
             System.out.println("========| Error saving Book (BookService) |========\n"+e.getMessage()+"\n====================");
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -53,8 +52,13 @@ public class BookService {
     }
 
     public Book getBookById(long id) {
-        Book book = bookRepository.getBookById(id);
-        return book;
+            Book book = bookRepository.getBookById(id);
+            if (book != null) {
+                return book;
+            }
+            else {
+                throw new BookNotFoundException("Book with id '" + id + "' could not be found");
+            }
     }
 
     public List<Book> getAllByTitle(String title) {
@@ -79,6 +83,11 @@ public class BookService {
         List<Book> list = new ArrayList<>();
         bookRepository.getBooksByIsbnStartingWith(isbn).forEach(book -> list.add(book));
         return list;
+
+    }
+
+    public void deleteBook(Book book) {
+
 
     }
 }

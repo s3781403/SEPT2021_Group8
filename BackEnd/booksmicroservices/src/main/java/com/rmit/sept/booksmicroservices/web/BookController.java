@@ -1,6 +1,7 @@
 package com.rmit.sept.booksmicroservices.web;
 
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
+import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
 import com.rmit.sept.booksmicroservices.services.BookService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +35,8 @@ public class BookController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    //CREATE
+//CREATE
+    @CrossOrigin(origins = "*")
     @PostMapping("/create")
     public ResponseEntity<?> createBook(@Valid @RequestBody Book book, BindingResult result) {
         bookValidator.validate(book,result);
@@ -45,17 +46,18 @@ public class BookController {
         return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
     }
 
-    //READ
-
+//READ
     //Returns a single book with the given ID (http://localhost:8080/api/books/book/2)
+    @CrossOrigin(origins = "*")
     @GetMapping("/book/{id}")
     public ResponseEntity<Book> getBookByID(@PathVariable("id") Integer id) {
         Book book = bookService.getBookById(id);
-        return new ResponseEntity<Book>(book, HttpStatus.OK);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     //Return matches from the given column which contain the value provided
     //http://localhost:8080/api/books/getAll?column=title&value=Harry%20Potter
+    @CrossOrigin(origins = "*")
     @GetMapping("/getAll")
     public ResponseEntity<List<Book>> getListByRequestParameters(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
         if (column != null) {
@@ -84,6 +86,7 @@ public class BookController {
 
     //Returns a list of books that match the entered value
     //http://localhost:8080/api/books/search?query=omic
+    @CrossOrigin(origins = "*")
     @GetMapping("/search")
     public ResponseEntity<List<Book>> getListFromSearch(@RequestParam("query") String queryValue) {
         List<Book> allMatchedBooks = new ArrayList<>();
@@ -95,7 +98,7 @@ public class BookController {
         try {
             matchIsbn = bookService.getAllByIsbn(Long.parseLong(queryValue));
         } catch (NumberFormatException e) {
-            System.out.println("Query is not a valid number, error = " + e.getMessage());
+            System.out.println("Query is not a valid number, error message = " + e.getMessage());
         }
 
         if (matchTitle != null) allMatchedBooks.addAll(matchTitle);
@@ -109,7 +112,17 @@ public class BookController {
 //UPDATE
 
 
-//DELETE
 
+//DELETE
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Boolean> deleteBook(@PathVariable("id") Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book with id '" + id + "' could be found to delete"));
+
+        bookService.deleteBook(book);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
 
 }
