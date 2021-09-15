@@ -12,6 +12,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     Book findByTitle(String title);
     Book findByCategory(String category);
     Book findByPublisher(String publisher);
+    Book getBookById(long id);
     Iterable<Book> findAll();
 
 }

@@ -52,7 +52,12 @@ public class BookController {
         return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
     }
 
-//    @GetMapping("/{}")
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookByID(@PathVariable("id") Integer id) {
+        Book book = bookService.getBookById(id);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+
 
 //    @Transactional
 //    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

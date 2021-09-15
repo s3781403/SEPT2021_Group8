@@ -24,9 +24,7 @@ public class Book {
 
     //Unsure if we should require ISBN, as not every book will have one necessarily
 //    @NotBlank(message = "ISBN is required to add a new book")
-
     private long isbn;
-
     @NotBlank(message = "Please enter a title")
     private String title;
     @NotBlank(message = "Please enter the category (genre)")

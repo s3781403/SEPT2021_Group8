@@ -3,6 +3,7 @@ package com.rmit.sept.booksmicroservices.services;
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,5 +50,10 @@ public class BookService {
         List<Book> list = new ArrayList<>();
         bookRepository.findAll().forEach(e -> list.add(e));
         return list;
+    }
+
+    public Book getBookById(long id) {
+        Book book = bookRepository.getBookById(id);
+        return book;
     }
 }
