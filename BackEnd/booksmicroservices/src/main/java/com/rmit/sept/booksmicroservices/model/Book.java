@@ -7,6 +7,15 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 // should implement bookdetails from service?
+
+//Description
+//Image (Cover image)
+//Book table contents pdf
+
+/* TODO
+condition
+stock
+ */
 @Entity
 public class Book {
     @Id
@@ -30,8 +39,12 @@ public class Book {
     private double price;
     @NotBlank(message = "Books type (ebook or physical) is required")
     private String type;
-    //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?)
+    private int condition;
+    private int stock;
+
+    //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?
     private int sellerID; //Unsure if this would be a feature of a book in this model
+
     private Date create_At;
     private Date update_At;
 
@@ -41,6 +54,22 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getCondition() {
+        return condition;
+    }
+
+    public void setCondition(int condition) {
+        this.condition = condition;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public long getIsbn() {
@@ -122,6 +151,8 @@ public class Book {
     public void setUpdate_At(Date update_At) {
         this.update_At = update_At;
     }
+
+
 
     @PrePersist
     protected void onCreate() {

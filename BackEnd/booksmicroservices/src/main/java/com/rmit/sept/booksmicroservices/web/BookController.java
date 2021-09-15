@@ -1,17 +1,18 @@
 package com.rmit.sept.booksmicroservices.web;
 
+import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.model.Book;
 import com.rmit.sept.booksmicroservices.services.BookService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
 
@@ -38,9 +42,17 @@ public class BookController {
 
         Book newBook = bookService.saveBook(book);
 
-        return  new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
 
     }
+
+    @GetMapping("/allbooks")
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+    }
+
+//    @GetMapping("/{}")
 
 //    @Transactional
 //    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

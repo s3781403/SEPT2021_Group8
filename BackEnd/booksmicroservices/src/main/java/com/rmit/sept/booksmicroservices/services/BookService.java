@@ -5,6 +5,9 @@ import com.rmit.sept.booksmicroservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class BookService {
 
@@ -25,6 +28,9 @@ public class BookService {
             newBook.setType(newBook.getType());
             newBook.setCreate_At(newBook.getCreate_At());
             newBook.setId(newBook.getId());
+            newBook.setCondition(newBook.getCondition());
+            newBook.setStock(newBook.getStock());
+
 
 
             //Couldn't you just comment everything above out and have it as the one that it passes in?
@@ -32,10 +38,16 @@ public class BookService {
 
         } catch(Exception e) {
 //            throw new SomethingException
-            System.out.println("========| Error saving Book (BookService) |========\n"+e.getMessage()+"\n==========================================");
+            System.out.println("========| Error saving Book (BookService) |========\n"+e.getMessage()+"\n====================");
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public List<Book> getAllBooks() {
+        List<Book> list = new ArrayList<>();
+        bookRepository.findAll().forEach(e -> list.add(e));
+        return list;
     }
 }

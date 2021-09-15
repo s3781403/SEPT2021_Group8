@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findByIsbn(long isbn);
-    Book getBySellerID(int sellerID);
+    Book findBySellerID(int sellerID);
     Book findByTitle(String title);
     Book findByCategory(String category);
     Book findByPublisher(String publisher);
+    Iterable<Book> findAll();
 
 }
