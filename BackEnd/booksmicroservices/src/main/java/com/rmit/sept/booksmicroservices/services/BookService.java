@@ -4,10 +4,10 @@ import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,19 +63,19 @@ public class BookService {
 
     public List<Book> getAllByTitle(String title) {
         List<Book> list = new ArrayList<>();
-        bookRepository.getBooksByTitleContaining(title).forEach(book -> list.add(book));
+        bookRepository.getBooksByTitleIgnoreCaseContaining(title).forEach(book -> list.add(book));
         return list;
     }
 
     public List<Book> getAllByCategory(String category) {
         List<Book> list = new ArrayList<>();
-        bookRepository.getBooksByCategoryContaining(category).forEach(book -> list.add(book));
+        bookRepository.getBooksByCategoryIgnoreCaseContaining(category).forEach(book -> list.add(book));
         return list;
     }
 
     public List<Book> getAllByAuthor(String author) {
         List<Book> list = new ArrayList<>();
-        bookRepository.getBooksByAuthorContaining(author).forEach(book -> list.add(book));
+        bookRepository.getBooksByAuthorIgnoreCaseContaining(author).forEach(book -> list.add(book));
         return list;
     }
 
@@ -88,5 +88,23 @@ public class BookService {
 
     public void deleteBook(Book book) {
         bookRepository.delete(book);
+    }
+
+
+    public Book updateBook(Book newBook, Book bookDetails) {
+        newBook.setUpdate_At(new Date());
+        newBook.setTitle(bookDetails.getTitle());
+        newBook.setCondition(bookDetails.getCondition());
+        newBook.setIsbn(bookDetails.getIsbn());
+        newBook.setType(bookDetails.getType());
+        newBook.setPublisher(bookDetails.getPublisher());
+        newBook.setPrice(bookDetails.getPrice());
+        newBook.setCategory(bookDetails.getCategory());
+        newBook.setAuthor(bookDetails.getAuthor());
+        newBook.setSellerID(bookDetails.getSellerID());
+        newBook.setStock(bookDetails.getStock());
+        newBook.setCreate_At(bookDetails.getCreate_At());
+
+        return bookRepository.save(newBook);
     }
 }

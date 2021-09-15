@@ -7,7 +7,6 @@ import com.rmit.sept.booksmicroservices.services.BookService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
@@ -57,6 +56,7 @@ public class BookController {
 
     //Return matches from the given column which contain the value provided
     //http://localhost:8080/api/books/getAll?column=title&value=Harry%20Potter
+    //TODO Should this be moved to BookValidator ?
     @CrossOrigin(origins = "*")
     @GetMapping("/getAll")
     public ResponseEntity<List<Book>> getListByRequestParameters(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
@@ -86,6 +86,7 @@ public class BookController {
 
     //Returns a list of books that match the entered value
     //http://localhost:8080/api/books/search?query=omic
+    //TODO Should this also be moved to bookValidator or another class?
     @CrossOrigin(origins = "*")
     @GetMapping("/search")
     public ResponseEntity<List<Book>> getListFromSearch(@RequestParam("query") String queryValue) {
@@ -110,7 +111,22 @@ public class BookController {
     }
 
 //UPDATE
+    //TODO secure this to check the userToken matches the sellerID
+    @CrossOrigin(origins = "*")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateBookDetails(@PathVariable("id") Long id, @Valid @RequestBody Book bookDetails, BindingResult bindingResult) {
+        //Check a book exists with the given ID
+        Book newBook = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book with id '" + id + "' could be found to update"));
 
+        //Validate the book details in the request body
+        bookValidator.validate(bookDetails, bindingResult);
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(bindingResult);
+        if (errorMap != null) return errorMap;
+
+        //Update and return the book
+        Book updatedBook = bookService.updateBook(newBook, bookDetails);
+        return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
+    }
 
 
 //DELETE
