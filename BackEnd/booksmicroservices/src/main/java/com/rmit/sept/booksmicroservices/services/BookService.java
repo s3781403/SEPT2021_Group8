@@ -48,12 +48,37 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         List<Book> list = new ArrayList<>();
-        bookRepository.findAll().forEach(e -> list.add(e));
+        bookRepository.findAll().forEach(book -> list.add(book));
         return list;
     }
 
     public Book getBookById(long id) {
         Book book = bookRepository.getBookById(id);
         return book;
+    }
+
+    public List<Book> getAllByTitle(String title) {
+        List<Book> list = new ArrayList<>();
+        bookRepository.getBooksByTitleContaining(title).forEach(book -> list.add(book));
+        return list;
+    }
+
+    public List<Book> getAllByCategory(String category) {
+        List<Book> list = new ArrayList<>();
+        bookRepository.getBooksByCategoryContaining(category).forEach(book -> list.add(book));
+        return list;
+    }
+
+    public List<Book> getAllByAuthor(String author) {
+        List<Book> list = new ArrayList<>();
+        bookRepository.getBooksByAuthorContaining(author).forEach(book -> list.add(book));
+        return list;
+    }
+
+    public List<Book> getAllByIsbn(long isbn) {
+        List<Book> list = new ArrayList<>();
+        bookRepository.getBooksByIsbnStartingWith(isbn).forEach(book -> list.add(book));
+        return list;
+
     }
 }

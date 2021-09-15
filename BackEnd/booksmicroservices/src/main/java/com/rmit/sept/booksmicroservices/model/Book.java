@@ -4,6 +4,7 @@ package com.rmit.sept.booksmicroservices.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 // should implement bookdetails from service?
@@ -25,22 +26,33 @@ public class Book {
     //Unsure if we should require ISBN, as not every book will have one necessarily
 //    @NotBlank(message = "ISBN is required to add a new book")
     private long isbn;
+
     @NotBlank(message = "Please enter a title")
     private String title;
+
     @NotBlank(message = "Please enter the category (genre)")
     private String category;
+
     @NotBlank(message = "Please enter the books author")
     private String author;
+
     @NotBlank(message = "Please enter the books publisher")
     private String publisher;
-//    @NotBlank(message = "Please enter the desired sale price")
+
+    @NotNull(message = "Please enter a price for the book")
     private double price;
+
     @NotBlank(message = "Books type (ebook or physical) is required")
     private String type;
+
+    @NotNull(message = "Please choose the condition of the book")
     private int condition;
+
+    @NotNull(message = "Please enter how many of this book you have in stock")
     private int stock;
 
     //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?
+    @NotNull(message = "You must have a seller ID")
     private int sellerID; //Unsure if this would be a feature of a book in this model
 
     private Date create_At;
