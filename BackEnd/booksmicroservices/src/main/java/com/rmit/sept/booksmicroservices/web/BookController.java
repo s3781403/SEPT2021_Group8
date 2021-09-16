@@ -116,7 +116,7 @@ public class BookController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateBookDetails(@PathVariable("id") Long id, @Valid @RequestBody Book bookDetails, BindingResult bindingResult) {
         //Check a book exists with the given ID
-        Book newBook = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book with id '" + id + "' could be found to update"));
+        Book oldBook = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book with id '" + id + "' could be found to update"));
 
         //Validate the book details in the request body
         bookValidator.validate(bookDetails, bindingResult);
@@ -124,7 +124,7 @@ public class BookController {
         if (errorMap != null) return errorMap;
 
         //Update and return the book
-        Book updatedBook = bookService.updateBook(newBook, bookDetails);
+        Book updatedBook = bookService.updateBook(oldBook, bookDetails);
         return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
     }
 

@@ -2,7 +2,6 @@ package com.rmit.sept.booksmicroservices.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -45,8 +44,8 @@ public class Book {
     @NotBlank(message = "Books type (ebook or physical) is required")
     private String type;
 
-    @NotNull(message = "Please choose the condition of the book")
-    private int condition;
+    @NotNull(message = "Please choose the quality of the book")
+    private int quality;
 
     @NotNull(message = "Please enter how many of this book you have in stock")
     private int stock;
@@ -66,12 +65,12 @@ public class Book {
         this.id = id;
     }
 
-    public int getCondition() {
-        return condition;
+    public int getQuality() {
+        return quality;
     }
 
-    public void setCondition(int condition) {
-        this.condition = condition;
+    public void setQuality(int condition) {
+        this.quality = condition;
     }
 
     public int getStock() {

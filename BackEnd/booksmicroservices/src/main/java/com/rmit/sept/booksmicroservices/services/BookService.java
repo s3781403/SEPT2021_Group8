@@ -30,7 +30,7 @@ public class BookService {
             newBook.setType(newBook.getType());
             newBook.setCreate_At(newBook.getCreate_At());
             newBook.setId(newBook.getId());
-            newBook.setCondition(newBook.getCondition());
+            newBook.setQuality(newBook.getQuality());
             newBook.setStock(newBook.getStock());
 
 
@@ -91,20 +91,20 @@ public class BookService {
     }
 
 
-    public Book updateBook(Book newBook, Book bookDetails) {
-        newBook.setUpdate_At(new Date());
-        newBook.setTitle(bookDetails.getTitle());
-        newBook.setCondition(bookDetails.getCondition());
-        newBook.setIsbn(bookDetails.getIsbn());
-        newBook.setType(bookDetails.getType());
-        newBook.setPublisher(bookDetails.getPublisher());
-        newBook.setPrice(bookDetails.getPrice());
-        newBook.setCategory(bookDetails.getCategory());
-        newBook.setAuthor(bookDetails.getAuthor());
-        newBook.setSellerID(bookDetails.getSellerID());
-        newBook.setStock(bookDetails.getStock());
-        newBook.setCreate_At(bookDetails.getCreate_At());
+    public Book updateBook(Book oldBook, Book bookDetails) {
+        oldBook.setUpdate_At(new Date());
+        oldBook.setTitle(bookDetails.getTitle());
+        oldBook.setQuality(bookDetails.getQuality());
+        oldBook.setIsbn(bookDetails.getIsbn());
+        oldBook.setType(bookDetails.getType());
+        oldBook.setPublisher(bookDetails.getPublisher());
+        oldBook.setPrice(bookDetails.getPrice());
+        oldBook.setCategory(bookDetails.getCategory());
+        oldBook.setAuthor(bookDetails.getAuthor());
+        oldBook.setSellerID(bookDetails.getSellerID());
+        oldBook.setStock(bookDetails.getStock());
+        oldBook.setCreate_At(oldBook.getCreate_At());
 
-        return bookRepository.save(newBook);
+        return bookRepository.save(oldBook);
     }
 }
