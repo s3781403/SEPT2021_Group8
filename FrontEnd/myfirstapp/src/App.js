@@ -17,7 +17,6 @@ import Registration from "./components/UserManagement/Registration";
 
 
 function App()  {
-/*
     const [user,setUser]=useState(null)
 
     useEffect(() => {
@@ -26,11 +25,7 @@ function App()  {
         }, 10_000)
     }, [])
 
- */
-
     return (
-        <h1>"Hello World"</h1>
-        /*
       <Provider store={store}>
         <Router>
           <div className="App">
@@ -57,7 +52,6 @@ function App()  {
         </Router>
       </Provider>
 
-         */
     );
 
 }

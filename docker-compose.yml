@@ -1,5 +1,16 @@
 version: "3"
 services:
+  frontendservices:
+    image: s3840619/frontendservice
+    tty: true
+    build:
+      context: FrontEnd/myfirstapp
+      dockerfile: Dockerfile
+    volumes:
+      - /data/app-frontend
+    ports:
+      - "3000:3000"
+
   loginmicroservices:
     image: s3781403/loginmicroservice
     tty: true
@@ -9,7 +20,7 @@ services:
     volumes:
       - /data/app-backend
     ports:
-      - "3000:3000"
+      - "8080:8080"
 
   booksmicroservices:
     image: s3781403/booksmicroservice
