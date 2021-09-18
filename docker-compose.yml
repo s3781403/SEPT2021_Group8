@@ -2,8 +2,9 @@ version: "3"
 services:
   loginmicroservices:
     image: s3781403/loginmicroservice
+    tty: true
     build:
-      context: ./loginmicroservices
+      context: BackEnd/loginmicroservices
       dockerfile: Dockerfile
     volumes:
       - /data/app-backend
@@ -12,8 +13,9 @@ services:
 
   booksmicroservices:
     image: s3781403/booksmicroservice
+    tty: true
     build:
-      context: ./booksmicroservices
+      context: BackEnd/booksmicroservices
       dockerfile: Dockerfile
     volumes:
       - /data/app-backend
