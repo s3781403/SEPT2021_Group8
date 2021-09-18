@@ -1,25 +1,21 @@
 version: "3"
 services:
-  consumer:
-    image: s3840619/loginmicroservice
+  loginmicroservices:
+    image: s3781403/loginmicroservice
     build:
       context: ./loginmicroservices
       dockerfile: Dockerfile
     volumes:
-      -/s3840619/loginmicroservice
+      - /data/app-backend
     ports:
-      "8080:8080"
+      - "3000:3000"
 
-
-depends_on:
-      - producer
-
-  producer:
-    image: booksmicroservice
+  booksmicroservices:
+    image: s3781403/booksmicroservice
+    build:
+      context: ./booksmicroservices
+      dockerfile: Dockerfile
+    volumes:
+      - /data/app-backend
     ports:
-      - "8080:8080"
-    networks:
-      - consumer-producer
-
-networks:
-  consumer-producer:
+      - "8081:8081"
