@@ -3,14 +3,16 @@ package com.rmit.sept.booksmicroservices.web;
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
+import com.rmit.sept.booksmicroservices.services.AmazonClient;
 import com.rmit.sept.booksmicroservices.services.BookService;
+import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -33,6 +35,25 @@ public class BookController {
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
+
+    private AmazonClient amazonClient;
+
+    @Autowired
+    BookController(AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonClient.uploadFile(file);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/deleteFile")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
+    }
 
 //CREATE
     @CrossOrigin(origins = "*")
