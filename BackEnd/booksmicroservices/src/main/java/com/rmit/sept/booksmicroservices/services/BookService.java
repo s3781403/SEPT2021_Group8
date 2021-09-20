@@ -32,6 +32,7 @@ public class BookService {
             newBook.setId(newBook.getId());
             newBook.setQuality(newBook.getQuality());
             newBook.setStock(newBook.getStock());
+            newBook.setImageURL(newBook.getImageURL());
 
 
 
