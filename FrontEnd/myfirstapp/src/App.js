@@ -23,7 +23,7 @@ import Test from "./components/Layout/Test";
 
 function App()  {
 
-     const [user,setUser]=useState(null)
+    const [user,setUser]=useState(null)
 
     // useEffect(() => {
     //     setTimeout(() => {
@@ -63,6 +63,7 @@ function App()  {
           </div>
         </Router>
       </Provider>
+
     );
 
 }

@@ -1,0 +1,5 @@
+amazonProperties:
+  endpointUrl: https://sept-group-8-images.s3-ap-southeast-2.amazonaws.com
+  accessKey: AKIA2YGNA6MKK7ZP5UXY
+  secretKey: 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
+  bucketName: sept-group-8-images
