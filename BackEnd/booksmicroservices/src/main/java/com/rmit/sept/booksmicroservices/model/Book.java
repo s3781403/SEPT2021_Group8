@@ -50,6 +50,9 @@ public class Book {
     @NotNull(message = "Please enter how many of this book you have in stock")
     private int stock;
 
+    @NotBlank(message = "you must include an image with book listings")
+    private String imageURL;
+
     //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?
     @NotNull(message = "You must have a seller ID")
     private int sellerID; //Unsure if this would be a feature of a book in this model
@@ -68,6 +71,15 @@ public class Book {
     public int getQuality() {
         return quality;
     }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
 
     public void setQuality(int condition) {
         this.quality = condition;
