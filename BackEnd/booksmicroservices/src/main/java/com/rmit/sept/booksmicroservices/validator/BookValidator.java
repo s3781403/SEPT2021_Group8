@@ -32,10 +32,6 @@ public class BookValidator implements Validator{
             errors.rejectValue("author","NoNumbers", "Author cannot contain digits (numbers)");
         }
 
-        /*TODO
-            * write check for image that determines whether it is the correct dimensions
-            * validate the rest of the book attributes
-         */
 
         /* Checks that need extra work to be implemented.
         // Check whether the selected category actually exists in pre-approved list of categories

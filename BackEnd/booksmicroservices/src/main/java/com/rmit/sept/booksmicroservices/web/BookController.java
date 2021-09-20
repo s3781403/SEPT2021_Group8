@@ -3,11 +3,10 @@ package com.rmit.sept.booksmicroservices.web;
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
-import com.rmit.sept.booksmicroservices.services.AmazonClientService;
+import com.rmit.sept.booksmicroservices.services.AmazonClient;
 import com.rmit.sept.booksmicroservices.services.BookService;
 import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,40 +36,37 @@ public class BookController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    private AmazonClientService amazonClientService;
+    private AmazonClient amazonClient;
 
     @Autowired
-    BookController(AmazonClientService amazonClientService) {
-        this.amazonClientService = amazonClientService;
+    BookController(AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
     }
 
-
-//CREATE
     @CrossOrigin(origins = "*")
-    @PostMapping("/create")
-    public ResponseEntity<?> createBook(@Valid @RequestBody Book book, BindingResult result, @RequestPart(value = "file") MultipartFile file) {
-        bookValidator.validate(book,result);
-        //bookValidator.validate(file) ?
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
-        Book newBook = bookService.saveBook(book, uploadFile(file));
-        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
-    }
-
-//    @CrossOrigin(origins = "*")
-//    @PostMapping("/uploadFile")
-    private String uploadFile(@RequestPart(value = "file") MultipartFile file) {
-        return this.amazonClientService.uploadFile(file);
+    @PostMapping("/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonClient.uploadFile(file);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteFile")
     public String deleteFile(@RequestPart(value = "url") String fileUrl) {
-        return this.amazonClientService.deleteFileFromS3Bucket(fileUrl);
+        return this.amazonClient.deleteFileFromS3Bucket(fileUrl);
     }
 
+//CREATE
+    @CrossOrigin(origins = "*")
+    @PostMapping("/create")
+    public ResponseEntity<?> createBook(@Valid @RequestBody Book book, BindingResult result) {
+        bookValidator.validate(book,result);
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null) return errorMap;
+        Book newBook = bookService.saveBook(book);
+        return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+    }
 
-    //READ
+//READ
     //Returns a single book with the given ID (http://localhost:8080/api/books/book/2)
     @CrossOrigin(origins = "*")
     @GetMapping("/book/{id}")

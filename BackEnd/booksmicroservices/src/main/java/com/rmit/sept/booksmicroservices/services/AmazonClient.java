@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Service
-public class AmazonClientService {
+public class AmazonClient {
 
     private AmazonS3 s3client;
 
@@ -30,7 +30,6 @@ public class AmazonClientService {
     private String accessKey;
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
-
     @PostConstruct
     private void initializeAmazon() {
         BasicAWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);

@@ -5,7 +5,6 @@ import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +16,7 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public Book saveBook(Book newBook,String fileURL) {
+    public Book saveBook(Book newBook) {
 
         try {
             //I don't understand why we do this instead of directly passing the book object
@@ -33,7 +32,8 @@ public class BookService {
             newBook.setId(newBook.getId());
             newBook.setQuality(newBook.getQuality());
             newBook.setStock(newBook.getStock());
-            newBook.setImageURL(fileURL);
+
+
 
             //Couldn't you just comment everything above out and have it as the one that it passes in?
             return bookRepository.save(newBook);
