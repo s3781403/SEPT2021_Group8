@@ -12,7 +12,7 @@ services:
       - "3000:3000"
 
   loginmicroservices:
-    image: s3781403/loginmicroservice
+    image: s3840619loginmicroservice
     tty: true
     build:
       context: BackEnd/loginmicroservices
@@ -23,7 +23,7 @@ services:
       - "8080:8080"
 
   booksmicroservices:
-    image: s3781403/booksmicroservice
+    image: s3840619/booksmicroservice
     tty: true
     build:
       context: BackEnd/booksmicroservices
