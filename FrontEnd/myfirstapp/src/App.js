@@ -17,7 +17,6 @@ import Registration from "./components/UserManagement/Registration";
 
 
 function App()  {
-
     const [user,setUser]=useState(null)
 
     useEffect(() => {
@@ -52,6 +51,7 @@ function App()  {
           </div>
         </Router>
       </Provider>
+
     );
 
 }
