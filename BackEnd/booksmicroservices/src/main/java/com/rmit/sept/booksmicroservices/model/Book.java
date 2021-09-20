@@ -54,6 +54,11 @@ public class Book {
     @NotNull(message = "You must have a seller ID")
     private int sellerID; //Unsure if this would be a feature of a book in this model
 
+
+
+    @NotBlank(message = "Book requires a valid image URL")
+    private String imageURL;
+
     private Date create_At;
     private Date update_At;
 
@@ -151,6 +156,14 @@ public class Book {
 
     public void setCreate_At(Date create_At) {
         this.create_At = create_At;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Date getUpdate_At() {

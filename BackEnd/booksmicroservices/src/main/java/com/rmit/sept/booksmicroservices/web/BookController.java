@@ -3,7 +3,7 @@ package com.rmit.sept.booksmicroservices.web;
 import com.rmit.sept.booksmicroservices.Repositories.BookRepository;
 import com.rmit.sept.booksmicroservices.exceptions.BookNotFoundException;
 import com.rmit.sept.booksmicroservices.model.Book;
-import com.rmit.sept.booksmicroservices.services.AmazonClient;
+import com.rmit.sept.booksmicroservices.services.AmazonClientService;
 import com.rmit.sept.booksmicroservices.services.BookService;
 import com.rmit.sept.booksmicroservices.services.MapValidationErrorService;
 import com.rmit.sept.booksmicroservices.validator.BookValidator;
@@ -36,10 +36,10 @@ public class BookController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    private AmazonClient amazonClient;
+    private AmazonClientService amazonClient;
 
     @Autowired
-    BookController(AmazonClient amazonClient) {
+    BookController(AmazonClientService amazonClient) {
         this.amazonClient = amazonClient;
     }
 
