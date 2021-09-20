@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@mui/material": "^5.0.0",
     "clsx": "^1.1.1"
   }
 }
