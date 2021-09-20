@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -39,10 +44,10 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-/*
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
-        System.out.println("Im registering a user");
         // Validate passwords match
         userValidator.validate(user,result);
 
@@ -53,12 +58,6 @@ public class UserController {
 
         return  new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
- */
-
-    @PostMapping("/register")
-    public void registerUser(){
-        System.out.println("Im registering a user");
-    }
 
 
     @Autowired
@@ -68,7 +67,7 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
 
-
+    @CrossOrigin(origins = "*")
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
