@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     Button,
     FormControl,
@@ -12,6 +14,7 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {Visibility, VisibilityOff} from "@material-ui/icons";
+import axios from "axios";
 
 
 
@@ -19,11 +22,30 @@ function Registration()
 {
     const paperStyle={
         padding:20,
-        height:'100vh',
         width:500,
         margin:"20px auto"
     }
 
+
+    const API_URL = "http://localhost:3000/api/users/";
+
+    const registerUser=()=> {
+        const fullName = document.getElementById("textFullName").value;
+        const address = document.getElementById("textAddress").value;
+        const role = document.getElementById("textRole").value;
+        const username = document.getElementById("textEmail").value;
+        const abn = document.getElementById("textABN").value;
+        const phoneNumber = document.getElementById("textPhone").value;
+        const confirmPassword = document.getElementById("textPassword").value;
+        const password = confirmPassword;
+
+        return axios.post(API_URL + "register",{username,fullName,password,confirmPassword,role,phoneNumber,address},
+            {headers: {
+                    "Accept": "*/*",
+                    "Access-Control-Allow-Origin": "*"
+                }});
+
+    }
 
     const [values, setValues] = React.useState({
         password: '',
@@ -50,48 +72,48 @@ function Registration()
 
                     <h3>Sign Up</h3>
 
-                    <TextField  required id="standard-required" label="First Name" defaultValue="" style={{margin:10,width:"10"}}/>
-                    <TextField  required id="standard-required" label="Last name" defaultValue="" style={{margin:10}}/>
+                    <TextField  required id="textFullName" label="Full Name" style={{margin:10,width:"10"}}/>
 
-                    <TextField  required id="standard-required" label="Address" defaultValue="" style={{margin:10}}/>
-                    <TextField  required id="standard-required" label="Email" defaultValue="" style={{margin:10}}/>
+                    <TextField  required id="textAddress" label="Address" style={{margin:10}}/>
+                    <TextField  required id="textEmail" label="Email"  style={{margin:10}}/>
 
-                    <TextField  required id="standard-required" label="Phone number" defaultValue="" style={{margin:10}}/>
+                    <TextField  required id="textPhone" label="Phone number" style={{margin:10}}/>
 
-                    <TextField  required id="standard-required" label="ABN" defaultValue="" style={{margin:10}}/>
+                    <TextField  required id="textRole" label="Role"  style={{margin:10}}/>
 
 
-                    <TextField  required id="standard-required" label="Username" defaultValue="" style={{margin:10}}/>
-                    <TextField  required id="standard-required" label="Role" defaultValue="" style={{margin:10}}/>
+                    <TextField  required id="textABN" label="ABN"  style={{margin:10}}/>
+
+
 
 
                     <FormControl style={{margin:'5px'}}>
                         <InputLabel htmlFor="standard-adornment-password">Password </InputLabel>
                         <Input
-                               id="standard-adornment-password"
+                            id="textPassword"
 
-                               type={values.showPassword ? 'text' : 'password'}
-                               value={values.password}
+                            type={values.showPassword ? 'text' : 'password'}
+                            value={values.password}
 
-                               onChange={handleChange('password')}
-                               endAdornment={
-                                   <InputAdornment position="end">
-                                       <IconButton
-                                           aria-label="toggle password visibility"
-                                           onClick={handleClickShowPassword}
-                                           onMouseDown={handleMouseDownPassword}
-                                       >
-                                           {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                       </IconButton>
-                                   </InputAdornment>
-                               }
+                            onChange={handleChange('password')}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
                         />
                     </FormControl>
 
                     <FormControl style={{margin:5}}>
                         <InputLabel htmlFor="standard-adornment-password">Retype Password </InputLabel>
                         <Input
-                            id="standard-adornment-password"
+                            id="textRePassword"
 
                             type={values.showPassword ? 'text' : 'password'}
                             value={values.password}
@@ -112,10 +134,9 @@ function Registration()
                     </FormControl>
                     <br></br>
 
-                    <Button variant="contained" style={{margin:30,padding:10}}>Register</Button>
-
-
-
+                    <Button onClick={()=>{
+                        registerUser()
+                    }} variant="contained" style={{margin:30,padding:10}}>Register</Button>
 
 
 

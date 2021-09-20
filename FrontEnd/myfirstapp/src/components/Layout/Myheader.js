@@ -6,15 +6,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-
+import { useHistory } from 'react-router-dom';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Login from "../UserManagement/Login";
 import {Button, ButtonGroup} from "@material-ui/core";
+import SearchBar from "./SearchBar";
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
@@ -74,43 +72,17 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PrimarySearchAppBar(props) {
+export default function PrimarySearchAppBar() {
 
-    const user = props.user;
 
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
-
-    const handleProfileMenuOpen = (event) => {
-       user ?  setAnchorEl(event.currentTarget):setAnchorEl(null);
-
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-
-
-    };
+    const history = useHistory();
+    const handleProfileMenuOpen = () => history.push('/login');
 
 
     const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
 
-            <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
-        </Menu>
-    );
 
     return (
         <div className={classes.grow}>
@@ -132,7 +104,13 @@ export default function PrimarySearchAppBar(props) {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={(e)=>{
+                                console.log("🔦",e.target.value)
+                            }}
+
+
                         />
+
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
@@ -156,7 +134,7 @@ export default function PrimarySearchAppBar(props) {
                 </Toolbar>
             </AppBar>
 
-            {renderMenu}
+
             <ButtonGroup variant="text" color="primary" aria-label="text primary button group" fullWidth={"true"}>
                 <Button>BestSellers</Button>
                 <Button>New Releases</Button>

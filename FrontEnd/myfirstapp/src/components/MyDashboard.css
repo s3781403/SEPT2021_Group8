@@ -1,0 +1,16 @@
+
+.handleButtonsgroup{
+    padding: 3rem;
+
+    flex: 1rem;
+    width: 1200px;
+
+}
+.handleButtonsgroup button{
+    padding: 2rem;
+    flex: 1rem;
+    margin: 1rem ;
+    border: 1px solid blueviolet ;
+    width: 300px;
+    height:130px ;
+}

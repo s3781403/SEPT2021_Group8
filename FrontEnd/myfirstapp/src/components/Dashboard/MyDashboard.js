@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {Button, ButtonGroup} from "@material-ui/core";
-import "./MyDashboard.css";
+import "../MyDashboard.css";
+import {Link, useHistory} from "react-router-dom";
 
 
 
 function AdminDashboard()
 {
+    const history = useHistory();
 
+    // const routeChange = () =>{
+    //     let path = 'addBook';
+    //     history.push(path);
+    // }
 
 
       return(
@@ -30,9 +36,15 @@ function AdminDashboard()
                                     <Button>Add Sellers</Button>
                                     <Button>Manage Sellers</Button>
                                     <Button>Manage Users</Button>
-                                    <Button>Add Books</Button>
-                                    <Button>Manage Books</Button>
-                                    <Button>Delete Books</Button>
+                                    <Button onClick={() =>{
+                                        history.push('addBook');
+                                    }}>Add Books</Button>
+                                    <Button onClick={() =>{
+                                        history.push('editBook');
+                                    }}>Manage Books</Button>
+                                    <Button onClick={() =>{
+                                        history.push('deleteBook');
+                                    }}>Delete Books</Button>
 
                             </div>
                       </div>
