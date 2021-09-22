@@ -1,28 +1,33 @@
 package com.rmit.sept.booksmicroservices.model;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 //Class for constructing mock books when testing
 public class MockBook {
 
-    public Book createMockBook(Long id, long isbn, String title, String category, String author, String publisher, double price, String type, int quality, int stock, int sellerID, String imageURL) {
-        Book book = new Book();
+    public long isbn;
+    public String author;
+    public String category;
+    public double price;
+    public String publisher;
+    public int sellerID;
+    public String title;
+    public String type;
+    public int quality;
+    public int stock;
+    public String imageURL;
 
-        book.setIsbn(isbn);
-        book.setAuthor(author);
-        book.setCategory(category);
-        book.setPrice(price);
-        book.setPublisher(publisher);
-        book.setSellerID(sellerID);
-        book.setTitle(title);
-        book.setType(type);
-        book.setId(id);
-        book.setQuality(quality);
-        book.setStock(stock);
-        book.setImageURL(imageURL);
 
-        return book;
+    public MockBook(long isbn, String title, String category, String author, String publisher, double price, String type, int quality, int stock, int sellerID, String imageURL) {
+        this.isbn = isbn;
+        this.author = author;
+        this.category = category;
+        this.price = price;
+        this.publisher = publisher;
+        this.sellerID=sellerID;
+        this.title=title;
+        this.type=type;
+        this.quality=quality;
+        this.stock=stock;
+        this.imageURL=imageURL;
     }
 
 }
