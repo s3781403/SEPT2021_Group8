@@ -1,8 +1,9 @@
 version: 2
 jobs:
   build:
-    working_directory: /App
+    working_directory: /dockerapp1
     docker:
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
@@ -15,3 +16,4 @@ jobs:
           name: Run tests
           command: |
             docker-compose up -d
+            docker-compose run dockerapp1 
