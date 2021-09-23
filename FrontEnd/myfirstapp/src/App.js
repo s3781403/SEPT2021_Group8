@@ -8,6 +8,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {useContext} from "react";
 import LoadingBar from "./ui/components/LoadingBar";
 
+
 const appTheme = createTheme({
     palette: {
         "mode": "light",
