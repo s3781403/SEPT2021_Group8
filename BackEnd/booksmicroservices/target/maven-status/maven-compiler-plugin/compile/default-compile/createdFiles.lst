@@ -1,0 +1,10 @@
+com/rmit/sept/booksmicroservices/services/BookService.class
+com/rmit/sept/booksmicroservices/BooksMicroservicesApplication.class
+com/rmit/sept/booksmicroservices/exceptions/BookNotFoundException.class
+com/rmit/sept/booksmicroservices/validator/BookValidator.class
+com/rmit/sept/booksmicroservices/Repositories/BookRepository.class
+com/rmit/sept/booksmicroservices/exceptions/BookNotFoundResponse.class
+com/rmit/sept/booksmicroservices/web/BookController.class
+com/rmit/sept/booksmicroservices/model/Book.class
+com/rmit/sept/booksmicroservices/services/MapValidationErrorService.class
+com/rmit/sept/booksmicroservices/exceptions/CustomResponseEntityExceptionHandler.class
