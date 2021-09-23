@@ -1,8 +1,6 @@
 package com.rmit.sept.bk_loginservices.services;
 
 
-
-
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
@@ -28,6 +26,10 @@ public class UserService {
         return userRepository.save(newUser);
        */
         try{
+            newUser.setRole(newUser.getRole());
+            newUser.setABN(newUser.getABN());
+            newUser.setAddress(newUser.getAddress());
+            newUser.setPhoneNumber(newUser.getPhoneNumber());
             newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
             //Username has to be unique (exception)
             newUser.setUsername(newUser.getUsername());
