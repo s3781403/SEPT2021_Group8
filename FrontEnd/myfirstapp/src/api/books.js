@@ -1,7 +1,7 @@
 // Axios
 import axios from "axios";
 
-const BOOK_API_URL = "http://localhost:8080/api/books"
+const BOOK_API_URL = "http://localhost:8081/api/books"
 
 // Get all books
 const getAllBooks = async () => {

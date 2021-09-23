@@ -7,6 +7,7 @@ import {AppContext, AppProvider} from "./context/AppContext";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {useContext} from "react";
 import LoadingBar from "./ui/components/LoadingBar";
+import React from "react";
 
 const appTheme = createTheme({
     palette: {
