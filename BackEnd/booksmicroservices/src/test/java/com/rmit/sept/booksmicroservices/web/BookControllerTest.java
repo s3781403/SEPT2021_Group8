@@ -42,15 +42,15 @@ public class BookControllerTest extends BooksmicroservicesApplicationTests {
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        book_1 = new MockBook(123456789112L, "Test Book #1", "Fantesty",
+        book_1 = new MockBook(1234567891123L, "Test Book #1", "Fantesty",
                 "Rex Testingham", "Penguin Tests", 10.50, "physical", 0,
                 1, 123155, "aws.testimageurl.com/1234-153-1235_source.jpg" );
 
-        book_2 = new MockBook(234567891112L, "Test Book #2", "Horror",
+        book_2 = new MockBook(2345678911123L, "Test Book #2", "Horror",
                 "Sir Tests", "Random House Tests", 20.30, "ebook", 2,
                 4, 234567, "aws.testimageurl.com/1236-143-1135_source.jpg" );
 
-        book_3 = new MockBook(314467823112L, "Test Book #3", "Mystesty",
+        book_3 = new MockBook(3144678231123L, "Test Book #3", "Mystesty",
                 "Mr Tests", "Amazon Tests", 40.50, "physical", 3,
                 1, 5618120, "aws.testimageurl.com/4123-123-151235a.jpg" );
     }
