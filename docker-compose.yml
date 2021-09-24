@@ -12,7 +12,7 @@ services:
       - "3000:3000"
 
   loginmicroservices:
-    image: s3840619loginmicroservice
+    image: s3840619/loginmicroservice
     tty: true
     build:
       context: BackEnd/loginmicroservices
