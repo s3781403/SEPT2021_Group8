@@ -18,6 +18,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {useContext, useEffect, useState} from "react";
 import logo from '../../assets/images/bookero.png'
 import {AppContext} from "../../context/AppContext";
+import {useHistory} from "react-router-dom";
 
 
 
@@ -39,6 +40,7 @@ const Search = styled('div')(({theme}) => ({
         width: '60%'
     }
 }));
+
 
 const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
@@ -79,13 +81,17 @@ const useStyles = makeStyles((theme) =>
 
 function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
+
+    const history = useHistory();
+    const loginPageOpen = () => {history.push('/login')};
+
     const {searchTerm,setSearchTerm} = useContext(AppContext)
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
+
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const classes = useStyles();
@@ -201,7 +207,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                                 <NotificationsIcon/>
                             </Badge>
                         </IconButton>
-                        <IconButton
+                        <IconButton onClick={loginPageOpen}
                             size="large"
                             edge="end"
                             aria-label="account of current user"
