@@ -6,6 +6,7 @@ import Fuse from "fuse.js";
 import BookCardMaterial from "../components/BookCardMaterial";
 import BookCard from "../components/BookCard";
 import AdminBookCard from "./AdminBookCard";
+import {Link} from 'react-router-dom'
 
 
 const fuseOptions = {
@@ -15,7 +16,7 @@ const fuseOptions = {
 
 function HomePage() {
 
-    const {books, setBooks, searchTerm, setLoading} = useContext(AppContext)
+    const {books, setBooks, searchTerm, setLoading, user} = useContext(AppContext)
 
 
     const fetchAndUpdateBooks = async () => {
@@ -51,9 +52,20 @@ function HomePage() {
     return <div>
         <Grid style={{marginTop: '1%', padding: '2%'}} container spacing={2} columns={12}>
             {
-                filteredBooks.map(book => <BookCardMaterial key={book.id} book={book}/>)
+                filteredBooks.map(book => (
+                    <Grid key={book.id} item={true} xs={6} md={4} lg={3} xl={2}
+                          style={{marginBottom: '2%', padding: '0.5%'}}>
+                        <BookCardMaterial book={book}/>
+                    </Grid>))
             }
+
+            {user?.type === "admin" ?
+                <Link to={"/admin"}>Admin</Link> : null
+            }
+
         </Grid>
+
+
     </div>
 }
 

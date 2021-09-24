@@ -17,7 +17,7 @@ function BookManagement() {
 
     const {books, setBooks, searchTerm, setLoading} = useContext(AppContext)
 
-const history=useHistory()
+    const history = useHistory()
 
     const fetchAndUpdateBooks = async () => {
         const fetchedBooks = await getAllBooks()
@@ -49,17 +49,20 @@ const history=useHistory()
 
     const filteredBooks = getFilteredBooks()
 
-    return(
+    return (
         <div style={{paddingBottom: '5%'}}>
-            <div style={{textAlign:"right", margin: '20px'}}>
-            <Fab variant={"extended"} color={"secondary"} onClick={()=>history.push("/admin/book/add")} >
-                <AddIcon sx={{ mr: 1 }}  />
-                Add Book
-            </Fab>
+            <div style={{textAlign: "right", margin: '20px'}}>
+                <Fab variant={"extended"} color={"secondary"} onClick={() => history.push("/admin/book/add")}>
+                    <AddIcon sx={{mr: 1}}/>
+                    Add Book
+                </Fab>
             </div>
-            <Grid style={{marginTop: '1%', padding: '2%'}} container spacing={2} columns={12}>
+            <Grid style={{marginTop: '1%', padding: '1%'}} container spacing={2} columns={12}>
                 {
-                    filteredBooks.map(book => <AdminBookCard key={book.id} book={book}/>)
+                    filteredBooks.map(book => (
+                        <Grid key={book.id} item={true} xs={6} md={4} lg={3} xl={2} style={{marginBottom: '2%', padding: '0.5%'}}>
+                            <AdminBookCard  book={book}/>
+                        </Grid>))
                 }
             </Grid>
         </div>)

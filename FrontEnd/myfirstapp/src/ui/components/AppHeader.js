@@ -18,7 +18,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {useContext, useEffect, useState} from "react";
 import logo from '../../assets/images/bookero.png'
 import {AppContext} from "../../context/AppContext";
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
+import {Avatar} from "@mui/material";
+import {deepOrange} from "@mui/material/colors";
 
 
 
@@ -85,7 +87,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
     const history = useHistory();
     const loginPageOpen = () => {history.push('/login')};
 
-    const {searchTerm,setSearchTerm} = useContext(AppContext)
+    const {searchTerm,setSearchTerm, user, setUser} = useContext(AppContext)
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -152,7 +154,8 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle/>
+                    {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
+                    {/*<AccountCircle/>*/}
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -173,7 +176,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                         component="div"
                         sx={{display: {xs: 'none', sm: 'block'}}}
                     >
-                        BOOKERO
+                        <Link style={{color: "inherit", textDecoration: 'none'}} to={"/"}>BOOKERO</Link>
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
@@ -214,7 +217,8 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             aria-haspopup="true"
                             color="inherit"
                         >
-                            <AccountCircle/>
+                            {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
+                            {/*<AccountCircle/>*/}
                         </IconButton>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>

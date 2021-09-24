@@ -1,6 +1,20 @@
+import {useContext} from "react";
+import {AppContext} from "../../context/AppContext";
+import {login, logout} from "../../api/login";
+
+function NotLoggedIn({setUser}) {
+    return <button onClick={() => login('', '')}>Login</button>
+}
+
+
 function LoginPage() {
+
+    const {user, setUser} = useContext(AppContext)
+
     return(
-        <h1>login</h1>
+        <div>
+            {user ? <button onClick={() => logout()}>Logout</button> : <NotLoggedIn setUser={setUser}/>}
+        </div>
     )
 }
 

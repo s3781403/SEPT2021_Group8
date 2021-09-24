@@ -46,7 +46,7 @@ export default function AdminBookCard({book}) {
     shuffleArray(sampleImages)
 
     return (
-        <Grid item={true} xs={6} md={4} lg={3} xl={2} style={{marginBottom: '2%', padding: '0.5%'}}>
+
             <Card sx={{width: '100%'}}>
                 <CardActionArea style={{paddingTop: '20px'}} onClick={() => {
                     goToDetailView(book.id)
@@ -84,7 +84,6 @@ export default function AdminBookCard({book}) {
                     </CardActions>
 
             </Card>
-        </Grid>
     );
 }
 
