@@ -25,7 +25,6 @@ public class Book {
     //Unsure if we should require ISBN, as not every book will have one necessarily
 //    @NotBlank(message = "ISBN is required to add a new book")
     private long isbn;
-
     @NotBlank(message = "Please enter a title")
     private String title;
 
@@ -53,8 +52,6 @@ public class Book {
     //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?
     @NotNull(message = "You must have a seller ID")
     private int sellerID; //Unsure if this would be a feature of a book in this model
-
-
 
     @NotBlank(message = "Book requires a valid image URL")
     private String imageURL;

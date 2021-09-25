@@ -34,9 +34,6 @@ public class BookService {
             newBook.setStock(newBook.getStock());
             newBook.setImageURL(newBook.getImageURL());
 
-
-
-            //Couldn't you just comment everything above out and have it as the one that it passes in?
             return bookRepository.save(newBook);
 
         } catch(Exception e) {
