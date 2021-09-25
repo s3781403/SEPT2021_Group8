@@ -54,14 +54,6 @@ describe('For the admin page, the book price is shown', () => {
 });
 
 
-describe('For the Admin Page, the book title is shown', () => {
-    test('renders AdminDashboard component', () => {
-        render(<AdminDashboard/>);
-        const linkElement = screen.getAllByText("Users");
-        expect(linkElement.length).toBeGreaterThan(0);
-    });
-});
-
 describe('For the Admin Page,in the bottom navigation Users is shown', () => {
     test('renders AdminDashboard component', () => {
         render(<AdminDashboard/>);

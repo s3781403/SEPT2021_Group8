@@ -6,9 +6,6 @@ test('api get books is working', async ()=> {
     expect(books.length).toBeGreaterThan(0)
 })
 
-// Add search
-
-// Add update
 
 // Add delete (check the book no longer exists)
 test ('book deleted correctly', async () => {
