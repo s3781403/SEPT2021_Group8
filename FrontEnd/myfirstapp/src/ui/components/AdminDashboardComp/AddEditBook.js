@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 function AddEditBook() {
 
 
-    const bookid = useParams()
+    const {bookid} = useParams()
     const {setLoading} = useContext(AppContext)
 
     const [bookData, setBookData] = useState()
@@ -111,7 +111,6 @@ function AddEditBook() {
 
                 (props) => (
                     <Form onSubmit={props.handleSubmit} onReset={props.handleReset}>
-                        {<pre>{JSON.stringify(props, null, 2)}</pre>}
                         <h1 style={{textAlign: "left"}}>{editMode ? "Edit" : "Add"} Book</h1>
                         <div style={{textAlign: "left", padding: 6, margin: 6}}>
 

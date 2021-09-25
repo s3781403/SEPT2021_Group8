@@ -19,7 +19,10 @@ const getBookByID = async (id) => {
 const createBook = async (bookData) => {
     try {
         const getByIDUrl = `${BOOK_API_URL}/create`
-        return (await axios.post(getByIDUrl, bookData)).data
+        return (await axios.post(getByIDUrl, bookData,{headers: {
+                "Accept": "/",
+                "Access-Control-Allow-Origin": "*"
+            }})).data
     } catch(e) {
         console.error(e)
     }
@@ -29,7 +32,10 @@ const createBook = async (bookData) => {
 // Update book
 const updateBook = async (id, bookData) => {
     const updateUrl = `${BOOK_API_URL}/update/${id}`
-    let updateResult = await axios.put(updateUrl, bookData);
+    let updateResult = await axios.put(updateUrl, bookData,{headers: {
+            "Accept": "/",
+            "Access-Control-Allow-Origin": "*"
+        }});
     return updateResult.data
 }
 
