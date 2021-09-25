@@ -6,7 +6,6 @@ import com.rmit.sept.booksmicroservices.BooksmicroservicesApplicationTests;
 import com.rmit.sept.booksmicroservices.model.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -80,7 +79,7 @@ public class BookControllerTest extends BooksmicroservicesApplicationTests {
     public void whenGetBook_thenReturnBook() throws Exception {
 //        Mockito.when(bookService.findAll()).thenReturn(books);
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/books/book/3")
+                .get("/api/books/book/34")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -127,7 +126,7 @@ public class BookControllerTest extends BooksmicroservicesApplicationTests {
     @Transactional
     public void whenDeleteBook_bookIsDeleted() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                .delete("/api/books/delete/33")
+                .delete("/api/books/delete/34")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
