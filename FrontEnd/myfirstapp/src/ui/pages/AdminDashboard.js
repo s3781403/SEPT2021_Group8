@@ -4,7 +4,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import Box from "@mui/material/Box";
 import React, {memo, useMemo, useState} from "react";
-import BookManagement from "../../components/Dashboard/BookManagement";
+import BookManagement from "../components/AdminDashboardComp/BookManagement";
 
 function UserManagement() {
     return <p>User management {Math.floor(Math.random()*10)}</p>

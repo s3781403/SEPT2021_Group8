@@ -1,9 +1,5 @@
-const user = {
-    name: "Shrestha Ghosh",
-    type: "admin",
-    accessToken: "accessToken",
-    refreshToken: "refreshToken"
-}
+import axios from "axios";
+
 
 const LOGGEDIN_USER_KEY = "logged_in_user";
 
@@ -24,11 +20,17 @@ export const getUser = () => {
 }
 
 export const login = async (username, password) => {
-    // call the api here???
-
-    const loggedInUser = user
+    // API call
+    const loginURL = 'http://localhost:8080/api/users/login'
+    const res= (await axios.post(loginURL, {username, password})).data
+if(res.success) {
+    const loggedInUser = {name: username,
+        type: "admin",
+        accessToken: res.token,
+        refreshToken: "refreshToken"}
     saveUser(loggedInUser)
     window.location.reload()
+}
 }
 
 const currentUser = async () => {

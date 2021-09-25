@@ -243,12 +243,12 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
 function AppHeader() {
 
-    const [cartItemCount, setCartItemCount] = useState(0)
+    // const [cartItemCount, setCartItemCount] = useState(0)
+    const {cartItemCount} = useContext(AppContext)
     const [notificationCount, setNotificationCount] = useState(0)
 
     useEffect(() => {
         setTimeout(() => {
-            setCartItemCount(1);
             setNotificationCount(1)
         }, 2000)
     }, [])

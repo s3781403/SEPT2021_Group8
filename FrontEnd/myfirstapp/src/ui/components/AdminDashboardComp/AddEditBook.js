@@ -1,30 +1,25 @@
 import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import {ErrorMessage, Form, useFormik, Formik} from 'formik';
+import {ErrorMessage, Form, useFormik, Formik, useFormikContext, withFormik} from 'formik';
 import * as yup from 'yup';
 import {Button, TextField} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {createBook, getBookByID, updateBook} from "../../api/books";
-import {AppContext} from "../../context/AppContext";
-//import Button from '@material-ui/core/Button';
-//import TextField from '@material-ui/core/TextField';
-
-function TextError(props) {
-    return (
-        <div className="error">
-            {props.children}
-        </div>
-    )
-}
+import {createBook, getBookByID, updateBook} from "../../../api/books";
+import {AppContext} from "../../../context/AppContext";
+import MenuItem from "@mui/material/MenuItem";
+import {Rating, RatingView} from 'react-simple-star-rating'
+import Typography from "@mui/material/Typography";
 
 function AddEditBook() {
 
 
-    const {bookid} = useParams()
+    const bookid = useParams()
     const {setLoading} = useContext(AppContext)
 
     const [bookData, setBookData] = useState()
     const editMode = (bookid != null)
+
+    const [bookType, setBookType] = useState()
 
     const initialValues = {
         isbn: '',
@@ -33,8 +28,8 @@ function AddEditBook() {
         author: '',
         publisher: '',
         price: '',
-        type: 'physical',
-        condition: 3,
+        type: '',
+        quality: '',
         stock: '',
         sellerID: '',
         imageURL: ''
@@ -49,7 +44,7 @@ function AddEditBook() {
         publisher: yup.string().required('Required'),
         price: yup.string().required('Required'),
         type: yup.string().required('Required'),
-        condition: yup.string().required('Required'),
+        quality: yup.string().required('Required'),
         stock: yup.string().required('Required'),
         sellerID: yup.string().required('Required'),
 
@@ -88,25 +83,38 @@ function AddEditBook() {
         }
     }
 
+    const handleChange = (event) => {
+        setBookType(event.target.value);
+    };
+
+    const handleFormSubmit = async (values) => {
+        console.log("submit clicked")
+        console.log({values})
+        setLoading(true)
+        let newBook;
+        if (editMode) newBook = await updateBook(bookid, values)
+        else newBook = await createBook(values)
+        setLoading(false)
+        alert(`${newBook.title} has been ${editMode ? "edited" : "created"}`)
+    };
+
+
     return (
+
         <Formik
+
             initialValues={bookData || initialValues}
             // validationSchema={validationSchema}
-            onSubmit={async (values) => {
-                setLoading(true)
-                let newBook;
-                if (editMode) newBook = await updateBook(bookid, values)
-                else newBook = await createBook(values).then(console.log)
-                setLoading(false)
-                alert(`${newBook.title} has been ${editMode ? "edited" : "created"}`)
-            }}
-        >
+            onSubmit={(values) => handleFormSubmit(values)}>
             {
-                props => (
+
+
+                (props) => (
                     <Form onSubmit={props.handleSubmit} onReset={props.handleReset}>
-                        {/*<pre>{JSON.stringify(props, null ,2)}</pre>*/}
+                        {<pre>{JSON.stringify(props, null, 2)}</pre>}
                         <h1 style={{textAlign: "left"}}>{editMode ? "Edit" : "Add"} Book</h1>
                         <div style={{textAlign: "left", padding: 6, margin: 6}}>
+
                             <div style={formStyle}>
                                 <TextField
                                     label="Title"
@@ -190,7 +198,42 @@ function AddEditBook() {
                                 {/*<ErrorMessage name="name" component={TextError}/>*/}
                             </div>
 
+                            <div style={formStyle}>
+                                <div>
+                                    <TextField
+                                        select
+                                        label="Type"
+                                        value={bookType}
+                                        onChange={handleChange}
+                                        style={textFieldStyle}
+                                        {
+                                            ...getInputProps("type", props)
+                                        }
+                                    >
 
+                                        <MenuItem value={"physical"}>
+                                            Physical
+                                        </MenuItem>
+                                        <MenuItem value={"ebook"}>
+                                            E-Book
+                                        </MenuItem>
+
+
+                                    </TextField>
+                                </div>
+                            </div>
+
+                            <div style={formStyle}>
+
+                                <Typography variant={"subtitle1"} >
+                                    Quality
+                                </Typography>
+                                <Rating name={'quality'} onClick={(rating) => {
+                                    props.setFieldValue('quality', rating)
+                                    setTimeout(() => props.setFieldTouched('quality', true))
+                                }} ratingValue={parseInt(props.values.quality) || 0} /* Rating Props */ />
+
+                            </div>
                             <div style={formStyle}>
                                 <TextField
                                     label="Stock"
@@ -207,7 +250,7 @@ function AddEditBook() {
                             <div style={formStyle}>
                                 <TextField
                                     label="Seller ID"
-                                    type="text"
+                                    type="number"
                                     style={textFieldStyle}
                                     {
                                         ...getInputProps("sellerID", props)

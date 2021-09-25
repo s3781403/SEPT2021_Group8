@@ -15,9 +15,9 @@ export const AppProvider = (props) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
     const [user, setUser] = useState(getUser())
-    // const [cartItemCount, setCartItemCount] = useState(999);
+    const [cartItemCount, setCartItemCount] = useState(0);
 
-    return <AppContext.Provider value={{books,setBooks, searchTerm, setSearchTerm, loading, setLoading, user, setUser}}>
+    return <AppContext.Provider value={{books,setBooks, searchTerm, setSearchTerm, loading, setLoading, user, setUser,cartItemCount, setCartItemCount}}>
         {props.children}
     </AppContext.Provider>
 

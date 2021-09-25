@@ -55,7 +55,7 @@ export default function BookCardMaterial({book}) {
                             {book.author}
                         </Typography>
                         <Typography variant={"h6"} color="text.primary">
-                            ${(book.price + "0000000").substr(0, 5)}
+                            ${(book.price + "00").substr(0, 5)}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

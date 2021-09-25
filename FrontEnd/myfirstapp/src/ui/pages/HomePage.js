@@ -4,8 +4,6 @@ import {getAllBooks} from "../../api/books";
 import {AppContext} from "../../context/AppContext";
 import Fuse from "fuse.js";
 import BookCardMaterial from "../components/BookCardMaterial";
-import BookCard from "../components/BookCard";
-import AdminBookCard from "./AdminBookCard";
 import {Link} from 'react-router-dom'
 
 
@@ -38,13 +36,12 @@ function HomePage() {
 
 
     const getFilteredBooks = () => {
-        // books.filter(book => book.author.contains(searchTerm) || book.title.contains(searchTerm) || )
         const searching = searchTerm.length >= 2
         if (!searching) return books
         const fuzzy = new Fuse(books, fuseOptions)
         const fuseResult = fuzzy.search(searchTerm)
         console.log(fuseResult)
-        return fuseResult.map(match => match.item) //[{item: book, somethingelse: __}, {}]
+        return fuseResult.map(match => match.item)
     }
 
     const filteredBooks = getFilteredBooks()
@@ -60,7 +57,7 @@ function HomePage() {
             }
 
             {user?.type === "admin" ?
-                <Link to={"/admin"}>Admin</Link> : null
+                <Grid  item={true} xs={12}><Link to={"/admin"}>Admin</Link></Grid> : null
             }
 
         </Grid>

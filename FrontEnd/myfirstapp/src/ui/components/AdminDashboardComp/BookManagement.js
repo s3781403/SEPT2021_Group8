@@ -1,9 +1,9 @@
 import {Fab, Grid} from "@mui/material";
-import BookCardMaterial from "../../ui/components/BookCardMaterial";
-import AdminBookCard from "../../ui/pages/AdminBookCard";
+import BookCardMaterial from "../BookCardMaterial";
+import AdminBookCard from "../../pages/AdminBookCard";
 import {useContext, useEffect} from "react";
-import {AppContext} from "../../context/AppContext";
-import {getAllBooks} from "../../api/books";
+import {AppContext} from "../../../context/AppContext";
+import {getAllBooks} from "../../../api/books";
 import Fuse from "fuse.js";
 import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from "react-router-dom";
@@ -38,26 +38,25 @@ function BookManagement() {
 
 
     const getFilteredBooks = () => {
-        // books.filter(book => book.author.contains(searchTerm) || book.title.contains(searchTerm) || )
         const searching = searchTerm.length >= 2
         if (!searching) return books
         const fuzzy = new Fuse(books, fuseOptions)
         const fuseResult = fuzzy.search(searchTerm)
         console.log(fuseResult)
-        return fuseResult.map(match => match.item) //[{item: book, somethingelse: __}, {}]
+        return fuseResult.map(match => match.item)
     }
 
     const filteredBooks = getFilteredBooks()
 
     return (
-        <div style={{paddingBottom: '5%'}}>
-            <div style={{textAlign: "right", margin: '20px'}}>
+        <div style={{paddingBottom: '3%'}}>
+            <div style={{textAlign: "right", margin: '7px'}}>
                 <Fab variant={"extended"} color={"secondary"} onClick={() => history.push("/admin/book/add")}>
                     <AddIcon sx={{mr: 1}}/>
                     Add Book
                 </Fab>
             </div>
-            <Grid style={{marginTop: '1%', padding: '1%'}} container spacing={2} columns={12}>
+            <Grid style={{marginTop: '0.5%', padding: '0.5%'}} container spacing={2} columns={12}>
                 {
                     filteredBooks.map(book => (
                         <Grid key={book.id} item={true} xs={6} md={4} lg={3} xl={2} style={{marginBottom: '2%', padding: '0.5%'}}>

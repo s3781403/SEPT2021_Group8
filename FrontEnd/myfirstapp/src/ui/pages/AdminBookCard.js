@@ -48,7 +48,7 @@ export default function AdminBookCard({book}) {
     return (
 
             <Card sx={{width: '100%'}}>
-                <CardActionArea style={{paddingTop: '20px'}} onClick={() => {
+                <CardActionArea style={{paddingTop: '15px'}} onClick={() => {
                     goToDetailView(book.id)
                 }}>
                     <CardMedia

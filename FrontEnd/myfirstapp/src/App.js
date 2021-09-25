@@ -9,9 +9,9 @@ import {useContext} from "react";
 import LoadingBar from "./ui/components/LoadingBar";
 import LoginPage from "./ui/pages/LoginPage";
 import RegistrationPage from "./ui/pages/Registration";
-import AddBook from "./components/Dashboard/AddBook";
-import AddEditBook from "./components/Dashboard/AddEditBook";
-import DeleteBook from "./components/Dashboard/DeleteBook";
+
+import AddEditBook from "./ui/components/AdminDashboardComp/AddEditBook";
+
 
 const appTheme = createTheme({
     palette: {
@@ -49,7 +49,7 @@ function App() {
                             <Route path={"/login"}  component={LoginPage}/>
                             <Route path={"/register"} exact={true} component={RegistrationPage}/>
                             <Route path={"/admin/book/add"} exact={true} component={AddEditBook}/>
-                            <Route path={"/admin/book/edit/:bookid"} exact={true} component={AddEditBook}/>
+                            <Route path={"/admin/book/edit/:bookid"} exact={true} component={AddEditBook }/>
                         </Switch>
                     </BrowserRouter>
 
