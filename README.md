@@ -12,6 +12,7 @@
 
 * GitHub repository : https://github.com/s3781403/SEPT2021_Group8 
 * jira Board : https://sept-group8.atlassian.net/jira/software/projects/SG/boards/1
+* Teams group : https://teams.microsoft.com/l/team/19%3aanHu7lS8y-9bnJ0YTYA6gMFxdkJqZEuqpevBFrPkJ6s1%40thread.tacv2/conversations?groupId=1639b096-01d0-4579-a40a-fa5051616be1&tenantId=d1323671-cdbe-4417-b4d4-bdb24b51316b
 	
 ## Code documentation - Release 0.1.0 - 25/09/2021
 
