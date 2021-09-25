@@ -3,8 +3,12 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {CardActionArea, Grid} from '@mui/material';
+import {Button, CardActionArea, CardActions, Dialog, Grid} from '@mui/material';
 import {useHistory} from 'react-router-dom'
+import IconButton from "@mui/material/IconButton";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import {deleteBook} from "../../api/books";
 
 const sampleImages = [
     "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1594616847",
@@ -19,10 +23,15 @@ const shuffleArray = (array) => {
     }
 }
 
-export default function BookCardMaterial({book}) {
+export default function AdminBookCard({book}) {
 
+    const history = useHistory();
+    //const loginPageOpen = () => {history.push('/login')};
     const routerHistory = useHistory()
 
+    const goToEditPage = (bookId) => {
+        routerHistory.push(`/admin/book/edit/${bookId}`)
+    }
     const goToDetailView = (bookId) => {
         const ANIMATION_DELAY = 500;
         setTimeout(() => {
@@ -31,12 +40,15 @@ export default function BookCardMaterial({book}) {
 
     }
 
+
+
+
     shuffleArray(sampleImages)
 
     return (
 
             <Card sx={{width: '100%'}}>
-                <CardActionArea style={{paddingTop: '20px'}} onClick={() => {
+                <CardActionArea style={{paddingTop: '15px'}} onClick={() => {
                     goToDetailView(book.id)
                 }}>
                     <CardMedia
@@ -55,12 +67,23 @@ export default function BookCardMaterial({book}) {
                             {book.author}
                         </Typography>
                         <Typography variant={"h6"} color="text.primary">
-                            ${(book.price + "00").substr(0, 5)}
+                            ${(book.price + "0000").substr(0, 5)}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-            </Card>
+                    <CardActions disableSpacing>
+                        <IconButton onClick={() =>{goToEditPage(book.id)}}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={async () => {
+                            (await deleteBook(book.id))
+                            alert(book.id + "has been deleted")
+                        }} >
+                            <DeleteForeverIcon />
+                        </IconButton>
+                    </CardActions>
 
+            </Card>
     );
 }
 

@@ -18,6 +18,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {useContext, useEffect, useState} from "react";
 import logo from '../../assets/images/bookero.png'
 import {AppContext} from "../../context/AppContext";
+import {useHistory, Link} from "react-router-dom";
+import {Avatar} from "@mui/material";
+import {deepOrange} from "@mui/material/colors";
 
 
 
@@ -39,6 +42,7 @@ const Search = styled('div')(({theme}) => ({
         width: '60%'
     }
 }));
+
 
 const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
@@ -79,13 +83,17 @@ const useStyles = makeStyles((theme) =>
 
 function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
-    const {searchTerm,setSearchTerm} = useContext(AppContext)
+
+    const history = useHistory();
+    const loginPageOpen = () => {history.push('/login')};
+
+    const {searchTerm,setSearchTerm, user, setUser} = useContext(AppContext)
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
+
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const classes = useStyles();
@@ -146,7 +154,8 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle/>
+                    {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
+                    {/*<AccountCircle/>*/}
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -167,7 +176,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                         component="div"
                         sx={{display: {xs: 'none', sm: 'block'}}}
                     >
-                        BOOKERO
+                        <Link style={{color: "inherit", textDecoration: 'none'}} to={"/"}>BOOKERO</Link>
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
@@ -201,14 +210,15 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                                 <NotificationsIcon/>
                             </Badge>
                         </IconButton>
-                        <IconButton
+                        <IconButton onClick={loginPageOpen}
                             size="large"
                             edge="end"
                             aria-label="account of current user"
                             aria-haspopup="true"
                             color="inherit"
                         >
-                            <AccountCircle/>
+                            {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
+                            {/*<AccountCircle/>*/}
                         </IconButton>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
@@ -233,12 +243,12 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
 function AppHeader() {
 
-    const [cartItemCount, setCartItemCount] = useState(0)
+    // const [cartItemCount, setCartItemCount] = useState(0)
+    const {cartItemCount} = useContext(AppContext)
     const [notificationCount, setNotificationCount] = useState(0)
 
     useEffect(() => {
         setTimeout(() => {
-            setCartItemCount(1);
             setNotificationCount(1)
         }, 2000)
     }, [])

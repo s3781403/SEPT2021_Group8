@@ -4,30 +4,17 @@ import {getAllBooks} from "../../api/books";
 import {AppContext} from "../../context/AppContext";
 import Fuse from "fuse.js";
 import BookCardMaterial from "../components/BookCardMaterial";
-import BookCard from "../components/BookCard";
-import React from "react";
+import {Link} from 'react-router-dom'
 
 
 const fuseOptions = {
-    // isCaseSensitive: false,
-    // includeScore: false,
-    // shouldSort: true,
-    // includeMatches: false,
-    // findAllMatches: false,
-    // minMatchCharLength: 1,
-    // location: 0,
-    // threshold: 0.6,
-    // distance: 100,
-    // useExtendedSearch: false,
-    // ignoreLocation: false,
-    // ignoreFieldNorm: false,
     keys: "isbn,author,category,publisher,title,type".split(",")
 };
 
 
 function HomePage() {
 
-    const {books, setBooks, searchTerm, setLoading} = useContext(AppContext)
+    const {books, setBooks, searchTerm, setLoading, user} = useContext(AppContext)
 
 
     const fetchAndUpdateBooks = async () => {
@@ -49,13 +36,12 @@ function HomePage() {
 
 
     const getFilteredBooks = () => {
-        // books.filter(book => book.author.contains(searchTerm) || book.title.contains(searchTerm) || )
         const searching = searchTerm.length >= 2
         if (!searching) return books
         const fuzzy = new Fuse(books, fuseOptions)
         const fuseResult = fuzzy.search(searchTerm)
         console.log(fuseResult)
-        return fuseResult.map(match => match.item) //[{item: book, somethingelse: __}, {}]
+        return fuseResult.map(match => match.item)
     }
 
     const filteredBooks = getFilteredBooks()
@@ -63,9 +49,20 @@ function HomePage() {
     return <div>
         <Grid style={{marginTop: '1%', padding: '2%'}} container spacing={2} columns={12}>
             {
-                filteredBooks.map(book => <BookCardMaterial key={book.id} book={book}/>)
+                filteredBooks.map(book => (
+                    <Grid key={book.id} item={true} xs={6} md={4} lg={3} xl={2}
+                          style={{marginBottom: '2%', padding: '0.5%'}}>
+                        <BookCardMaterial book={book}/>
+                    </Grid>))
             }
+
+            {user?.type === "admin" ?
+                <Grid  item={true} xs={12}><Link to={"/admin"}>Admin</Link></Grid> : null
+            }
+
         </Grid>
+
+
     </div>
 }
 

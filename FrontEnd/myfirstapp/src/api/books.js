@@ -15,10 +15,28 @@ const getBookByID = async (id) => {
     return (await axios.get(getByIDUrl)).data
 }
 
+//add book
+const createBook = async (bookData) => {
+    try {
+        const getByIDUrl = `${BOOK_API_URL}/create`
+        return (await axios.post(getByIDUrl, bookData,{headers: {
+                "Accept": "/",
+                "Access-Control-Allow-Origin": "*"
+            }})).data
+    } catch(e) {
+        console.error(e)
+    }
+}
+
+
 // Update book
 const updateBook = async (id, bookData) => {
     const updateUrl = `${BOOK_API_URL}/update/${id}`
-    return (await axios.put(updateUrl, bookData)).data
+    let updateResult = await axios.put(updateUrl, bookData,{headers: {
+            "Accept": "/",
+            "Access-Control-Allow-Origin": "*"
+        }});
+    return updateResult.data
 }
 
 // Delete book
@@ -27,7 +45,7 @@ const deleteBook = async (id) => {
     return (await axios.delete(deleteUrl)).data
 }
 
-export {getAllBooks, getBookByID, updateBook, deleteBook}
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook}
 
 
 
