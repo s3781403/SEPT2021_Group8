@@ -56,6 +56,9 @@ public class Book {
     @NotBlank(message = "Book requires a valid image URL")
     private String imageURL;
 
+    @NotBlank(message = "Book requires a valid image URL")
+    private String pdfURL;
+
     private Date create_At;
     private Date update_At;
 
@@ -162,6 +165,10 @@ public class Book {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    public String getPdfURL() {return pdfURL;}
+
+    public void setPdfURL(String pdfURL) {this.pdfURL = pdfURL;}
 
     public Date getUpdate_At() {
         return update_At;

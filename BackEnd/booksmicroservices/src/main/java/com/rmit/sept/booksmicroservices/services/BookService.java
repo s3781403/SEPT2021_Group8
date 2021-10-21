@@ -33,6 +33,7 @@ public class BookService {
             newBook.setQuality(newBook.getQuality());
             newBook.setStock(newBook.getStock());
             newBook.setImageURL(newBook.getImageURL());
+            newBook.setPdfURL(newBook.getPdfURL());
 
             return bookRepository.save(newBook);
 
