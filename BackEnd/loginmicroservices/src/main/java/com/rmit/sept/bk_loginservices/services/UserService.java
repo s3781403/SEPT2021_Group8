@@ -5,8 +5,10 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserService {
@@ -40,6 +42,27 @@ public class UserService {
 
         }catch (Exception e){
             throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists");
+        }
+
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+    public User updateUser(User oldUser, User userDetails) {
+        try{
+            oldUser.setUpdate_At(new Date());
+            oldUser.setRole(userDetails.getRole());
+            oldUser.setABN(userDetails.getABN());
+            oldUser.setAddress(userDetails.getAddress());
+            oldUser.setPhoneNumber(userDetails.getPhoneNumber());
+            oldUser.setPassword(bCryptPasswordEncoder.encode(userDetails.getPassword()));
+            oldUser.setUsername(userDetails.getUsername());
+            oldUser.setConfirmPassword("");
+            return userRepository.save(oldUser);
+        }catch (Exception e){
+            throw new UsernameAlreadyExistsException("Username '"+userDetails.getUsername()+"' already exists");
         }
 
     }

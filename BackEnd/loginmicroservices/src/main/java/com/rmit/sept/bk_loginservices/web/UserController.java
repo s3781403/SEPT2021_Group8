@@ -1,7 +1,9 @@
 package com.rmit.sept.bk_loginservices.web;
 
 
+import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.InvalidLoginResponse;
+import com.rmit.sept.bk_loginservices.exceptions.UserNotFoundException;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.bk_loginservices.payload.LoginRequest;
@@ -21,6 +23,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.rmit.sept.bk_loginservices.security.SecurityConstant.TOKEN_PREFIX;
 
@@ -38,6 +42,8 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/register")
@@ -81,14 +87,37 @@ public class UserController {
         }catch(BadCredentialsException e){
             return new ResponseEntity<>(new InvalidLoginResponse(), HttpStatus.BAD_REQUEST);
         }
-
-
         //Check password vs db here
+    }
+
+    //UPDATE
+    //TODO secure this to ensure the user has correct permissions to create edits
+    @CrossOrigin(origins = "*")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUserDetails(@PathVariable("id") Long id, @Valid @RequestBody User userDetails, BindingResult bindingResult) {
+        //Check a user exists with the given ID
+        User oldUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No User with id '" + id + "' could be found to update"));
+
+        //Validate the user details in the request body
+        userValidator.validate(userDetails, bindingResult);
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(bindingResult);
+        if (errorMap != null) return errorMap;
+
+        //Update and return the user
+        User updatedUser = userService.updateUser(oldUser, userDetails);
+        return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
+    }
 
 
-
-
-
+    //DELETE
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/delete/{id}")
+    public Map<String, Boolean> deleteUser(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No User with id '\" + id + \"' could be found to delete"));
+        userService.deleteUser(user);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
 
 }
