@@ -36,8 +36,8 @@ function BookDetail() {
 
 
                 }}>Add to cart</Button>
-                <h1>description</h1>
-                <h1>reviews</h1>
+                <h1>Description</h1>
+                <h1>Reviews</h1>
 
             </Grid>
         </Grid>
