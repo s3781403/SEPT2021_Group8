@@ -14,6 +14,10 @@ function TransactionsManagement() {
     return <p>Transactions management</p>
 }
 
+function RoleRequests() {
+    return <p>Role Requests</p>
+}
+
 
 
 function AdminDashboard() {
@@ -25,9 +29,10 @@ function AdminDashboard() {
     const [selectedIndex, setSelectedIndex] = useState(getSavedTab() || 0);
 
     const componentMap = {
-        0: memo(UserManagement),
-        1: memo(BookManagement),
-        2: memo(TransactionsManagement)
+        0: memo(RoleRequests),
+        1: memo(UserManagement),
+        2: memo(BookManagement),
+        3: memo(TransactionsManagement)
     }
 
     const ToDraw = componentMap[selectedIndex]
