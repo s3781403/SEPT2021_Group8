@@ -12,7 +12,7 @@ function BookDetail() {
     const [bookData, setBookData] = useState()
 
 
-    const {setLoading,cartItemCount, setCartItemCount} = useContext(AppContext)
+    const {setLoading,cartItem, setCartItem} = useContext(AppContext)
 
     useEffect(async () => {
         setLoading(true)
@@ -28,8 +28,17 @@ function BookDetail() {
             <Grid item xs={12}>
                 <BookCardMaterial book={bookData}/>
             </Grid>
-            <Grid item xs={12}>
-                <Button style={{margin:10}} variant={'outlined'} onClick={() => setCartItemCount(cartItemCount+1) }>Add to cart</Button>
+            <Grid item xs={6}>
+                <Button style={{margin:10}} variant={'outlined'} onClick={() => {
+
+                    let newArrayWithAddedBook = [...cartItem,bookData];
+                    setCartItem(newArrayWithAddedBook)
+
+
+                }}>Add to cart</Button>
+                <h1>Description</h1>
+                <h1>Reviews</h1>
+
             </Grid>
         </Grid>
     </div>
