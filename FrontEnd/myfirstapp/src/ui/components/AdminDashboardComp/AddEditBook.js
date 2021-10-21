@@ -4,14 +4,17 @@ import {ErrorMessage, Form, useFormik, Formik, useFormikContext, withFormik} fro
 import * as yup from 'yup';
 import {Button, TextField} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {createBook, getBookByID, updateBook} from "../../../api/books";
+import {createBook, getBookByID, updateBook,imageFileUploadToApi} from "../../../api/books";
 import {AppContext} from "../../../context/AppContext";
 import MenuItem from "@mui/material/MenuItem";
 import {Rating, RatingView} from 'react-simple-star-rating'
 import Typography from "@mui/material/Typography";
+import { FileUploader } from "react-drag-drop-files";
 
 function AddEditBook() {
 
+
+    const fileTypes = ["JPG", "PNG", "GIF","jpg", "png", "jpeg"];
 
     const {bookid} = useParams()
     const {setLoading} = useContext(AppContext)
@@ -92,11 +95,23 @@ function AddEditBook() {
         console.log({values})
         setLoading(true)
         let newBook;
-        if (editMode) newBook = await updateBook(bookid, values)
-        else newBook = await createBook(values)
-        setLoading(false)
-        alert(`${newBook.title} has been ${editMode ? "edited" : "created"}`)
+        try {
+            if (editMode) newBook = await updateBook(bookid, values)
+            else newBook = await createBook(values)
+            alert(`${newBook.title} has been ${editMode ? "edited" : "created"}`)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+
+
     };
+
+  //  const [file, setFile] = useState(null);
+
+
+
 
 
     return (
@@ -140,8 +155,6 @@ function AddEditBook() {
 
                                 />
 
-
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
                             </div>
                             <div style={formStyle}>
                                 <TextField
@@ -224,7 +237,7 @@ function AddEditBook() {
 
                             <div style={formStyle}>
 
-                                <Typography variant={"subtitle1"} >
+                                <Typography variant={"subtitle1"}>
                                     Quality
                                 </Typography>
                                 <Rating name={'quality'} onClick={(rating) => {
@@ -243,7 +256,7 @@ function AddEditBook() {
                                     }
 
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
+
                             </div>
 
                             <div style={formStyle}>
@@ -255,22 +268,20 @@ function AddEditBook() {
                                         ...getInputProps("sellerID", props)
                                     }
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
                             </div>
 
                             <div style={formStyle}>
-                                <TextField
-                                    label="Image URL"
-                                    type="text"
-                                    style={textFieldStyle}
-                                    {
-                                        ...getInputProps("imageURL", props)
-                                    }
-
-
+                                <img src={props.values.imageURL} />
+                                <FileUploader
+                                    handleChange={async (file) => {
+                                        const s3Url = await imageFileUploadToApi(file)
+                                        props.setFieldValue('imageURL', s3Url)
+                                    }}
+                                    name="file"
+                                    types={fileTypes}
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
                             </div>
+
                             <Button variant="outlined" style={{padding: 10, margin: 10}} type={"submit"}>Submit</Button>
                         </div>
                     </Form>
