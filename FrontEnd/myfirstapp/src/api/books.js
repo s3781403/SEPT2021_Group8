@@ -17,15 +17,23 @@ const getBookByID = async (id) => {
 
 //add book
 const createBook = async (bookData) => {
-    try {
+
         const getByIDUrl = `${BOOK_API_URL}/create`
         return (await axios.post(getByIDUrl, bookData,{headers: {
-                "Accept": "/",
+                "Accept": "*/*",
                 "Access-Control-Allow-Origin": "*"
             }})).data
-    } catch(e) {
-        console.error(e)
-    }
+
+}
+
+const imageFileUploadToApi = async (file) => {
+    const formData = new FormData()
+    formData.append("file", file);
+    return (await axios.post('http://localhost:8081/api/books/uploadFile', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })).data
 }
 
 
@@ -33,7 +41,7 @@ const createBook = async (bookData) => {
 const updateBook = async (id, bookData) => {
     const updateUrl = `${BOOK_API_URL}/update/${id}`
     let updateResult = await axios.put(updateUrl, bookData,{headers: {
-            "Accept": "/",
+            "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         }});
     return updateResult.data
@@ -45,7 +53,7 @@ const deleteBook = async (id) => {
     return (await axios.delete(deleteUrl)).data
 }
 
-export {getAllBooks, getBookByID, updateBook, deleteBook,createBook}
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,imageFileUploadToApi}
 
 
 
