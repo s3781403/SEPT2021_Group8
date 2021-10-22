@@ -37,6 +37,9 @@ public class Book {
     @NotBlank(message = "Please enter the books publisher")
     private String publisher;
 
+    @NotBlank(message = "Please enter the books description")
+    private String description;
+
     @NotNull(message = "Please enter a price for the book")
     private double price;
 
@@ -125,6 +128,10 @@ public class Book {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
+
+    public String getDescription() {return description;}
+
+    public void setDescription(String description) {this.description = description;}
 
     public double getPrice() {
         return price;

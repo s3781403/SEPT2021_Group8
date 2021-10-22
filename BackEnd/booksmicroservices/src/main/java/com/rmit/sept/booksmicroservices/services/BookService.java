@@ -25,6 +25,7 @@ public class BookService {
             newBook.setCategory(newBook.getCategory());
             newBook.setPrice(newBook.getPrice());
             newBook.setPublisher(newBook.getPublisher());
+            newBook.setDescription(newBook.getDescription());
             newBook.setSellerID(newBook.getSellerID());
             newBook.setTitle(newBook.getTitle());
             newBook.setType(newBook.getType());
@@ -97,12 +98,15 @@ public class BookService {
         oldBook.setIsbn(bookDetails.getIsbn());
         oldBook.setType(bookDetails.getType());
         oldBook.setPublisher(bookDetails.getPublisher());
+        oldBook.setDescription(bookDetails.getDescription());
         oldBook.setPrice(bookDetails.getPrice());
         oldBook.setCategory(bookDetails.getCategory());
         oldBook.setAuthor(bookDetails.getAuthor());
         oldBook.setSellerID(bookDetails.getSellerID());
         oldBook.setStock(bookDetails.getStock());
         oldBook.setCreate_At(oldBook.getCreate_At());
+        oldBook.setImageURL(bookDetails.getImageURL());
+        oldBook.setPdfURL(bookDetails.getPdfURL());
 
         return bookRepository.save(oldBook);
     }
