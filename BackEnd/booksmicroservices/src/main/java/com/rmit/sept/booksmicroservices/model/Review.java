@@ -3,6 +3,7 @@ package com.rmit.sept.booksmicroservices.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -11,10 +12,10 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "BookID is Required")
+    @NotNull(message = "BookID is Required")
     private long bookID;
 
-    @NotBlank(message = "UserID is required")
+    @NotNull(message = "UserID is required")
     private long userID;
 
     @NotBlank(message = "Review requires some content")
