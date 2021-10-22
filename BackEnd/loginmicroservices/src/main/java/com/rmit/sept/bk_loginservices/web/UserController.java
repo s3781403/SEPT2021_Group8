@@ -23,7 +23,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.rmit.sept.bk_loginservices.security.SecurityConstant.TOKEN_PREFIX;
@@ -118,6 +120,27 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserByID(@PathVariable("id") Integer id) {
+        User user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<User>> getListByRequestParameters(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
+        if (column != null) {
+            List<User> users = new ArrayList<>();
+            if (column.equals("all")) {
+                users = userService.getAllUsers();
+            }
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } else {
+            return null;
+        }
     }
 
 }
