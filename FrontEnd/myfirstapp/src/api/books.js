@@ -40,8 +40,8 @@ const FileUploadToApi = async (file) => {
 // Update book
 const updateBook = async (id, bookData) => {
     const updateUrl = `${BOOK_API_URL}/update/${id}`
-    let updateResult = await axios.put(updateUrl, bookData,{headers: {
-            "Accept": "application/json",
+    const updateResult = await axios.put(updateUrl, bookData,{headers: {
+            "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
         }});
     return updateResult.data

@@ -21,7 +21,7 @@ export default function BookCardMaterial({book}) {
 
     return (
 
-            <Card sx={{width: '100%'}}>
+            <Card sx={{width: '100%',height:'100%'}}>
                 <CardActionArea style={{paddingTop: '20px'}} onClick={() => {
                     goToDetailView(book.id)
                 }}>
@@ -34,7 +34,7 @@ export default function BookCardMaterial({book}) {
                         alt="book cover"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" style={{maxHeight: '100', maxWidth: '100%',color:'#220f48'}} >
+                        <Typography gutterBottom variant="h5" component="div" style={{maxHeight: '100', maxWidth: '100%',color:'#220f48',textOverflow:"ellipsis"}} >
                             {book.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">

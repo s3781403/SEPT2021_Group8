@@ -183,7 +183,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             <SearchIcon/>
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search for a book by its ID, Name, Author or Category 🔦 📚 🔦 📚"
+                            placeholder="Search for a book by its ID, Name, Author or Category 📚 "
                             inputProps={{'aria-label': 'search'}}
                             style={{width: '100%'}}
                             value={searchTerm}

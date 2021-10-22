@@ -6,19 +6,9 @@ import Box from "@mui/material/Box";
 import React, {memo, useState} from "react";
 import BookManagement from "../components/AdminDashboardComp/BookManagement";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-
-function UserManagement() {
-    return <p>User management</p>
-}
-
-function TransactionsManagement() {
-    return <p>Transactions management</p>
-}
-
-function RoleRequests() {
-    return <p>Role Requests</p>
-}
-
+import UserManagement from "./UserManagement";
+import RoleRequests from "./RoleRequests";
+import ReportsManagement from "./ReportsManagement";
 
 
 function AdminDashboard() {
@@ -33,7 +23,7 @@ function AdminDashboard() {
         0: memo(RoleRequests),
         1: memo(UserManagement),
         2: memo(BookManagement),
-        3: memo(TransactionsManagement)
+        3: memo(ReportsManagement)
     }
 
     const ToDraw = componentMap[selectedIndex]

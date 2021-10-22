@@ -28,23 +28,23 @@ export default function AdminBookCard({book}) {
 
     return (
 
-            <Card sx={{width: '100%'}}>
+            <Card xs={{width: '100%',height:'100%'}}>
                 <CardActionArea style={{paddingTop: '15px'}} onClick={() => {
                     goToDetailView(book.id)
                 }}>
                     <CardMedia
                         component="img"
-                        height="auto"
-                        width={'auto'}
-                        style={{maxHeight: '450px', maxWidth: '100%', objectFit: 'contain', aspectRatio: 'auto'}}
+                        height="250px"
+                        width={'100%'}
+                        style={{maxHeight: '250px', maxWidth: '100%', objectFit: 'contain', aspectRatio: 'auto'}}
                         image={book.imageURL}
                         alt="book cover"
                     />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                    <CardContent style={{height:'150px'}}>
+                        <Typography gutterBottom variant="h5" component="div" style={{height:"80px"}}>
                             {book.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="secondary">
                             {book.author}
                         </Typography>
                         <Typography variant={"h6"} color="text.primary">
@@ -53,10 +53,10 @@ export default function AdminBookCard({book}) {
                     </CardContent>
                 </CardActionArea>
                     <CardActions disableSpacing>
-                        <IconButton onClick={() =>{goToEditPage(book.id)}}>
+                        <IconButton color="primary" onClick={() =>{goToEditPage(book.id)}}>
                             <EditIcon />
                         </IconButton>
-                        <IconButton onClick={async () => {
+                        <IconButton color="error"  onClick={async () => {
                             (await deleteBook(book.id))
                             alert(book.id + "has been deleted")
                         }} >

@@ -31,7 +31,7 @@ function BookDetail() {
         <Grid container>
 
 
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
                 <CardMedia
                     component="img"
                     height="450px"
@@ -42,7 +42,7 @@ function BookDetail() {
                 />
 
                 <br/>
-                <Grid xs={10} >
+                <Grid lg={10} >
                     <TextField style={{color:"#f50057"}} label={"Write a review"} style={{margin:'1%',padding:'2%',width:'90%'}}></TextField>
                     <Button style={{padding:'2%',margin:'1%'}} variant="contained"> Submit review</Button>
                 </Grid>
@@ -50,7 +50,7 @@ function BookDetail() {
             </Grid>
 
 
-            <Grid item xs={4}>
+            <Grid item lg={4} xs={12}>
 
 
                 <h1>{bookData.title}</h1>
@@ -67,10 +67,10 @@ function BookDetail() {
             </Grid>
 
 
-            <Grid item xs={4} >
+            <Grid item lg={4} xs={12}>
                 <Card  style={{padding:'2%',margin:'2%',height:'450px',width:'80%'}} >
                 <h1 style={{color:'#f50057'}}>  RRP ${(bookData.price + ".00").substr(0, 5)}</h1>
-                <h3>Condition: New 😄</h3>
+                <h3>Condition: New ✨</h3>
                     <h3>Stock: In Stock ✅</h3>
                 <Button variant="contained" color="secondary" endIcon={<ShoppingCartIcon/>} style={{width:'80%',height:'20',margin:'5%',padding:'4%'}} onClick={() => {
 
