@@ -70,6 +70,11 @@ public class UserService {
 
     }
 
+    public User updateRole(User oldUser, String role){
+        oldUser.setUpdate_At(new Date());
+        return userRepository.save(oldUser);
+    }
+
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         userRepository.findAll().forEach(user -> list.add(user));

@@ -7,6 +7,9 @@ import com.rmit.sept.bk_loginservices.model.RoleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class RoleRequestService {
 
@@ -25,5 +28,16 @@ public class RoleRequestService {
         }
 
     }
+
+    public List<RoleRequest> getAllRoleRequests() {
+        List<RoleRequest> list = new ArrayList<>();
+        roleRequestRepository.findAll().forEach(roleRequest -> list.add(roleRequest));
+        return list;
+    }
+
+    public void deleteRoleRequest(RoleRequest roleRequest) {
+        roleRequestRepository.delete(roleRequest);
+    }
+
 
 }

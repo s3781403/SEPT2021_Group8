@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface RoleRequestRepository extends CrudRepository<RoleRequest, Long> {
 
     RoleRequest getById(Long id);
+    Iterable<RoleRequest> findAll();
 
 }
