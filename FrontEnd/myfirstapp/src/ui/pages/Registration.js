@@ -14,6 +14,7 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import axios from "axios";
 import {useHistory} from "react-router";
+import MenuItem from "@mui/material/MenuItem";
 
 
 function RegistrationPage() {
@@ -33,12 +34,12 @@ function RegistrationPage() {
         const registerUser = async () => {
             const fullName = document.getElementById("textFullName").value;
             const address = document.getElementById("textAddress").value;
-            const role = document.getElementById("textRole").value;
+            const role = roles;
+            console.log(role)
             const username = document.getElementById("textEmail").value;
             const phoneNumber = document.getElementById("textPhone").value;
             const confirmPassword = document.getElementById("textPassword").value;
-            const password = confirmPassword;
-
+            const password = document.getElementById("textRePassword").value;
             try {
                 const res = await axios.post(API_URL + "register", {
                         username,
@@ -60,7 +61,6 @@ function RegistrationPage() {
             } catch (e) {
                 alert("Registration unsuccessful")
             }
-
 
         }
 
@@ -100,9 +100,21 @@ function RegistrationPage() {
 
                         <TextField required id="textPhone" label="Phone number" style={{margin: 10}}/>
 
-                        <TextField required id="textRole" label="Role" style={{margin: 10}} onChange={(e) => {
+
+
+                        <TextField select required id="textRole" label="Role" style={{margin: 10,width:'40%'}} onChange={(e) => {
                             setRoles(e.target.value)
-                        }}/>
+                        }}>
+                        <MenuItem value={"customer"}>
+                            Customer
+                        </MenuItem>
+                        <MenuItem value={"seller"}>
+                            Seller
+                        </MenuItem>
+                            <MenuItem value={"admin"}>
+                                Admin
+                            </MenuItem>
+                        </TextField>
 
 
                         {roles === "seller" ?

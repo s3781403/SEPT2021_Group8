@@ -86,11 +86,11 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
     const history = useHistory();
     const loginPageOpen = () => {history.push('/login')};
+    const cartPageOpen = () => {history.push('/cart')};
 
     const {searchTerm,setSearchTerm, user, setUser} = useContext(AppContext)
 
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
 
@@ -183,7 +183,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             <SearchIcon/>
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search for a book by its ID, Name, or Category…"
+                            placeholder="Search for a book by its ID, Name, Author or Category 📚 "
                             inputProps={{'aria-label': 'search'}}
                             style={{width: '100%'}}
                             value={searchTerm}
@@ -194,22 +194,15 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             }}
                         />
                     </Search>
+
                     <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={cartPageOpen}>
                             <Badge badgeContent={cartItemCount} color="error">
                                 <ShoppingCartIcon/>
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label={`show ${notificationCount} new notifications`}
-                            color="inherit"
-                        >
-                            <Badge badgeContent={notificationCount} color="error">
-                                <NotificationsIcon/>
-                            </Badge>
-                        </IconButton>
+                        
                         <IconButton onClick={loginPageOpen}
                             size="large"
                             edge="end"
@@ -218,7 +211,7 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             color="inherit"
                         >
                             {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
-                            {/*<AccountCircle/>*/}
+
                         </IconButton>
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>

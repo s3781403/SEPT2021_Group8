@@ -3,21 +3,12 @@ import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import Box from "@mui/material/Box";
-import React, {memo, useMemo, useState} from "react";
+import React, {memo, useState} from "react";
 import BookManagement from "../components/AdminDashboardComp/BookManagement";
-
-function UserManagement() {
-    return <p>User management {Math.floor(Math.random()*10)}</p>
-}
-
-function TransactionsManagement() {
-    return <p>Transactions management</p>
-}
-
-function RoleRequests() {
-    return <p>Role Requests</p>
-}
-
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import UserManagement from "./UserManagement";
+import RoleRequests from "./RoleRequests";
+import ReportsManagement from "./ReportsManagement";
 
 
 function AdminDashboard() {
@@ -32,7 +23,7 @@ function AdminDashboard() {
         0: memo(RoleRequests),
         1: memo(UserManagement),
         2: memo(BookManagement),
-        3: memo(TransactionsManagement)
+        3: memo(ReportsManagement)
     }
 
     const ToDraw = componentMap[selectedIndex]
@@ -54,6 +45,7 @@ function AdminDashboard() {
                         setSelectedIndex(newValue);
                     }}
                 >
+                    <BottomNavigationAction label="Role Requests" icon={<GroupAddIcon/>}/>
                     <BottomNavigationAction label="Users" icon={<PeopleIcon/>}/>
                     <BottomNavigationAction label="Books" icon={<MenuBookIcon/>}/>
                     <BottomNavigationAction label="Orders" icon={<ReceiptLongIcon/>}/>

@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
-import axios from "axios";
-import {ErrorMessage, Form, useFormik, Formik, useFormikContext, withFormik} from 'formik';
-import * as yup from 'yup';
+import { Form, Formik} from 'formik';
 import {Button, TextField} from "@mui/material";
 import {useParams} from "react-router-dom";
-import {createBook, getBookByID, updateBook,imageFileUploadToApi} from "../../../api/books";
+import {createBook, getBookByID, updateBook,FileUploadToApi} from "../../../api/books";
 import {AppContext} from "../../../context/AppContext";
 import MenuItem from "@mui/material/MenuItem";
 import {Rating, RatingView} from 'react-simple-star-rating'
@@ -14,7 +12,8 @@ import { FileUploader } from "react-drag-drop-files";
 function AddEditBook() {
 
 
-    const fileTypes = ["JPG", "PNG", "GIF","jpg", "png", "jpeg"];
+    const imageFileTypes = ["JPG", "PNG", "GIF","jpg", "png", "jpeg"];
+    const pdfFileTypes=["pdf"];
 
     const {bookid} = useParams()
     const {setLoading} = useContext(AppContext)
@@ -35,23 +34,10 @@ function AddEditBook() {
         quality: '',
         stock: '',
         sellerID: '',
-        imageURL: ''
+        imageURL: '',
+        pdfURL:''
     }
 
-    const validationSchema = yup.object({
-
-        isbn: yup.string().required('Required'),
-        title: yup.string().email('Is not a valid email'),
-        category: yup.string().required('Required'),
-        author: yup.string().required('Required'),
-        publisher: yup.string().required('Required'),
-        price: yup.string().required('Required'),
-        type: yup.string().required('Required'),
-        quality: yup.string().required('Required'),
-        stock: yup.string().required('Required'),
-        sellerID: yup.string().required('Required'),
-
-    });
 
     useEffect(async () => {
         if (bookid) {
@@ -91,14 +77,12 @@ function AddEditBook() {
     };
 
     const handleFormSubmit = async (values) => {
-        console.log("submit clicked")
-        console.log({values})
         setLoading(true)
         let newBook;
         try {
             if (editMode) newBook = await updateBook(bookid, values)
             else newBook = await createBook(values)
-            alert(`${newBook.title} has been ${editMode ? "edited" : "created"}`)
+            alert(`${newBook.title} has been ${editMode ? "Edited" : "Created"}`)
         } catch (error) {
             console.error(error)
         } finally {
@@ -108,21 +92,14 @@ function AddEditBook() {
 
     };
 
-  //  const [file, setFile] = useState(null);
-
-
-
-
-
     return (
 
         <Formik
 
             initialValues={bookData || initialValues}
-            // validationSchema={validationSchema}
+
             onSubmit={(values) => handleFormSubmit(values)}>
             {
-
 
                 (props) => (
                     <Form onSubmit={props.handleSubmit} onReset={props.handleReset}>
@@ -141,7 +118,6 @@ function AddEditBook() {
 
 
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
                             </div>
                             <div style={formStyle}>
                                 <TextField
@@ -167,7 +143,7 @@ function AddEditBook() {
                                     }
 
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
+
                             </div>
                             <div style={formStyle}>
                                 <TextField
@@ -179,7 +155,7 @@ function AddEditBook() {
                                         ...getInputProps("category", props)
                                     }
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
+
                             </div>
                             <div style={formStyle}>
                                 <TextField
@@ -192,9 +168,8 @@ function AddEditBook() {
                                     }
 
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
+
                             </div>
-                            {/*<ErrorMessage name="channel" component={TextError}/>*/}
 
                             <div style={formStyle}>
                                 <TextField
@@ -207,7 +182,7 @@ function AddEditBook() {
                                     }
 
                                 />
-                                {/*<ErrorMessage name="name" component={TextError}/>*/}
+
                             </div>
 
                             <div style={formStyle}>
@@ -274,11 +249,24 @@ function AddEditBook() {
                                 <img src={props.values.imageURL} />
                                 <FileUploader
                                     handleChange={async (file) => {
-                                        const s3Url = await imageFileUploadToApi(file)
+                                        const s3Url = await FileUploadToApi(file)
                                         props.setFieldValue('imageURL', s3Url)
+                                        console.log(s3Url)
                                     }}
                                     name="file"
-                                    types={fileTypes}
+                                    types={imageFileTypes}
+                                />
+                            </div>
+
+                            <div style={formStyle}>
+                                <FileUploader
+                                    handleChange={async (file) => {
+                                        const s3Url = await FileUploadToApi(file)
+                                        console.log(s3Url)
+                                        props.setFieldValue('pdfURL', s3Url)
+                                    }}
+                                    name="file"
+                                    types={pdfFileTypes}
                                 />
                             </div>
 

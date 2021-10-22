@@ -33,7 +33,6 @@ function BookManagement() {
     }, [])
 
     useEffect(() => {
-        console.log("🏺: Search term changed to: ", searchTerm)
     }, [searchTerm])
 
 

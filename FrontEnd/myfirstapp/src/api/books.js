@@ -26,7 +26,7 @@ const createBook = async (bookData) => {
 
 }
 
-const imageFileUploadToApi = async (file) => {
+const FileUploadToApi = async (file) => {
     const formData = new FormData()
     formData.append("file", file);
     return (await axios.post('http://localhost:8081/api/books/uploadFile', formData, {
@@ -40,8 +40,8 @@ const imageFileUploadToApi = async (file) => {
 // Update book
 const updateBook = async (id, bookData) => {
     const updateUrl = `${BOOK_API_URL}/update/${id}`
-    let updateResult = await axios.put(updateUrl, bookData,{headers: {
-            "Accept": "application/json",
+    const updateResult = await axios.put(updateUrl, bookData,{headers: {
+            "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
         }});
     return updateResult.data
@@ -53,7 +53,7 @@ const deleteBook = async (id) => {
     return (await axios.delete(deleteUrl)).data
 }
 
-export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,imageFileUploadToApi}
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi}
 
 
 

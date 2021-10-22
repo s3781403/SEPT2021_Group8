@@ -9,7 +9,7 @@ import {useContext} from "react";
 import LoadingBar from "./ui/components/LoadingBar";
 import LoginPage from "./ui/pages/LoginPage";
 import RegistrationPage from "./ui/pages/Registration";
-
+import ShoppingCart from "./ui/pages/ShoppingCart";
 import AddEditBook from "./ui/components/AdminDashboardComp/AddEditBook";
 
 
@@ -48,6 +48,7 @@ function App() {
                             <Route path={"/admin"} exact={true} component={AdminDashboard}/>
                             <Route path={"/login"}  component={LoginPage}/>
                             <Route path={"/register"} exact={true} component={RegistrationPage}/>
+                            <Route path={"/cart"} exact={true} component={ShoppingCart}/>
                             <Route path={"/admin/book/add"} exact={true} component={AddEditBook}/>
                             <Route path={"/admin/book/edit/:bookid"} exact={true} component={AddEditBook }/>
                         </Switch>
