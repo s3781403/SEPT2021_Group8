@@ -2,6 +2,7 @@ package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
@@ -11,7 +12,7 @@ public class RoleRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Please enter your full name")
+    @NotNull(message = "Please enter a valid UserID")
     private Long userID;
     @NotBlank(message = "Please enter a valid role")
     private String roleRequested;

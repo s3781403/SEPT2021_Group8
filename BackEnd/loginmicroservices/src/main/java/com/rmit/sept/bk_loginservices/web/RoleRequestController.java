@@ -50,6 +50,8 @@ public class RoleRequestController {
     @PostMapping("/create")
     public ResponseEntity<?> createRoleRequest(@Valid @RequestBody RoleRequest roleRequest, BindingResult result){
 
+        System.out.println("Creating a role request");
+
         roleRequestValidator.validate(roleRequest,result);
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -63,14 +65,11 @@ public class RoleRequestController {
     //APPROVE ROLE REQUEST
     @CrossOrigin(origins = "*")
     @PutMapping("/approve/{id}")
-    public ResponseEntity<?> approveRoleRequest(@PathVariable("id") Long id, @Valid @RequestBody RoleRequest requestDetails, BindingResult bindingResult) {
+    public ResponseEntity<?> approveRoleRequest(@PathVariable("id") Long id) {
 
         RoleRequest request = roleRequestRepository.findById(id).orElseThrow(() -> new RoleRequestNotFoundException("No Role Request with id '" + id + "' could be found to process"));
         //Check a user exists with the given ID
         User oldUser = userRepository.findById(request.getUserID()).orElseThrow(() -> new UserNotFoundException("No User with id '" + request.getUserID() + "' could be found to update"));
-
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(bindingResult);
-        if (errorMap != null) return errorMap;
 
         User updatedUser = userService.updateRole(oldUser, request.getRoleRequested());
         roleRequestService.deleteRoleRequest(request);
@@ -95,7 +94,7 @@ public class RoleRequestController {
     //DELETE
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable("id") Long id) {
+    public Map<String, Boolean> deleteRoleRequest(@PathVariable("id") Long id) {
         RoleRequest roleRequest = roleRequestRepository.findById(id).orElseThrow(() -> new RoleRequestNotFoundException("No Role Request with id '\" + id + \"' could be found to delete"));
         roleRequestService.deleteRoleRequest(roleRequest);
         Map<String, Boolean> response = new HashMap<>();

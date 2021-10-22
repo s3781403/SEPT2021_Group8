@@ -72,6 +72,7 @@ public class UserService {
 
     public User updateRole(User oldUser, String role){
         oldUser.setUpdate_At(new Date());
+        oldUser.setRole(role);
         return userRepository.save(oldUser);
     }
 
