@@ -1,12 +1,10 @@
 import {useContext} from "react";
 import {AppContext} from "../../context/AppContext";
 import {login, logout} from "../../api/login";
-import {Button, FormControl, Grid, InputAdornment, InputLabel, Paper, TextField} from "@mui/material";
+import {Button,  Grid,  Paper, TextField} from "@mui/material";
 import React from "react";
 import Typography from "@mui/material/Typography";
 import {Link} from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
-import {Input, Visibility, VisibilityOff} from "@mui/icons-material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
@@ -64,6 +62,18 @@ export function NotLoggedIn() {
 
 }
 
+export function UserAccount(){
+
+    return(
+        <div>
+        <h1>Order History</h1>
+        <div>
+    <button onClick={() => logout()}>Logout</button>
+        </div>
+        </div>
+    );
+}
+
 
 function LoginPage() {
 
@@ -71,7 +81,7 @@ function LoginPage() {
 
     return(
         <div>
-            {user ? <button onClick={() => logout()}>Logout</button> : <NotLoggedIn/>}
+            {user ? <UserAccount/> : <NotLoggedIn/>}
         </div>
     )
 }

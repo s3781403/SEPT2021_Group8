@@ -26,7 +26,7 @@ const createBook = async (bookData) => {
 
 }
 
-const imageFileUploadToApi = async (file) => {
+const FileUploadToApi = async (file) => {
     const formData = new FormData()
     formData.append("file", file);
     return (await axios.post('http://localhost:8081/api/books/uploadFile', formData, {
@@ -53,7 +53,7 @@ const deleteBook = async (id) => {
     return (await axios.delete(deleteUrl)).data
 }
 
-export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,imageFileUploadToApi}
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi}
 
 
 

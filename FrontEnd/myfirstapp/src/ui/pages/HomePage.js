@@ -47,7 +47,13 @@ function HomePage() {
     const filteredBooks = getFilteredBooks()
 
     return <div>
-        <Grid style={{marginTop: '1%', padding: '2%'}} container spacing={2} columns={12}>
+        <Grid style={{marginTop: '1%', padding: '1%'}} container spacing={2} columns={12}>
+
+            {user?.type === "admin" ?
+                <Grid  item={true} xs={12}  style={{color:'ff5722'}}><Link to={"/admin"} >Admin Dashboard</Link></Grid> : null
+            }
+
+            <br/>  <br/>  <br/>
             {
                 filteredBooks.map(book => (
                     <Grid key={book.id} item={true} xs={6} md={4} lg={3} xl={2}
@@ -56,9 +62,7 @@ function HomePage() {
                     </Grid>))
             }
 
-            {user?.type === "admin" ?
-                <Grid  item={true} xs={12}><Link to={"/admin"}>Admin</Link></Grid> : null
-            }
+
 
         </Grid>
 

@@ -12,7 +12,7 @@ function BookCard({book}) {
             <h3>{book.title}</h3>
             <p>{book.author}</p>
 
-            <p style={{color: 'magenta'}}>${(book.price + "0000000").substr(0, 5)}</p>
+            <p style={{color: 'magenta'}}>${(book.price).substr(0, 5)}</p>
         </div>
         </Grid>)
 
