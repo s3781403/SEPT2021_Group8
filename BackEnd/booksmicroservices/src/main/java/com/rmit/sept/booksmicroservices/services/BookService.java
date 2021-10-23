@@ -19,7 +19,6 @@ public class BookService {
     public Book saveBook(Book newBook) {
 
         try {
-            //I don't understand why we do this instead of directly passing the book object
             newBook.setIsbn(newBook.getIsbn());
             newBook.setAuthor(newBook.getAuthor());
             newBook.setCategory(newBook.getCategory());

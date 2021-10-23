@@ -16,12 +16,4 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     Iterable<Book> getBooksByAuthorIgnoreCaseContaining(String author);
     Iterable<Book> getBooksByIsbnStartingWith(long Isbn);
 
-
-
-/* TODO
-    Make all case insensitive
-    Book findBySellerID(int sellerID);
-    Book findByPublisher(String publisher);
- */
-
 }
