@@ -4,7 +4,7 @@ import {login, logout} from "../../api/login";
 import {Button,  Grid,  Paper, TextField} from "@mui/material";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
@@ -81,7 +81,7 @@ function LoginPage() {
 
     return(
         <div>
-            {user ? <UserAccount/> : <NotLoggedIn/>}
+            {user ? <Redirect to={'/'}/> : <NotLoggedIn/>}
         </div>
     )
 }

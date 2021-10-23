@@ -15,7 +15,7 @@ function BookDetail() {
     const [bookData, setBookData] = useState()
 
 
-    const {setLoading,cartItem, setCartItem} = useContext(AppContext)
+    const {setLoading,cartItem, addCartItem} = useContext(AppContext)
 
     useEffect(async () => {
         setLoading(true)
@@ -55,12 +55,7 @@ function BookDetail() {
 
                 <h1>{bookData.title}</h1>
                 <h3 style={{color:'#f50057'}}>{bookData.author}</h3>
-                Based on an original new story by J.K. Rowling, Jack Thorne and John Tiffany, a new play by Jack Thorne, Harry Potter and the Cursed Child is the eighth story in the Harry Potter series and the first official Harry Potter story to be presented on stage. The play will receive its world premiere in London’s West End on July 30, 2016.
-
-                It was always difficult being Harry Potter and it isn’t much easier now that he is an overworked employee of the Ministry of Magic, a husband and father of three school-age children.
-
-                While Harry grapples with a past that refuses to stay where it belongs, his youngest son Albus must struggle with the weight of a family legacy he never wanted. As past and present fuse ominously, both father and son learn the uncomfortable truth: sometimes, darkness comes from unexpected places.
-
+                <p>{bookData?.description || 'No Description Available'}</p>
 
                 <br/><br/><br/>
                 <Link style={{color:'#f50057'}} href="https://sept-group-8-images.s3-ap-southeast-2.amazonaws.com/1634819921323-Untitled_document_(2).pdf">Download Table Of Content</Link>
@@ -73,11 +68,7 @@ function BookDetail() {
                 <h3>Condition: New ✨</h3>
                     <h3>Stock: In Stock ✅</h3>
                 <Button variant="contained" color="secondary" endIcon={<ShoppingCartIcon/>} style={{width:'80%',height:'20',margin:'5%',padding:'4%'}} onClick={() => {
-
-                    let newArrayWithAddedBook = [...cartItem,bookData];
-                    setCartItem(newArrayWithAddedBook)
-                    console.log("🛍")
-                    console.log(cartItem)
+                    addCartItem(bookData)
 
                 }}>Add to cart</Button>
                 </Card>

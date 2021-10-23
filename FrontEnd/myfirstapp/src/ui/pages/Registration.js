@@ -15,6 +15,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import axios from "axios";
 import {useHistory} from "react-router";
 import MenuItem from "@mui/material/MenuItem";
+import {createRoleRequest} from "../../api/users";
+import {registerUserAPI} from "../../api/login";
 
 
 function RegistrationPage() {
@@ -24,10 +26,6 @@ function RegistrationPage() {
             width: 500,
             margin: "20px auto"
         }
-
-
-        const API_URL = "http://localhost:8080/api/users/";
-
 
         const history = useHistory();
 
@@ -40,27 +38,24 @@ function RegistrationPage() {
             const phoneNumber = document.getElementById("textPhone").value;
             const confirmPassword = document.getElementById("textPassword").value;
             const password = document.getElementById("textRePassword").value;
-            try {
-                const res = await axios.post(API_URL + "register", {
-                        username,
-                        fullName,
-                        password,
-                        confirmPassword,
-                        role,
-                        phoneNumber,
-                        address,
+            const abn = document.getElementById("textABN")?.value || ''
 
-                    },
-                    {
-                        headers: {
-                            "Accept": "*/*",
-                            "Access-Control-Allow-Origin": "*"
-                        }
-                    });
-                history.push("/")
+            try {
+                await registerUserAPI({
+                    username,
+                    fullName,
+                    password,
+                    confirmPassword,
+                    role,
+                    phoneNumber,
+                    address,
+                    abn
+                })
+                history.push("/login")
             } catch (e) {
                 alert("Registration unsuccessful")
             }
+
 
         }
 
@@ -105,13 +100,13 @@ function RegistrationPage() {
                         <TextField select required id="textRole" label="Role" style={{margin: 10,width:'40%'}} onChange={(e) => {
                             setRoles(e.target.value)
                         }}>
-                        <MenuItem value={"customer"}>
+                        <MenuItem value={"Customer"}>
                             Customer
                         </MenuItem>
-                        <MenuItem value={"seller"}>
+                        <MenuItem value={"Seller"}>
                             Seller
                         </MenuItem>
-                            <MenuItem value={"admin"}>
+                            <MenuItem value={"Admin"}>
                                 Admin
                             </MenuItem>
                         </TextField>

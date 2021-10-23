@@ -18,13 +18,19 @@ export const AppProvider = (props) => {
     const [cartItemCount, setCartItemCount] = useState(0);
     const [cartItem, setCartItem] = useState([]);
 
+    const addCartItem = (bookData) =>  {
+        bookData.qty = 1
+        let newArrayWithAddedBook = [...cartItem,bookData];
+        setCartItem(newArrayWithAddedBook)
+    }
+
 useEffect(
     ()=>{
         setCartItemCount(cartItem.length)
     },[cartItem]
 )
 
-    return <AppContext.Provider value={{books,setBooks, searchTerm, setSearchTerm, loading, setLoading, user, setUser,cartItemCount, setCartItemCount,cartItem, setCartItem}}>
+    return <AppContext.Provider value={{books,setBooks, searchTerm, setSearchTerm, loading, setLoading, user, setUser,cartItemCount,cartItem, addCartItem}}>
         {props.children}
     </AppContext.Provider>
 

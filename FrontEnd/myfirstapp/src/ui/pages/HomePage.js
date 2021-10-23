@@ -5,6 +5,8 @@ import {AppContext} from "../../context/AppContext";
 import Fuse from "fuse.js";
 import BookCardMaterial from "../components/BookCardMaterial";
 import {Link} from 'react-router-dom'
+import {logout} from "../../api/login";
+import Button from "@mui/material/Button";
 
 
 const fuseOptions = {
@@ -49,7 +51,7 @@ function HomePage() {
     return <div>
         <Grid style={{marginTop: '1%', padding: '1%'}} container spacing={2} columns={12}>
 
-            {user?.type === "admin" ?
+            {user?.userInfo?.role === "Admin" ?
                 <Grid  item={true} xs={12}  style={{color:'ff5722'}}><Link to={"/admin"} >Admin Dashboard</Link></Grid> : null
             }
 
@@ -65,6 +67,8 @@ function HomePage() {
 
 
         </Grid>
+
+        {user ? <Button variant={'outlined'} onClick={logout}>Logout</Button> : null }
 
 
     </div>
