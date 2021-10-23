@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AppContext} from "../../context/AppContext";
 import Fuse from "fuse.js";
+import {deleteUser, getAllUsers} from "../../api/users";
 
 // Fuse
 // Fuzzy search
@@ -45,20 +46,31 @@ function createData(name, username, role, address, phoneNo) {
     return { name, username, role, address, phoneNo };
 }
 
-const rows = [
-    createData('abc sellers', 'abc@abc.com', 'Seller', '24 abc street', '0456789321'),
-    createData('xyz sellers', 'xyz@xyz.com', 'Seller', '4 xyz street', '0456789321'),
-    createData('pqr sellers', 'pqr@pqr.com', 'Seller', '2 pqr street', '0456909321'),
-    createData('abc test', 'abc@test.com', 'Customer', '240 efg street', '0499789321'),
-    createData('john wo', 'john@wo.com', 'Customer', '74 mno street', '0450089321')
 
-];
+
+
 
 export default function UserManagement() {
 
 
 
-    const {searchTerm} = useContext(AppContext)
+
+    const {searchTerm,setLoading} = useContext(AppContext)
+
+    const [rows,setRows]=useState([])
+
+    async function fetchAvailableUsers() {
+        setLoading(true)
+        const fetchedUsers = await getAllUsers()
+        console.log("Fetched users: ")
+        console.table(fetchedUsers)
+        setRows(fetchedUsers)
+        setLoading(false)
+    }
+
+    useEffect(async () => {
+        await fetchAvailableUsers();
+    },[])
 
     const getFilteredUsers = () => {
         const searching = searchTerm.length >= 2
@@ -72,6 +84,7 @@ export default function UserManagement() {
 
     return (
         <TableContainer component={Paper}>
+            <p>There are {rows.length} users</p>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -86,9 +99,9 @@ export default function UserManagement() {
                 </TableHead>
                 <TableBody>
                     {filteredUsers.map((row) => (
-                        <StyledTableRow key={row.name}>
+                        <StyledTableRow key={row.id}>
                             <StyledTableCell component="th" scope="row">
-                                {row.name}
+                                {row.fullName}
                             </StyledTableCell>
                             <StyledTableCell align="left">{row.username}</StyledTableCell>
                             <StyledTableCell align="left">{row.role}</StyledTableCell>
@@ -98,7 +111,11 @@ export default function UserManagement() {
                                 <EditIcon />
                             </IconButton>}
                             </StyledTableCell>
-                            <StyledTableCell align="left">{<IconButton color="secondary">
+                            <StyledTableCell align="left">{<IconButton color="secondary" onClick={()=>{
+                                setLoading(true)
+                                deleteUser(row.id).then(() => fetchAvailableUsers()).finally(setLoading(false))
+
+                            }}>
                                 <DeleteForeverIcon />
                             </IconButton>}
                             </StyledTableCell>

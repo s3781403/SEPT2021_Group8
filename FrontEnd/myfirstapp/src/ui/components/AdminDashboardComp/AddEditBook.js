@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Formik} from 'formik';
-import {Button, TextField} from "@mui/material";
+import {Button, Grid, TextField} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {createBook, getBookByID, updateBook,FileUploadToApi} from "../../../api/books";
 import {AppContext} from "../../../context/AppContext";
@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import {Rating, RatingView} from 'react-simple-star-rating'
 import Typography from "@mui/material/Typography";
 import { FileUploader } from "react-drag-drop-files";
+import './BookComponent.css'
 
 function AddEditBook() {
 
@@ -26,6 +27,7 @@ function AddEditBook() {
     const initialValues = {
         isbn: '',
         title: '',
+        description:'',
         category: '',
         author: '',
         publisher: '',
@@ -57,7 +59,7 @@ function AddEditBook() {
 
     const textFieldStyle = {
         // padding:5,
-        width: 500, //TODO: do not hardcode the width
+        width: '100%', //TODO: do not hardcode the width
     }
 
     if (!bookData && bookid) return null
@@ -94,8 +96,13 @@ function AddEditBook() {
 
     return (
 
-        <Formik
+        <Grid container>
 
+            <Grid item lg={3}> </Grid>
+
+           <Grid item xs={12} lg={6}>
+
+        <Formik
             initialValues={bookData || initialValues}
 
             onSubmit={(values) => handleFormSubmit(values)}>
@@ -103,6 +110,7 @@ function AddEditBook() {
 
                 (props) => (
                     <Form onSubmit={props.handleSubmit} onReset={props.handleReset}>
+
                         <h1 style={{textAlign: "left"}}>{editMode ? "Edit" : "Add"} Book</h1>
                         <div style={{textAlign: "left", padding: 6, margin: 6}}>
 
@@ -143,6 +151,19 @@ function AddEditBook() {
                                     }
 
                                 />
+                            </div>
+
+                                <div style={formStyle}>
+                                    <TextField
+                                        label="Description"
+                                        type="text"
+                                        style={textFieldStyle}
+
+                                        {
+                                            ...getInputProps("description", props)
+                                        }
+
+                                    />
 
                             </div>
                             <div style={formStyle}>
@@ -246,7 +267,7 @@ function AddEditBook() {
                             </div>
 
                             <div style={formStyle}>
-                                <img src={props.values.imageURL} />
+                                <img style={{width:'auto', maxWidth: '70%',height:'20vh'}} src={props.values.imageURL} />
                                 <FileUploader
                                     handleChange={async (file) => {
                                         const s3Url = await FileUploadToApi(file)
@@ -255,6 +276,8 @@ function AddEditBook() {
                                     }}
                                     name="file"
                                     types={imageFileTypes}
+                                    classes={'uploader__class'}
+                                    style={{maxWidth: '100%', width: '100%'}}
                                 />
                             </div>
 
@@ -278,6 +301,9 @@ function AddEditBook() {
 
 
         </Formik>
+        </Grid>
+        </Grid>
+
 
     );
 }

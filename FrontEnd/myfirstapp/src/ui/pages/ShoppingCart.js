@@ -4,6 +4,31 @@ import * as React from "react";
 import {useContext} from "react";
 import {AppContext} from "../../context/AppContext";
 import Card from "@mui/material/Card";
+import BookCardMaterial from "../components/BookCardMaterial";
+
+function CartItemSummary({item}) {
+    // Book card
+    // Qty
+
+    return (
+    <div>
+        <Grid container>
+            <Grid item xs={12} md={8}>
+                 <BookCardMaterial book={item} />
+            </Grid>
+            <Grid item xs={12} md={4} style={{textAlign: 'center'}}>
+                <label>Quantity</label><br/>
+                <input type={"number"} value={item.qty}/>
+            </Grid>
+
+        </Grid>
+        <hr/>
+
+    </div>
+
+    )
+}
+
 
 function ShoppingCart() {
 
@@ -13,28 +38,25 @@ function ShoppingCart() {
     return(
 
         <div>
-        <h1>Cart Summary</h1>
+        <h1>Cart Summary ({cartItem.length})</h1>
         <hr/>
             <div>
             <Grid container>
-            <Grid item lg={6}>
-                <Card xs={{width: '100%',height:'50%'}}>
-                    <CardMedia
-                        component="img"
-                        height="450px"
-                        width={'100%'}
-                        style={{maxHeight: '450px', maxWidth: '100%', objectFit: 'contain', aspectRatio: 'auto',margin:'2%',padding:'2%'}}
-                        image={cartItem.imageURL}
-                        alt="book cover"
-                    />
 
-                </Card>
-            </Grid>
-
-                <Grid item lg={6}>
-                    <h1>checkout</h1>
+            {/*    Cart Items */}
+                <Grid item xs={12} lg={8}>
+                {
+                    cartItem.map(item => <CartItemSummary item={item}/>)
+                }
                 </Grid>
 
+            {/*    Checkout */}
+                <Grid item xs={12} lg={4} style={{textAlign: 'center'}}>
+                    <p>Checkout items</p>
+                </Grid>
+
+
+            {/*    Footer Description*/}
 
 
 
