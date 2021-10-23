@@ -139,11 +139,11 @@ public class Book {
         this.type = type;
     }
 
-    public int getSellerID() {
+    public long getSellerID() {
         return sellerID;
     }
 
-    public void setSellerID(int sellerID) {
+    public void setSellerID(long sellerID) {
         this.sellerID = sellerID;
     }
 
