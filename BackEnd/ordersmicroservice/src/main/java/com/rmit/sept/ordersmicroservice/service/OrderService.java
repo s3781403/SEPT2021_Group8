@@ -23,6 +23,11 @@ public class OrderService{
             newInvoice.setCart(cart);
             newInvoice.setUserID(newInvoice.getUserID());
             newInvoice.setStatus(newInvoice.getStatus());
+            newInvoice.setCurrency("AUD");
+            newInvoice.setIntent("sale");
+            newInvoice.setDescription("Online Payment to Bookero");
+            newInvoice.setMethod("PayPal");
+            newInvoice.setPrice(newInvoice.getPrice());
             switch (newInvoice.getStatus()) {
                 case "Order Received":
                     newInvoice.setOrderReceived_Date(new Date());

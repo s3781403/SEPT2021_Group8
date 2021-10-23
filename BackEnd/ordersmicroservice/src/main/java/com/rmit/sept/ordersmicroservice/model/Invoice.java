@@ -17,6 +17,15 @@ public class Invoice {
     private Date cancelled_Date;
     private String status;
 
+
+
+    //Additional Fields Added for PayPal API
+    private double price;
+    private String currency;
+    private String method;
+    private String intent;
+    private String description;
+
     private Date create_At;
     private Date update_At;
 
@@ -102,6 +111,46 @@ public class Invoice {
 
     public void setCancelled_Date(Date cancelled_Date) {
         this.cancelled_Date = cancelled_Date;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getIntent() {
+        return intent;
+    }
+
+    public void setIntent(String intent) {
+        this.intent = intent;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @PrePersist
