@@ -51,7 +51,7 @@ public class Book {
 
     //    @NotBlank(message = "Seller")  //Seller ID would be sent by something? (not the user right?
     @NotNull(message = "You must have a seller ID")
-    private int sellerID; //Unsure if this would be a feature of a book in this model
+    private long sellerID; //Unsure if this would be a feature of a book in this model
 
     @NotBlank(message = "Book requires a valid image URL")
     private String imageURL;

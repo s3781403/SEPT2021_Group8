@@ -44,7 +44,7 @@ public class BookControllerTest extends BooksmicroservicesApplicationTests {
 
         book_1 = new MockBook(1234567891123L, "Test Book #1", "Fantesty",
                 "Rex Testingham", "Penguin Tests", 10.50, "physical", 0,
-                1, 123155, "aws.testimageurl.com/1234-153-1235_source.jpg" );
+                1, 123155, "aws.testimageurl.com/1234-153-1235`_source.jpg" );
 
         book_2 = new MockBook(2345678911123L, "Test Book #2", "Horror",
                 "Sir Tests", "Random House Tests", 20.30, "ebook", 2,
