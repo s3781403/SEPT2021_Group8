@@ -1,25 +1,26 @@
 package com.rmit.sept.ordersmicroservice.web;
 
+import com.rmit.sept.ordersmicroservice.exceptions.CartNotFoundException;
+import com.rmit.sept.ordersmicroservice.model.Cart;
+import com.rmit.sept.ordersmicroservice.model.Invoice;
+import com.rmit.sept.ordersmicroservice.model.LineItem;
 import com.rmit.sept.ordersmicroservice.repositories.CartRepository;
 import com.rmit.sept.ordersmicroservice.service.CartService;
+import com.rmit.sept.ordersmicroservice.service.LineItemService;
 import com.rmit.sept.ordersmicroservice.service.MapValidationErrorService;
+import com.rmit.sept.ordersmicroservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.rmit.sept.ordersmicroservice.model.Cart;
-import com.rmit.sept.ordersmicroservice.model.LineItem;
-import com.rmit.sept.ordersmicroservice.exceptions.CartNotFoundException;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/carts")
 public class CartController {
 
     @Autowired
@@ -27,6 +28,12 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private LineItemService lineItemService;
 
     @Autowired
     private CartRepository cartRepository;
@@ -45,12 +52,11 @@ public class CartController {
     //GET CART BY ID (RETURNS A LIST OF LINEITEMS)
     @CrossOrigin(origins = "*")
     @GetMapping("/cart/{id}")
-    public ResponseEntity<List<LineItem>> getCartByID(@PathVariable("id") Integer id) {
+    public ResponseEntity<Cart> getCartByID(@PathVariable("id") Integer id) {
 
-        List<LineItem> items = new ArrayList<>();
-        items = cartService.getCartById(id).getLineItems();
+        Cart cart = cartService.getCartById(id);
 
-        return new ResponseEntity<>(items, HttpStatus.OK);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
     //DELETE
@@ -63,6 +69,32 @@ public class CartController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
+    //ADD LINEITEM TO CART
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cart/{id}/addItem")
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long id, @Valid @RequestBody LineItem item, BindingResult result) {
+        Cart cart = cartRepository.findById(id).orElseThrow(() -> new CartNotFoundException("No cart with id '" + id + "' could be found"));
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null) return errorMap;
+        lineItemService.saveLineItem(item,cart);
+        return new ResponseEntity<Cart>(cart, HttpStatus.CREATED);
+    }
+
+    //Create an invoice
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cart/{id}/createOrder")
+    public ResponseEntity<?> createOrder(@PathVariable("id") Long id, @Valid @RequestBody Invoice invoice, BindingResult result) {
+        Cart cart = cartRepository.findById(id).orElseThrow(() -> new CartNotFoundException("No cart with id '" + id + "' could be found to delete"));
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null) return errorMap;
+        Invoice newInvoice = orderService.saveOrder(invoice,cart);
+        return new ResponseEntity<>(newInvoice, HttpStatus.CREATED);
+    }
+
+
+
+
 
 
 

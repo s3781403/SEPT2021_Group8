@@ -1,10 +1,13 @@
 package com.rmit.sept.ordersmicroservice.service;
 
+import com.rmit.sept.ordersmicroservice.exceptions.CartNotFoundException;
+import com.rmit.sept.ordersmicroservice.model.Cart;
+import com.rmit.sept.ordersmicroservice.model.LineItem;
+import com.rmit.sept.ordersmicroservice.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.rmit.sept.ordersmicroservice.model.Cart;
-import com.rmit.sept.ordersmicroservice.repositories.CartRepository;
-import com.rmit.sept.ordersmicroservice.exceptions.CartNotFoundException;
+
+import java.util.Set;
 
 @Service
 public class CartService {
@@ -33,6 +36,13 @@ public class CartService {
         else {
             throw new CartNotFoundException("Cart with id '" + id + "' could not be found");
         }
+    }
+
+    public Cart addToCart(Cart cart, LineItem item){
+        Set<LineItem> itemList = cart.getLineItems();
+        itemList.add(item);
+        cart.setLineItems(itemList);
+        return cartRepository.save(cart);
     }
 
     public void deleteCart(Cart cart) {

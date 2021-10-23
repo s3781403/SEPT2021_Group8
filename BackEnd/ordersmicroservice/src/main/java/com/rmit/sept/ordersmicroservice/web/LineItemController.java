@@ -6,17 +6,13 @@ import com.rmit.sept.ordersmicroservice.repositories.LineItemRepository;
 import com.rmit.sept.ordersmicroservice.service.LineItemService;
 import com.rmit.sept.ordersmicroservice.service.MapValidationErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/api/items")
 public class LineItemController {
 
     @Autowired
@@ -28,16 +24,16 @@ public class LineItemController {
     @Autowired
     private LineItemRepository lineItemRepository;
 
-    //CREATE
-    @CrossOrigin(origins = "*")
-    @PostMapping("/add")
-    public ResponseEntity<?> createLineItem(@Valid @RequestBody LineItem lineItem, BindingResult result) {
-        //LineItemValidator.validate(cart,result);
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap != null) return errorMap;
-        LineItem newLineItem = lineItemService.saveLineItem(lineItem);
-        return new ResponseEntity<LineItem>(newLineItem, HttpStatus.CREATED);
-    }
+//    //CREATE
+//    @CrossOrigin(origins = "*")
+//    @PostMapping("/add")
+//    public ResponseEntity<?> createLineItem(@Valid @RequestBody LineItem lineItem, BindingResult result) {
+//        //LineItemValidator.validate(cart,result);
+//        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+//        if(errorMap != null) return errorMap;
+//        LineItem newLineItem = lineItemService.saveLineItem(lineItem);
+//        return new ResponseEntity<LineItem>(newLineItem, HttpStatus.CREATED);
+//    }
 
     //DELETE
     @CrossOrigin(origins = "*")

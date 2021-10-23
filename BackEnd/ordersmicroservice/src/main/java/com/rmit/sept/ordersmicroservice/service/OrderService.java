@@ -1,7 +1,8 @@
 package com.rmit.sept.ordersmicroservice.service;
 
 import com.rmit.sept.ordersmicroservice.exceptions.OrderNotFoundException;
-import com.rmit.sept.ordersmicroservice.model.Order;
+import com.rmit.sept.ordersmicroservice.model.Cart;
+import com.rmit.sept.ordersmicroservice.model.Invoice;
 import com.rmit.sept.ordersmicroservice.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,69 +17,85 @@ public class OrderService{
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order saveOrder(Order newOrder) {
+    public Invoice saveOrder(Invoice newInvoice, Cart cart) {
 
         try {
-            newOrder.setCartID(newOrder.getCartID());
-            newOrder.setUserID(newOrder.getUserID());
-            newOrder.setStatus(newOrder.getStatus());
+            newInvoice.setCart(cart);
+            newInvoice.setUserID(newInvoice.getUserID());
+            newInvoice.setStatus(newInvoice.getStatus());
+            switch (newInvoice.getStatus()) {
+                case "Order Received":
+                    newInvoice.setOrderReceived_Date(new Date());
+                    break;
+                case "In-Progress":
+                    newInvoice.setInProgress_Date(new Date());
+                    break;
+                case "Shipped":
+                    newInvoice.setShipped_Date(new Date());
+                    break;
+                case "Delivered":
+                    newInvoice.setDelivered_Date(new Date());
+                    break;
+                case "Cancelled":
+                    newInvoice.setCancelled_Date(new Date());
+            }
 
-            return newOrder;
+            return orderRepository.save(newInvoice);
         } catch(Exception e) {
-            System.out.println("========| Error saving Order (OrderService) |========\n" + e.getMessage() + "\n====================");
+            System.out.println("========| Error saving Invoice (OrderService) |========\n" + e.getMessage() + "\n====================");
             e.printStackTrace();
         }
 
     return null;
     }
 
-    public List<Order> getAllOrders() {
-        List<Order> list = new ArrayList<>();
+    public List<Invoice> getAllOrders() {
+        List<Invoice> list = new ArrayList<>();
         orderRepository.findAll().forEach(order -> list.add(order));
         return list;
     }
 
-    public Order getOrderById(long id) {
-        Order order = orderRepository.getOrderById(id);
+    public Invoice getOrderById(long id) {
+        Invoice invoice = orderRepository.getOrderById(id);
 
-        if (order != null) {
-            return order;
+        if (invoice != null) {
+            return invoice;
         } else {
-            throw new OrderNotFoundException("Order with id [" + id + "] could not be found");
+            throw new OrderNotFoundException("Invoice with id [" + id + "] could not be found");
         }
     }
 
-    public List<Order> getAllOrdersByUserId(long userId) {
-        List<Order> list = new ArrayList<>();
+    public List<Invoice> getAllOrdersByUserId(long userId) {
+        List<Invoice> list = new ArrayList<>();
         orderRepository.findAllByUserID(userId).forEach(order -> list.add(order));
         return list;
     }
 
-    public Order updateOrderStatus(Order oldOrder, String newStatus) {
-        oldOrder.setUpdate_At(new Date());
-        oldOrder.setStatus(newStatus);
+    public Invoice updateOrderStatus(Invoice oldInvoice, String newStatus) {
+        oldInvoice.setUpdate_At(new Date());
+        oldInvoice.setStatus(newStatus);
 
         switch (newStatus) {
-            case "Order Received":
-                oldOrder.setOrderReceived_Date(new Date());
+            case "Invoice Received":
+                oldInvoice.setOrderReceived_Date(new Date());
                 break;
             case "In-Progress":
-                oldOrder.setInProgress_Date(new Date());
+                oldInvoice.setInProgress_Date(new Date());
                 break;
             case "Shipped":
-                oldOrder.setShipped_Date(new Date());
+                oldInvoice.setShipped_Date(new Date());
                 break;
             case "Delivered":
-                oldOrder.setDelivered_Date(new Date());
+                oldInvoice.setDelivered_Date(new Date());
                 break;
             case "Cancelled":
-                oldOrder.setCancelled_Date(new Date());
+                oldInvoice.setCancelled_Date(new Date());
         }
-        return orderRepository.save(oldOrder);
+        return orderRepository.save(oldInvoice);
     }
 
 
-    public void deleteOrder(Order order) {
-        orderRepository.delete(order);
+    public void deleteOrder(Invoice invoice) {
+        orderRepository.delete(invoice);
     }
 }

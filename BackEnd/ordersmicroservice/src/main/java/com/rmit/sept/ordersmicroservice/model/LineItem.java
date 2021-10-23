@@ -1,15 +1,22 @@
 package com.rmit.sept.ordersmicroservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="ITEMS")
 public class LineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     //Foreign key
+    @ManyToOne
+    @JoinColumn(name = "cart_id",nullable = false)
+    @JsonIgnoreProperties({"lineItems"})
+    private Cart cart;
     private long bookID;
     private long quantity;
     private Date update_At;
@@ -28,6 +35,10 @@ public class LineItem {
     }
 
     public void setId(Long id) {this.id = id;}
+
+    public Cart getCart() {return cart;}
+
+    public void setCart(Cart cart) {this.cart = cart;}
 
     public long getBookID() {
         return bookID;

@@ -4,14 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Order {
+public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date create_At;
-    private Date update_At;
     private long userID;
-    //Order Received, In progress, Shipped, Delivered, Cancelled
+    //Invoice Received, In progress, Shipped, Delivered, Cancelled
     private Date orderReceived_Date;
     private Date inProgress_Date;
     private Date shipped_Date;
@@ -19,9 +17,12 @@ public class Order {
     private Date cancelled_Date;
     private String status;
 
+    private Date create_At;
+    private Date update_At;
+
     @OneToOne
-    @JoinColumn(name = "id")
-    private Cart cartID;
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 
     public Long getId() {
         return id;
@@ -51,12 +52,12 @@ public class Order {
         this.userID = userID;
     }
 
-    public Cart getCartID() {
-        return cartID;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartID(Cart cartID) {
-        this.cartID = cartID;
+    public void setCart(Cart cartID) {
+        this.cart = cartID;
     }
 
     public String getStatus() {return status;}
