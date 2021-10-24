@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.9.1
   aws-ecs: circleci/aws-ecs@1.2.0
@@ -16,24 +16,34 @@ jobs:
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
       - run:
-          name: Run test compile
+          name: Run tests
           command: |
             docker-compose up -d
-  aws-ecr/build-and-push-image:
-    repo: "bookeroo-server"
-    tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
-    filters:
-      branches:
-        only:
-          - master
-          - development
 workflows:
   version: 2
   test-build-deploy:
     jobs:
       - testBuild
-      - aws-ecr/build-and-push-image
-      - aws-ecs/deploy-service-update
+      - aws-ecr/build-and-push-image:
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          filters:
+            branches:
+              only:
+                - master
+                - development
+      - aws-ecs/deploy-service-update:
+          name: deploy-development
+          requires:
+            - aws-ecr/build-and-push-image
+          family: "runDockerContainers-development"
+          cluster-name: "bookeroo-server-development"
+          service-name: "bookeroo-server"
+          container-image-name-updates: "container=bookeroo_server_development,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only:
+                - development
       - approve-deploy:
           type: approval
           requires:
@@ -54,3 +64,4 @@ workflows:
             branches:
               only:
                 - master
+
