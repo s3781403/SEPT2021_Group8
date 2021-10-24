@@ -41,5 +41,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /data/app-backend
+    depends_on:
+      - booksmicroservices
     ports:
       - "8082:8082"

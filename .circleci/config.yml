@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.9.1
+  aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
   build:
     working_directory: /dockerapp1
@@ -16,3 +19,18 @@ jobs:
           name: Run tests
           command: |
             docker-compose up -d
+workflows:
+  version: 2
+  test-and-build:
+    jobs:
+      - build
+      - aws-ecr/build-and-push-image:
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - development
