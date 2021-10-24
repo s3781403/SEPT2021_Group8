@@ -13,7 +13,7 @@ export const getAllRoleRequests = async () => {
      console.log(output)
      return output
  })
-    return Promise.all(finalData)
+    return Promise.all(requestsData)
     // [Promise<>, Promise<>, Promise<>, ] -> [{}, {}, {}]
 }
 
