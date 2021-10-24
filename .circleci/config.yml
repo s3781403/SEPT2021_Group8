@@ -7,22 +7,7 @@ workflows:
   version: 2
   test-build-deploy:
     jobs:
-      - test:
-          working_directory: /dockerapp1
-          docker:
-            - image: docker:17.05.0-ce-git
-          steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Install dependencies
-                command: |
-                  apk add --no-cache py-pip=9.0.0-r1
-                  pip install docker-compose==1.15.0
-            - run:
-                name: Run test build
-                command: |
-                  docker-compose up -d
+      - test
       - aws-ecr/build-and-push-image:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
@@ -65,5 +50,22 @@ workflows:
             branches:
               only:
                 - master
+jobs:
+  test:
+    working_directory: /dockerapp1
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache py-pip=9.0.0-r1
+            pip install docker-compose==1.15.0
+      - run:
+          name: Run test build
+          command: |
+            docker-compose up -d
 
 
