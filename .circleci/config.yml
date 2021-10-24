@@ -38,10 +38,6 @@ workflows:
                 - development
       - aws-ecs/deploy-service-update:
           name: deploy-development
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: AWS_DEFAULT_REGION
           requires:
             - aws-ecr/build-and-push-image
           family: "runDockerContainers-development"
