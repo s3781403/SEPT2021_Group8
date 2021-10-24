@@ -46,8 +46,9 @@ const deleteOrder = async (id) => {
 
 const createCart = async (userId) => {
 
+    //http://localhost:8082/api/carts/create
     const getUrl = `${ORDER_API_URL}/carts/create`
-    return (await axios.post(getUrl, userId,{headers: {
+    return (await axios.post(getUrl, { "userID": userId},{headers: {
             "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
         }})).data
@@ -55,8 +56,9 @@ const createCart = async (userId) => {
 }
 
 //add item to cart
-const addItem = async (bookId,quantity) => {
+const addItem = async (bookId,quantity,cartId) => {
 
+    //http://localhost:8082/api/carts/cart/11/addItem
     const getUrl = `${ORDER_API_URL}/carts/cart/${cartId}/addItem`
     return (await axios.post(getUrl, { "bookID": bookId,
         "quantity": quantity},{headers: {
@@ -77,4 +79,12 @@ const deleteCart = async (id) => {
     const deleteUrl = `${ORDER_API_URL}/carts/delete/${id}`
     return (await axios.delete(deleteUrl)).data
 }
- export {createOrder,getOrderByUserID,getAllOrders,deleteOrder,deleteItem,deleteCart,updateOrder,addItem,createCart}
+//get cart by userid
+const getCartByUserID = async (userId) => {
+    //http://localhost:8082/api/carts/getAll?column=userid&value=1
+    const getUrl = `${ORDER_API_URL}/carts/getAll?column=userid&value=${userId}`
+    return (await axios.get(getUrl)).data
+}
+ export {createOrder,getOrderByUserID,getAllOrders,deleteOrder,deleteItem,deleteCart,updateOrder,addItem,createCart,getCartByUserID}
+
+
