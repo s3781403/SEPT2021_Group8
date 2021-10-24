@@ -16,7 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -57,6 +59,22 @@ public class CartController {
         Cart cart = cartService.getCartById(id);
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Cart>> getListByRequestParameters(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
+        if (column != null) {
+            List<Cart> carts = new ArrayList<>();
+            if (column.equals("all")) {
+                carts = cartService.getAllCarts();
+            }if (column.equals("userid") && value != null) {
+                carts = cartService.getAllByUserID(Long.parseLong(value));
+            }
+            return new ResponseEntity<>(carts, HttpStatus.OK);
+        } else {
+            return null;
+        }
     }
 
     //DELETE

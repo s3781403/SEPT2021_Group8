@@ -9,5 +9,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     Review getById(Long id);
     Iterable<Review> findAll();
+    Iterable<Review> getReviewsByBookID(long bookID);
 
 }

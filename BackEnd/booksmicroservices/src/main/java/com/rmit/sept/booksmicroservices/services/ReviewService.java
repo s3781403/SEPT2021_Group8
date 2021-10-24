@@ -29,6 +29,12 @@ public class ReviewService {
         return list;
     }
 
+    public List<Review> getAllByBookID(long id) {
+        List<Review> list = new ArrayList<>();
+        reviewRepository.getReviewsByBookID(id).forEach(review -> list.add(review));
+        return list;
+    }
+
     public void deleteReview(Review review) {
         reviewRepository.delete(review);
     }

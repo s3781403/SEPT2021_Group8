@@ -7,6 +7,8 @@ import com.rmit.sept.ordersmicroservice.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,6 +39,20 @@ public class CartService {
             throw new CartNotFoundException("Cart with id '" + id + "' could not be found");
         }
     }
+
+    public List<Cart> getAllCarts() {
+        List<Cart> list = new ArrayList<>();
+        cartRepository.findAll().forEach(cart -> list.add(cart));
+        return list;
+    }
+
+    public List<Cart> getAllByUserID(long id) {
+        List<Cart> list = new ArrayList<>();
+        cartRepository.getCartsByUserID(id).forEach(cart -> list.add(cart));
+        return list;
+    }
+
+
 
     public Cart addToCart(Cart cart, LineItem item){
         Set<LineItem> itemList = cart.getLineItems();

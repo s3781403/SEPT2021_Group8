@@ -54,6 +54,8 @@ public class ReviewController {
             List<Review> reviews = new ArrayList<>();
             if (column.equals("all")) {
                 reviews = reviewService.getAllReviews();
+            }if (column.equals("bookid") && value != null) {
+                reviews = reviewService.getAllByBookID(Long.parseLong(value));
             }
             return new ResponseEntity<>(reviews, HttpStatus.OK);
         } else {
