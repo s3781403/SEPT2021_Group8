@@ -18,11 +18,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import {useContext, useEffect, useState} from "react";
 import logo from '../../assets/images/bookero.png'
 import {AppContext} from "../../context/AppContext";
-import {useHistory, Link} from "react-router-dom";
+import {useHistory, Link, Redirect} from "react-router-dom";
 import {Avatar} from "@mui/material";
 import {deepOrange} from "@mui/material/colors";
-
-
+import Button from "@mui/material/Button";
+import {logout} from "../../api/login";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -197,12 +197,17 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
                     <Box sx={{flexGrow: 1}}/>
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                        {user ? <Button variant={'outlined'} style={{color:'white'}} onClick={()=> {
+                            history.push("/orderhistory")
+                        }} >Order History</Button> : null }
+
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={cartPageOpen}>
                             <Badge badgeContent={cartItemCount} color="error">
                                 <ShoppingCartIcon/>
                             </Badge>
                         </IconButton>
-                        
+
+
                         <IconButton onClick={loginPageOpen}
                             size="large"
                             edge="end"
@@ -213,6 +218,10 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
                             {!user ? <AccountCircle/> : <Avatar sx={{ bgcolor: deepOrange[500] }}>{user.name[0]}</Avatar>}
 
                         </IconButton>
+
+                        {user ? <Button variant={'outlined'} style={{color:'white'}} onClick={logout}>Logout</Button> : null }
+
+
                     </Box>
                     <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
@@ -236,7 +245,6 @@ function PrimarySearchAppBar({cartItemCount, notificationCount}) {
 
 function AppHeader() {
 
-    // const [cartItemCount, setCartItemCount] = useState(0)
     const {cartItemCount} = useContext(AppContext)
     const [notificationCount, setNotificationCount] = useState(0)
 

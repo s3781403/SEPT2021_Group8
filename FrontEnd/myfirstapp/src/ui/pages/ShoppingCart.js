@@ -1,14 +1,15 @@
 import {Grid} from "@mui/material";
-import CardMedia from "@mui/material/CardMedia";
 import * as React from "react";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {AppContext} from "../../context/AppContext";
-import Card from "@mui/material/Card";
 import BookCardMaterial from "../components/BookCardMaterial";
+import PayPal from "./PayPal";
 
 function CartItemSummary({item}) {
     // Book card
     // Qty
+
+
 
     return (
     <div>
@@ -35,6 +36,7 @@ function ShoppingCart() {
 
     const {cartItem, setCartItem} = useContext(AppContext)
 
+    const [checkout, setCheckOut] = useState(false);
     return(
 
         <div>
@@ -53,6 +55,17 @@ function ShoppingCart() {
             {/*    Checkout */}
                 <Grid item xs={12} lg={4} style={{textAlign: 'center'}}>
                     <p>Checkout items</p>
+                    {checkout ? (
+                        <PayPal />
+                    ) : (
+                        <button
+                            onClick={() => {
+                                setCheckOut(true);
+                            }}
+                        >
+                            Checkout
+                        </button>
+                    )}
                 </Grid>
 
 
