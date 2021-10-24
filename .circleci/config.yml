@@ -38,6 +38,7 @@ workflows:
                 - development
       - aws-ecs/deploy-service-update:
           name: deploy-development
+          aws-region: AWS_DEFAULT_REGION
           requires:
             - aws-ecr/build-and-push-image
           family: "runDockerContainers-development"
