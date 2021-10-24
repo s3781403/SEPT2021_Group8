@@ -53,7 +53,31 @@ const deleteBook = async (id) => {
     return (await axios.delete(deleteUrl)).data
 }
 
-export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi}
+//add review
+const addReview = async (reviewData,bookId,userId) => {
+
+    const getUrl = `http://localhost:8081/api/reviews/create`
+    console.log(reviewData,bookId,userId)
+    return (await axios.post(getUrl, {
+        "bookID": bookId,
+            "userID": userId,
+            "content": reviewData
+    },{headers: {
+            "Accept": "*/*",
+            "Access-Control-Allow-Origin": "*"
+        }})).data
+
+}
+
+//get reviews
+
+const getAllReviews = async () => {
+    const getUrl = `http://localhost:8081/api/reviews/getAll?column=all`
+    return (await axios.get(getUrl)).data
+}
+
+
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi,addReview,getAllReviews}
 
 
 

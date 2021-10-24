@@ -68,7 +68,6 @@ function HomePage() {
 
         </Grid>
 
-        {user ? <Button variant={'outlined'} onClick={logout}>Logout</Button> : null }
 
 
     </div>
