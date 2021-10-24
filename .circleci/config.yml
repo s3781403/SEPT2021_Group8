@@ -3,7 +3,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.9.1
   aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
-  testBuild:
+  test:
     working_directory: /dockerapp1
     docker:
       - image: docker:17.05.0-ce-git
@@ -16,14 +16,14 @@ jobs:
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
       - run:
-          name: Run tests
+          name: Run test build
           command: |
             docker-compose up -d
 workflows:
   version: 2
   test-build-deploy:
     jobs:
-      - testBuild
+      - test
       - aws-ecr/build-and-push-image:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
