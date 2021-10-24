@@ -3,7 +3,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.9.1
   aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
-  build:
+  testBuild:
     working_directory: /dockerapp1
     docker:
       - image: docker:17.05.0-ce-git
@@ -21,16 +21,49 @@ jobs:
             docker-compose up -d
 workflows:
   version: 2
-  test-and-build:
+  test-build-deploy:
     jobs:
-      - build
+      - testBuild
       - aws-ecr/build-and-push-image:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
-            - build
+            - testBuild
           filters:
             branches:
               only:
                 - master
                 - development
+      - aws-ecs/deploy-service-update:
+          name: deploy-development
+            requires:
+              - aws-ecr/build-and-push-image
+            family: "runDockerContainers-development"
+            cluster-name: "bookeroo-server-development"
+            service-name: "bookeroo-server"
+            container-image-name-updates: "container=bookeroo_server_development,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
+            filters:
+              branches:
+                only:
+                  - development
+      - approve-deploy:
+          type: approval
+          requires:
+            - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only:
+                - master
+      - aws-ecs/deploy-service-update:
+          name: deploy-production
+          requires:
+            - approve-deploy
+          family: "runDockerContainers"
+          cluster-name: "BookerooServer-production"
+          service-name: "bookeroo-server"
+          container-image-name-updates: "container=bookeroo_server_production,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only:
+                - master
+
