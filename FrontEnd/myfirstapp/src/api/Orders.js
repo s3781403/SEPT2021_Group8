@@ -81,8 +81,7 @@ const deleteCart = async (id) => {
 }
 //get cart by userid
 const getCartByUserID = async (userId) => {
-    //http://localhost:8082/api/carts/getAll?column=userid&value=1
-    const getUrl = `${ORDER_API_URL}/carts/getAll?column=userid&value=${userId}`
+    const getUrl = `${ORDER_API_URL}/carts/cart/getSingle?column=userid&value=${userId}`
     return (await axios.get(getUrl)).data
 }
  export {createOrder,getOrderByUserID,getAllOrders,deleteOrder,deleteItem,deleteCart,updateOrder,addItem,createCart,getCartByUserID}

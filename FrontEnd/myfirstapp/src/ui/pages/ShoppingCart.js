@@ -34,9 +34,8 @@ function ShoppingCart() {
 
     const [checkout, setCheckOut] = useState(false);
     return(
-
         <div>
-        <h1>Cart Summary ({cartItem.length})</h1>
+        <h1>Cart Summary </h1>
         <hr/>
             <div>
             <Grid container>
@@ -44,7 +43,8 @@ function ShoppingCart() {
             {/*    Cart Items */}
                 <Grid item xs={12} lg={8}>
                 {
-                    cartItem.map(item => <CartItemSummary item={item}/>)
+                    //cartItem.map(item => <CartItemSummary item={item}/>)
+
                 }
                 </Grid>
 

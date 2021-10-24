@@ -8,7 +8,7 @@ test('api get books is working', async ()=> {
 
 
 // Add delete (check the book no longer exists)
-test ('book deleted correctly', async () => {
+test (' api book deleted correctly', async () => {
     // Delete the first book
     const books = await getAllBooks()
     const first = books[0]
