@@ -25,6 +25,8 @@ public class Cart {
     @Column(unique = true)
     private Long userID;
 
+    private String status;
+
     private Date create_At;
     private Date update_At;
 
@@ -48,6 +50,10 @@ public class Cart {
     public Long getUserID() {return userID;}
 
     public void setUserID(Long userID) {this.userID = userID;}
+
+    public String getStatus() {return status;}
+
+    public void setStatus(String status) {this.status = status;}
 
     @PrePersist
     protected void onCreate() {

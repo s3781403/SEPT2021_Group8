@@ -21,6 +21,7 @@ public class OrderService{
 
         try {
             newInvoice.setCart(cart);
+            newInvoice.getCart().setStatus("Processed");
             newInvoice.setUserID(newInvoice.getUserID());
             newInvoice.setStatus(newInvoice.getStatus());
             newInvoice.setCurrency("AUD");
@@ -79,6 +80,7 @@ public class OrderService{
     public Invoice updateOrderStatus(Invoice oldInvoice, String newStatus) {
         oldInvoice.setUpdate_At(new Date());
         oldInvoice.setStatus(newStatus);
+        oldInvoice.getCart().setStatus("Processed");
 
         switch (newStatus) {
             case "Invoice Received":

@@ -64,14 +64,17 @@ public class CartController {
     //GET CART BY USERID
     @CrossOrigin(origins = "*")
     @GetMapping("/cart/getSingle")
-    public ResponseEntity<Cart> getCartByID(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
+    public ResponseEntity<?> getCartByID(@RequestParam("column") String column, @RequestParam(value = "value", required = false) String value) {
 
         List<Cart> carts = new ArrayList<>();
         if (column.equals("userid") && value != null) {
-            carts = cartService.getAllByUserID(Long.parseLong(value));
+            carts = cartService.getUnprocessedCartByUserID(Long.parseLong(value));
+        }
+        if(carts.size()>0){
+            return new ResponseEntity<Cart>(carts.get(0), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(carts.get(0), HttpStatus.OK);
+        return new ResponseEntity<List<Cart>>(carts, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")

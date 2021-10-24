@@ -20,6 +20,7 @@ public class CartService {
     public Cart saveCart(Cart newCart) {
         try {
             newCart.setUserID(newCart.getUserID());
+            newCart.setStatus("Unprocessed");
 
             return cartRepository.save(newCart);
 
@@ -49,6 +50,12 @@ public class CartService {
     public List<Cart> getAllByUserID(long id) {
         List<Cart> list = new ArrayList<>();
         cartRepository.getCartsByUserID(id).forEach(cart -> list.add(cart));
+        return list;
+    }
+
+    public List<Cart> getUnprocessedCartByUserID(long id){
+        List<Cart> list = new ArrayList<>();
+        cartRepository.getCartsByUserIDAndStatus(id, "unprocessed").forEach(cart -> list.add(cart));
         return list;
     }
 
