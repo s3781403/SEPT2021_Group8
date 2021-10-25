@@ -45,6 +45,7 @@ workflows:
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
             - test
+            - build-booksService-image
           filters:
             branches:
               only:
@@ -58,6 +59,7 @@ workflows:
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
             - test
+            - build-loginService-image
           filters:
             branches:
               only:
@@ -71,6 +73,7 @@ workflows:
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
             - test
+            - build-ordersService-image
           filters:
             branches:
               only:
@@ -79,7 +82,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           name: deploy-development
           requires:
-            - aws-ecr/build-and-push-image
+            - build-frontEndService-image
           family: "runDockerContainers-development"
           cluster-name: "bookeroo-server-development"
           service-name: "bookeroo-server"
