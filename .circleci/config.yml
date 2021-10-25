@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.2.0
-  aws-ecs: circleci/aws-ecs@2.2.1
+  aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
   test:
     working_directory: /dockerapp1
@@ -19,68 +19,31 @@ jobs:
           name: Run test build
           command: |
             docker-compose up -d
-  createImage:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: AWS_DEFAULT_REGION
-          repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
-          filters:
-            branches:
-              only:
-                - master
-                - development
-  deployDevelopmentBuild:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - aws-ecs/deploy-service-update:
-          name: deploy-development
-          aws-region: AWS_DEFAULT_REGION
-          requires:
-            - createImage
-          family: "runDockerContainers-development"
-          cluster-name: "bookeroo-server-development"
-          service-name: "bookeroo-server"
-          container-image-name-updates: "container=bookeroo_server_development,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
-          filters:
-            branches:
-              only:
-                - development
-  deployProductionBuild:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - aws-ecs/deploy-service-update:
-          name: deploy-production
-          aws-region: AWS_DEFAULT_REGION
-          requires:
-            - createImage
-          family: "runDockerContainers"
-          cluster-name: "BookerooServer-production"
-          service-name: "bookeroo-server"
-          container-image-name-updates: "container=bookeroo_server_production,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
-          filters:
-            branches:
-              only:
-                - master
-
-
-
-
 workflows:
-  version: 2
   test-build-deploy:
     jobs:
       - test
-      - createImage
-      - deployDevelopmentBuild
-      - deployProductionBuild
+      - aws-ecr/build-and-push-image:
+          setup-remote-docker: true 
+          repo: bookeroo-server
+          tag: ${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest
+
+      - aws-ecs/deploy-service-update:
+            cluster-name: bookeroo-server-development 
+            family: runDockerContainers-development 
+            service-name: bookeroo-server 
+            docker-image-for-job: docker:17.05.0-ce-git 
+
+      - approve-deploy:
+          type: approval
+          requires:
+            - aws-ecr/build-and-push-image
+
+      - aws-ecs/deploy-service-update:
+            cluster-name: BookerooServer-production 
+            family: runDockerContainers 
+            service-name: bookeroo-server 
+            docker-image-for-job: docker:17.05.0-ce-git 
 
 
 
