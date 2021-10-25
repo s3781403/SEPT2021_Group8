@@ -6,15 +6,15 @@ const usersURL = "http://localhost:8080/api/users"
 export const getAllRoleRequests = async () => {
     const getUrl = `${roleRequestURL}/getAll?column=all`
     const requestsData = (await axios.get(getUrl)).data
-
+console.log(requestsData)
      const finalData = requestsData.map(async requestData=>{
      let userInfo = await getUserByID(requestData.userID);
+     console.log(userInfo)
      let output = {...userInfo, ...requestData};
      console.log(output)
      return output
  })
-    return Promise.all(requestsData)
-    // [Promise<>, Promise<>, Promise<>, ] -> [{}, {}, {}]
+    return Promise.all(finalData)
 }
 
 export const getUserByID = async (id) => {

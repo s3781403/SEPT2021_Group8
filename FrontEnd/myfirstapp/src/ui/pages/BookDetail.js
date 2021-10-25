@@ -15,16 +15,13 @@ function BookDetail() {
     const {bookid: bookId} = useParams()
     const [bookData, setBookData] = useState()
     const [reviews, setReviews] = useState()
-    const {user,cartItemCount, setCartItemCount} = useContext(AppContext)
+    const {user,setLoading, addCartItem} = useContext(AppContext)
 
     const addReviews = async () => {
         const reviewData = document.getElementById("textReview").value
         console.log(user)
         return await addReview(reviewData, bookData.id, user.userInfo.id)
     }
-
-
-    const {setLoading, cartItem, addCartItem} = useContext(AppContext)
 
     useEffect(async () => {
         setLoading(true)
@@ -38,18 +35,6 @@ function BookDetail() {
     if (!bookData) return null
 
     const addItemToCart =  (bookData) => {
-       //  const userIdCarts = await getCartByUserID(user.userInfo.id)
-       //
-       // let cartId;
-       //
-       //  const cartLength = userIdCarts.length;
-       //  if (cartLength > 0 ) {
-       //      cartId=userIdCarts[0].id
-       //  } else {
-       //       cartId = await createCart(user.userInfo.id)
-       //
-       //  }
-       // addItem(bookData.id, bookData.quantity, cartId)
 
         addCartItem(bookData)
     }

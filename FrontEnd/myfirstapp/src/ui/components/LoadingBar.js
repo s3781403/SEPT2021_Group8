@@ -6,7 +6,6 @@ import {AppContext} from "../../context/AppContext";
 
 export default function LoadingBar() {
     const {loading} = useContext(AppContext)
-    console.log("⏳", loading)
 
     if(!loading) return null
 

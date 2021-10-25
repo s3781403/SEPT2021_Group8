@@ -2,25 +2,31 @@ import {Grid} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
 import {AppContext} from "../../context/AppContext";
-import BookCardMaterial from "../components/BookCardMaterial";
 import PayPal from "./PayPal";
-
+import CartItemBookCard from "../components/AdminDashboardComp/CartItemBookCard";
+import Button from "@mui/material/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
+import {deleteItem} from "../../api/Orders";
 function CartItemSummary({item}) {
 
+    const {deleteItemFromCart} = useContext(AppContext) //[] //[{}]
 
     return (
     <div>
         <Grid container>
-            <Grid item xs={12} md={4} >
-                 <BookCardMaterial book={item} />
+            <Grid item xs={12} md={10} >
+                 <CartItemBookCard book={item} />
             </Grid>
-            <Grid item xs={12} md={8} style={{textAlign: 'center'}}>
-                <label>Quantity</label><br/>
-                <input type={"number"} value={item.qty}/>
+            <Grid item xs={12} md={2} style={{textAlign: 'center'}}>
+                <br/>
+                <Button onClick={()=>{deleteItemFromCart(item.id)}}>Delete <DeleteIcon/>
+
+                </Button>
+
             </Grid>
 
         </Grid>
-        <hr/>
+
     </div>
 
     )
@@ -30,22 +36,28 @@ function CartItemSummary({item}) {
 function ShoppingCart() {
 
 
-    const {cartItem, setCartItem} = useContext(AppContext)
+    const {cartItem,deleteItemFromCart} = useContext(AppContext) //[] //[{}]
+
+
+
 
     const [checkout, setCheckOut] = useState(false);
+
     return(
         <div>
         <h1>Cart Summary </h1>
-        <hr/>
+       
             <div>
             <Grid container>
 
             {/*    Cart Items */}
                 <Grid item xs={12} lg={8}>
                 {
-                    //cartItem.map(item => <CartItemSummary item={item}/>)
-
+                    cartItem?.lineItems?.map(item => <CartItemSummary item={item}/>)
                 }
+                    {
+                        (cartItem?.lineItems || []).length === 0 ? <p>No items in cart</p> : null
+                    }
                 </Grid>
 
             {/*    Checkout */}
@@ -63,9 +75,6 @@ function ShoppingCart() {
                         </button>
                     )}
                 </Grid>
-
-
-            {/*    Footer Description*/}
 
 
 

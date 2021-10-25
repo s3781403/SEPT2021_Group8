@@ -13,7 +13,6 @@ const createOrder = async (orderData,cartId) => {
 
 }
 
-
 //get all order
 const getAllOrders = async () => {
     const getUrl = `${ORDER_API_URL}/admin/getAllOrders`
@@ -70,7 +69,8 @@ const addItem = async (bookId,quantity,cartId) => {
 
 //delete item from cart
 const deleteItem = async (id) => {
-    const deleteUrl = `${ORDER_API_URL}/item/delete/${id}`
+    console.log(id)
+    const deleteUrl = `${ORDER_API_URL}/items/delete/${id}`
     return (await axios.delete(deleteUrl)).data
 }
 
@@ -81,7 +81,7 @@ const deleteCart = async (id) => {
 }
 //get cart by userid
 const getCartByUserID = async (userId) => {
-    const getUrl = `${ORDER_API_URL}/carts/cart/getSingle?column=userid&value=${userId}`
+    const getUrl = `${ORDER_API_URL}/carts/getAll?column=userid&value=${userId}`
     return (await axios.get(getUrl)).data
 }
  export {createOrder,getOrderByUserID,getAllOrders,deleteOrder,deleteItem,deleteCart,updateOrder,addItem,createCart,getCartByUserID}
