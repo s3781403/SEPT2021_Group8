@@ -24,53 +24,53 @@ workflows:
   test-build-deploy:
     jobs:
       - test
-      - aws-ecr/build-and-push-image:
-          name: build-booksService-image
-          dockerfile: ./Dockerfile
-          path: ./BackEnd/booksmicroservices
-          repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-BOOKSMICROSERVICE"
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - master
-                - develop
-      - aws-ecr/build-and-push-image:
-          name: build-loginService-image
-          dockerfile: ./Dockerfile
-          path: ./BackEnd/loginmicroservices
-          repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-LOGINMICROSERVICE"
-          requires:
-            - build-booksService-image
-          filters:
-            branches:
-              only:
-                - master
-                - develop
-      - aws-ecr/build-and-push-image:
-          name: build-ordersService-image
-          dockerfile: ./Dockerfile
-          path: ./BackEnd/ordersmicroservice
-          repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--ORDERSMICROSERVICE"
-          requires:
-            - build-loginService-image
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+#      - aws-ecr/build-and-push-image:
+#          name: build-booksService-image
+#          dockerfile: ./Dockerfile
+#          path: ./BackEnd/booksmicroservices
+#          repo: "bookeroo-server"
+#          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-BOOKSMICROSERVICE"
+#          requires:
+#            - test
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - develop
+#      - aws-ecr/build-and-push-image:
+#          name: build-loginService-image
+#          dockerfile: ./Dockerfile
+#          path: ./BackEnd/loginmicroservices
+#          repo: "bookeroo-server"
+#          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-LOGINMICROSERVICE"
+#          requires:
+#            - build-booksService-image
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - develop
+#      - aws-ecr/build-and-push-image:
+#          name: build-ordersService-image
+#          dockerfile: ./Dockerfile
+#          path: ./BackEnd/ordersmicroservice
+#          repo: "bookeroo-server"
+#          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--ORDERSMICROSERVICE"
+#          requires:
+#            - build-loginService-image
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - develop
       - aws-ecr/build-and-push-image:
           name: build-frontEndService-image
           dockerfile: ./Dockerfile
           path: ./FrontEnd/myfirstapp
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--FRONTENDMICROSERVICE"
-          requires:
-            - build-ordersService-image
+#          requires:
+#            - build-ordersService-image
           filters:
             branches:
               only:
