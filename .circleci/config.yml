@@ -4,7 +4,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
   test:
-    working_directory: /dockerapp1
+    working_directory: ~/repo
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -25,15 +25,17 @@ workflows:
     jobs:
       - test
       - aws-ecr/build-and-push-image:
-          setup-remote-docker: true 
-          repo: bookeroo-server
-          tag: ${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          requires:
+            - test
           filters:
             branches:
               only:
                 - master
                 - develop
       - aws-ecs/deploy-service-update:
+          name: deploy-development
           requires:
             - aws-ecr/build-and-push-image
           family: "runDockerContainers-development"
@@ -54,7 +56,6 @@ workflows:
                 - master
       - aws-ecs/deploy-service-update:
           name: deploy-production
-          aws-region: AWS_DEFAULT_REGION
           requires:
             - approve-deploy
           family: "runDockerContainers"
@@ -65,15 +66,3 @@ workflows:
             branches:
               only:
                 - master
-
-      - aws-ecs/deploy-service-update:
-            requires:
-              - approve-deploy
-            cluster-name: BookerooServer-production 
-            family: runDockerContainers 
-            service-name: bookeroo-server 
-            docker-image-for-job: docker:17.05.0-ce-git 
-            filters:
-              branches:
-                only:
-                  - master
