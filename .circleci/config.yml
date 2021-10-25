@@ -35,7 +35,7 @@ workflows:
             branches:
               only:
                 - master
-                - development
+                - develop
       - aws-ecs/deploy-service-update:
           name: deploy-development
           aws-region: AWS_DEFAULT_REGION
@@ -48,7 +48,7 @@ workflows:
           filters:
             branches:
               only:
-                - development
+                - develop
       - approve-deploy:
           type: approval
           requires:
