@@ -27,23 +27,44 @@ workflows:
           setup-remote-docker: true 
           repo: bookeroo-server
           tag: ${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest
+          filters:
+            branches:
+              only:
+                - master
+                - development
 
       - aws-ecs/deploy-service-update:
-            cluster-name: bookeroo-server-development 
-            family: runDockerContainers-development 
-            service-name: bookeroo-server 
-            docker-image-for-job: docker:17.05.0-ce-git 
+          requires:
+            - aws-ecr/build-and-push-image
+          cluster-name: bookeroo-server-development 
+          family: runDockerContainers-development 
+          service-name: bookeroo-server 
+          docker-image-for-job: docker:17.05.0-ce-git 
+          filters:
+            branches:
+              only:
+                - development
 
       - approve-deploy:
           type: approval
           requires:
             - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only:
+                - master
 
       - aws-ecs/deploy-service-update:
+            requires:
+              - approve-deploy
             cluster-name: BookerooServer-production 
             family: runDockerContainers 
             service-name: bookeroo-server 
             docker-image-for-job: docker:17.05.0-ce-git 
+            filters:
+              branches:
+                only:
+                  - master
 
 
 
