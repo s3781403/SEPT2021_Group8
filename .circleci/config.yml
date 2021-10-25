@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@6.9.1
+  aws-ecr: circleci/aws-ecr@7.2.0
   aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
   test:
@@ -25,20 +25,15 @@ workflows:
     jobs:
       - test
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          region: AWS_DEFAULT_REGION
-          repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          setup-remote-docker: true 
+          repo: bookeroo-server
+          tag: ${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest
           filters:
             branches:
               only:
                 - master
                 - develop
       - aws-ecs/deploy-service-update:
-          name: deploy-development
-          aws-region: AWS_DEFAULT_REGION
           requires:
             - aws-ecr/build-and-push-image
           family: "runDockerContainers-development"
@@ -71,3 +66,14 @@ workflows:
               only:
                 - master
 
+      - aws-ecs/deploy-service-update:
+            requires:
+              - approve-deploy
+            cluster-name: BookerooServer-production 
+            family: runDockerContainers 
+            service-name: bookeroo-server 
+            docker-image-for-job: docker:17.05.0-ce-git 
+            filters:
+              branches:
+                only:
+                  - master
