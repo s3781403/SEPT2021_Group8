@@ -29,7 +29,7 @@ workflows:
           dockerfile: ./Dockerfile
           path: ./BackEnd/booksmicroservices
           repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-BOOKSMICROSERVICE"
           requires:
             - test
           filters:
@@ -42,7 +42,7 @@ workflows:
           dockerfile: ./Dockerfile
           path: ./BackEnd/loginmicroservices
           repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-LOGINMICROSERVICE"
           requires:
             - build-booksService-image
           filters:
@@ -55,7 +55,7 @@ workflows:
           dockerfile: ./Dockerfile
           path: ./BackEnd/ordersmicroservice
           repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--ORDERSMICROSERVICE"
           requires:
             - build-loginService-image
           filters:
@@ -68,7 +68,7 @@ workflows:
           dockerfile: ./Dockerfile
           path: ./FrontEnd/myfirstapp
           repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--FRONTENDMICROSERVICE"
           requires:
             - build-ordersService-image
           filters:
