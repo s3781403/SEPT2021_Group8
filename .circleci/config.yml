@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@7.2.0
-  aws-ecs: circleci/aws-ecs@2.2.1
+  aws-ecr: circleci/aws-ecr@6.9.1
+  aws-ecs: circleci/aws-ecs@1.2.0
 jobs:
   test:
     working_directory: /dockerapp1
@@ -19,10 +19,11 @@ jobs:
           name: Run test build
           command: |
             docker-compose up -d
-  createImage:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
+workflows:
+  version: 2
+  test-build-deploy:
+    jobs:
+      - test
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -35,15 +36,11 @@ jobs:
               only:
                 - master
                 - development
-  deployDevelopmentBuild:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
       - aws-ecs/deploy-service-update:
           name: deploy-development
           aws-region: AWS_DEFAULT_REGION
           requires:
-            - createImage
+            - aws-ecr/build-and-push-image
           family: "runDockerContainers-development"
           cluster-name: "bookeroo-server-development"
           service-name: "bookeroo-server"
@@ -52,15 +49,19 @@ jobs:
             branches:
               only:
                 - development
-  deployProductionBuild:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
+      - approve-deploy:
+          type: approval
+          requires:
+            - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only:
+                - master
       - aws-ecs/deploy-service-update:
           name: deploy-production
           aws-region: AWS_DEFAULT_REGION
           requires:
-            - createImage
+            - approve-deploy
           family: "runDockerContainers"
           cluster-name: "BookerooServer-production"
           service-name: "bookeroo-server"
@@ -69,18 +70,4 @@ jobs:
             branches:
               only:
                 - master
-
-
-
-
-workflows:
-  version: 2
-  test-build-deploy:
-    jobs:
-      - test
-      - createImage
-      - deployDevelopmentBuild
-      - deployProductionBuild
-
-
 
