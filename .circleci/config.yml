@@ -27,7 +27,6 @@ workflows:
       - aws-ecr/build-and-push-image:
           name: build-booksService-image
           dockerfile: ./BackEnd/booksmicroservices/Dockerfile
-          path: ./BackEnd/booksmicroservices
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
@@ -40,11 +39,9 @@ workflows:
       - aws-ecr/build-and-push-image:
           name: build-loginService-image
           dockerfile: ./BackEnd/loginmicroservices/Dockerfile
-          path: ./BackEnd/loginmicroservices
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
-            - test
             - build-booksService-image
           filters:
             branches:
@@ -54,11 +51,9 @@ workflows:
       - aws-ecr/build-and-push-image:
           name: build-ordersService-image
           dockerfile: ./BackEnd/ordersmicroservice/Dockerfile
-          path: ./BackEnd/ordersmicroservice
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
-            - test
             - build-loginService-image
           filters:
             branches:
@@ -68,11 +63,9 @@ workflows:
       - aws-ecr/build-and-push-image:
           name: build-frontEndService-image
           dockerfile: ./FrontEnd/myfirstapp/Dockerfile
-          path: ./FrontEnd/myfirstapp
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
           requires:
-            - test
             - build-ordersService-image
           filters:
             branches:
