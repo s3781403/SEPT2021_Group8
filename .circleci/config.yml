@@ -94,7 +94,7 @@ workflows:
       - approve-deploy:
           type: approval
           requires:
-            - aws-ecr/build-and-push-image
+            - build-frontEndService-image
           filters:
             branches:
               only:
