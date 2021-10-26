@@ -5,12 +5,15 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.InvalidLoginResponse;
 import com.rmit.sept.bk_loginservices.exceptions.UserNotFoundException;
 import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.ms_login;
 import com.rmit.sept.bk_loginservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.bk_loginservices.payload.LoginRequest;
 import com.rmit.sept.bk_loginservices.security.JwtTokenProvider;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.UserService;
 import com.rmit.sept.bk_loginservices.validator.UserValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +50,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    private static final Logger logger = LogManager.getLogger(ms_login.class);
+
     @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
+        logger.info("Registering a new user");
         // Validate passwords match
         userValidator.validate(user,result);
 
@@ -84,6 +90,7 @@ public class UserController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
+            logger.info("Logging in user");
             return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
 
         }catch(BadCredentialsException e){
@@ -107,6 +114,7 @@ public class UserController {
 
         //Update and return the user
         User updatedUser = userService.updateUser(oldUser, userDetails);
+        logger.info("Updating user");
         return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
     }
 
@@ -119,6 +127,7 @@ public class UserController {
         userService.deleteUser(user);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+        logger.info("Deleting user");
         return response;
     }
 
@@ -126,6 +135,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserByID(@PathVariable("id") Integer id) {
         User user = userService.getUserById(id);
+        logger.info("Getting user by ID");
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -137,6 +147,7 @@ public class UserController {
             if (column.equals("all")) {
                 users = userService.getAllUsers();
             }
+            logger.info("Getting all users");
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {
             return null;

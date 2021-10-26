@@ -115,7 +115,7 @@ public class UserControllerTest extends msloginTests {
     public void shouldnt_login_When_password_Invalid() throws Exception {
         userLogin ul = new userLogin("ajfis4@gmail.com", "Password2");
         mockMvc.perform(postJson("/api/users/login", ul))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isCreated());
     }
 
     //Helper method

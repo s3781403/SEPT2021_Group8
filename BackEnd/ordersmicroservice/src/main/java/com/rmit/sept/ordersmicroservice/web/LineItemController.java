@@ -24,17 +24,6 @@ public class LineItemController {
     @Autowired
     private LineItemRepository lineItemRepository;
 
-//    //CREATE
-//    @CrossOrigin(origins = "*")
-//    @PostMapping("/add")
-//    public ResponseEntity<?> createLineItem(@Valid @RequestBody LineItem lineItem, BindingResult result) {
-//        //LineItemValidator.validate(cart,result);
-//        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-//        if(errorMap != null) return errorMap;
-//        LineItem newLineItem = lineItemService.saveLineItem(lineItem);
-//        return new ResponseEntity<LineItem>(newLineItem, HttpStatus.CREATED);
-//    }
-
     //DELETE
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")

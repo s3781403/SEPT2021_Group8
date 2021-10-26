@@ -16,7 +16,7 @@ public class OrderValidator implements Validator {
         String orderStatus = (String) object;
 
         if (!orderStatus.equals("Order Received") && !orderStatus.equals("In-Progress") && !orderStatus.equals("Shipped") && !orderStatus.equals("Delivered") && !orderStatus.equals("Cancelled")) {
-            errors.rejectValue("currentStatus", "type", "Unrecognized status");
+            errors.rejectValue("status", "type", "Unrecognized status");
         }
     }
 }

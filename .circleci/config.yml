@@ -25,8 +25,50 @@ workflows:
     jobs:
       - test
       - aws-ecr/build-and-push-image:
+          name: build-booksService-image
+          dockerfile: ./Dockerfile
+          path: ./BackEnd/booksmicroservices
           repo: "bookeroo-server"
-          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-BOOKSMICROSERVICE"
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - aws-ecr/build-and-push-image:
+          name: build-loginService-image
+          dockerfile: ./Dockerfile
+          path: ./BackEnd/loginmicroservices
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-LOGINMICROSERVICE"
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - aws-ecr/build-and-push-image:
+          name: build-ordersService-image
+          dockerfile: ./Dockerfile
+          path: ./BackEnd/ordersmicroservice
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--ORDERSMICROSERVICE"
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - aws-ecr/build-and-push-image:
+          name: build-frontEndService-image
+          dockerfile: ./Dockerfile
+          path: ./FrontEnd/myfirstapp
+          repo: "bookeroo-server"
+          tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--FRONTENDMICROSERVICE"
           requires:
             - test
           filters:
@@ -37,11 +79,14 @@ workflows:
       - aws-ecs/deploy-service-update:
           name: deploy-development
           requires:
-            - aws-ecr/build-and-push-image
-          family: "runDockerContainers-development"
-          cluster-name: "bookeroo-server-development"
-          service-name: "bookeroo-server"
-          container-image-name-updates: "container=bookeroo_server_development,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
+            - build-booksService-image
+            - build-loginService-image
+            - build-ordersService-image
+            - build-frontEndService-image
+          family: "createBooksServiceTask"
+          cluster-name: "BookerooCluster"
+          service-name: "createBooksService"
+          container-image-name-updates: "container=booksMicroServiceContainer,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
           filters:
             branches:
               only:
@@ -49,7 +94,10 @@ workflows:
       - approve-deploy:
           type: approval
           requires:
-            - aws-ecr/build-and-push-image
+            - build-booksService-image
+            - build-loginService-image
+            - build-ordersService-image
+            - build-frontEndService-image
           filters:
             branches:
               only:
@@ -58,10 +106,10 @@ workflows:
           name: deploy-production
           requires:
             - approve-deploy
-          family: "runDockerContainers"
-          cluster-name: "BookerooServer-production"
-          service-name: "bookeroo-server"
-          container-image-name-updates: "container=bookeroo_server_production,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
+          family: "createBooksServiceTask"
+          cluster-name: "BookerooCluster"
+          service-name: "createBooksService"
+          container-image-name-updates: "container=booksMicroServiceContainer,tag=${CIRCLE_BRANCH}_${CIRCLE_SHA1}"
           filters:
             branches:
               only:
