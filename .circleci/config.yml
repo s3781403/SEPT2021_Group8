@@ -44,7 +44,7 @@ workflows:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest-LOGINMICROSERVICE"
           requires:
-            - build-booksService-image
+            - test
           filters:
             branches:
               only:
@@ -57,7 +57,7 @@ workflows:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--ORDERSMICROSERVICE"
           requires:
-            - build-loginService-image
+            - test
           filters:
             branches:
               only:
@@ -70,7 +70,7 @@ workflows:
           repo: "bookeroo-server"
           tag: "${CIRCLE_BRANCH}_${CIRCLE_SHA1},${CIRCLE_BRANCH}_latest--FRONTENDMICROSERVICE"
           requires:
-            - build-ordersService-image
+            - test
           filters:
             branches:
               only:
@@ -79,6 +79,9 @@ workflows:
       - aws-ecs/deploy-service-update:
           name: deploy-development
           requires:
+            - build-booksService-image
+            - build-loginService-image
+            - build-ordersService-image
             - build-frontEndService-image
           family: "createBooksServiceTask"
           cluster-name: "BookerooCluster"
@@ -91,6 +94,9 @@ workflows:
       - approve-deploy:
           type: approval
           requires:
+            - build-booksService-image
+            - build-loginService-image
+            - build-ordersService-image
             - build-frontEndService-image
           filters:
             branches:
