@@ -9,6 +9,7 @@ import com.rmit.sept.ordersmicroservice.service.CartService;
 import com.rmit.sept.ordersmicroservice.service.LineItemService;
 import com.rmit.sept.ordersmicroservice.service.MapValidationErrorService;
 import com.rmit.sept.ordersmicroservice.service.OrderService;
+import com.rmit.sept.ordersmicroservice.validator.OrderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,9 @@ public class CartController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderValidator orderValidator;
 
     @Autowired
     private LineItemService lineItemService;
@@ -120,6 +124,7 @@ public class CartController {
     @PostMapping("/cart/{id}/createOrder")
     public ResponseEntity<?> createOrder(@PathVariable("id") Long id, @Valid @RequestBody Invoice invoice, BindingResult result) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new CartNotFoundException("No cart with id '" + id + "' could be found to delete"));
+        orderValidator.validate(invoice.getStatus(),result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if(errorMap != null) return errorMap;
         Invoice newInvoice = orderService.saveOrder(invoice,cart);

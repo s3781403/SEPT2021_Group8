@@ -1,15 +1,11 @@
 package com.rmit.sept.ordersmicroservice.web;
 
-import com.paypal.api.payments.Links;
-import com.paypal.api.payments.Payment;
-import com.paypal.base.rest.PayPalRESTException;
 import com.rmit.sept.ordersmicroservice.exceptions.OrderNotFoundException;
 import com.rmit.sept.ordersmicroservice.model.Invoice;
 import com.rmit.sept.ordersmicroservice.repositories.CartRepository;
 import com.rmit.sept.ordersmicroservice.repositories.OrderRepository;
 import com.rmit.sept.ordersmicroservice.service.MapValidationErrorService;
 import com.rmit.sept.ordersmicroservice.service.OrderService;
-import com.rmit.sept.ordersmicroservice.service.PayPalService;
 import com.rmit.sept.ordersmicroservice.validator.OrderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,11 +40,6 @@ public class OrderController {
     @Autowired
     private OrderValidator orderValidator;
 
-    @Autowired
-    PayPalService service;
-
-    public static final String SUCCESS_URL = "/paymentsuccess";
-    public static final String CANCEL_URL = "/paymentcancelled";
 
 //Get
     //This should be only for admins, returns every order.
@@ -119,46 +110,6 @@ public class OrderController {
         return response;
     }
 
-
-
-    @PostMapping("order/{id}/pay")
-    public String payment(@PathVariable("id") Long id) {
-        Invoice order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("No order with that id could be found to update"));
-        try {
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:3000/" + CANCEL_URL,
-                    "http://localhost:3000/" + SUCCESS_URL);
-            for(Links link:payment.getLinks()) {
-                if(link.getRel().equals("approval_url")) {
-                    return "redirect:"+link.getHref();
-                }
-            }
-
-        } catch (PayPalRESTException e) {
-
-            e.printStackTrace();
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping(value = CANCEL_URL)
-    public String cancelPay() {
-        return "cancel";
-    }
-
-    @GetMapping(value = SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-        try {
-            Payment payment = service.executePayment(paymentId, payerId);
-            //System.out.println(payment.toJSON());
-            if (payment.getState().equals("approved")) {
-                return "success";
-            }
-        } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
-        }
-        return "redirect:/";
-    }
 
 
 }
