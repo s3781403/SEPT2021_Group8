@@ -1,40 +1,50 @@
 import {useParams} from 'react-router-dom'
-import {Grid, Link, TextField} from "@mui/material";
+import {Grid, Link, TextField, Typography} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import {AppContext} from "../../context/AppContext";
-import {addReview, getAllReviews, getBookByID} from "../../api/books";
+import {addReview, getAllReviews, getBookByID, getReviewsById} from "../../api/books";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import CardMedia from "@mui/material/CardMedia";
 import Card from "@mui/material/Card";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {addItem, createCart, getCartByUserID} from "../../api/Orders";
+import ReviewsList from "../components/ReviewsList";
 
 function BookDetail() {
 
     const {bookid: bookId} = useParams()
     const [bookData, setBookData] = useState()
-    const [reviews, setReviews] = useState()
-    const {user,setLoading, addCartItem} = useContext(AppContext)
+    const [reviews, setReviews] = useState([])
+    const {user, setLoading, addCartItem} = useContext(AppContext)
 
     const addReviews = async () => {
+        setLoading(true)
         const reviewData = document.getElementById("textReview").value
         console.log(user)
-        return await addReview(reviewData, bookData.id, user.userInfo.id)
+
+        await addReview(reviewData, bookData.id, user.userInfo.id)
+        await reFetchReviews()
+        setLoading(false)
+    }
+
+    async function reFetchReviews() {
+        const allReviews = await getReviewsById(bookId)
+        console.log("...///", allReviews)
+        setReviews(allReviews)
     }
 
     useEffect(async () => {
         setLoading(true)
         const freshBookData = await getBookByID(bookId)
         setBookData(freshBookData)
-        const allReviews = await getAllReviews
-        setReviews(allReviews)
+        await reFetchReviews();
         setLoading(false)
     }, [])
 
     if (!bookData) return null
 
-    const addItemToCart =  (bookData) => {
+    const addItemToCart = (bookData) => {
 
         addCartItem(bookData)
     }
@@ -71,7 +81,9 @@ function BookDetail() {
 
                     <h1>{bookData.title}</h1>
                     <h3 style={{color: '#f50057'}}>{bookData.author}</h3>
+                    <Typography>
                     <p>{bookData?.description || 'No Description Available'}</p>
+                    </Typography>
 
                     <br/><br/><br/>
                     <Link style={{color: '#f50057'}}
@@ -108,11 +120,15 @@ function BookDetail() {
                     <Button style={{margin: '1%', padding: '1%', height: 'auto'}} variant="contained" onClick={() => {
                         addReviews()
                     }}> Submit review</Button>
+                    <div>
+                        <Typography variant="h5" style={{padding:'1%'}}> Reviews</Typography>
+                        {reviews.map(review => <ReviewsList review={review}/>)}
 
+                    </div>
                 </Grid>
             </Grid>
         </div>
     )
 }
 
-export default BookDetail
+export default BookDetail;

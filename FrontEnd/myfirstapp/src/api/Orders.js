@@ -1,37 +1,46 @@
 import axios from "axios";
 
-const ORDER_API_URL='http://localhost:8082/api'
+const ORDER_API_URL = 'http://localhost:8082/api'
 
 //create order
-const createOrder = async (orderData,cartId) => {
+const createOrder = async (userID,totalPrice,cartId) => {
 
     const getUrl = `${ORDER_API_URL}/carts/cart/${cartId}/createOrder`
-    return (await axios.post(getUrl, orderData,{headers: {
+    return (await axios.post(getUrl, {
+        "userID": userID,
+        "status": "Order Received",
+        "price": totalPrice
+    }, {
+        headers: {
             "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
-        }})).data
+        }
+    })).data
 
 }
 
 //get all order
 const getAllOrders = async () => {
-    const getUrl = `${ORDER_API_URL}/admin/getAllOrders`
+    const getUrl = `http://localhost:8082/api/orders/admin/getAllOrders`
     return (await axios.get(getUrl)).data
 }
 
 //get order by userid
 const getOrderByUserID = async (userId) => {
     const getUrl = `${ORDER_API_URL}/orders/getAll?userid=${userId}`
-    return (await axios.get(getUrl)).data
+    const gotData= (await axios.get(getUrl)).data
+    return (gotData)
 }
 
 //update order status
 const updateOrder = async (orderId, status) => {
     const updateUrl = `${ORDER_API_URL}/orders/update?orderid=${orderId}`
-    const updateResult = await axios.put(updateUrl, status,{headers: {
+    const updateResult = await axios.put(updateUrl, status, {
+        headers: {
             "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
-        }});
+        }
+    });
     return updateResult.data
 }
 
@@ -47,23 +56,29 @@ const createCart = async (userId) => {
 
     //http://localhost:8082/api/carts/create
     const getUrl = `${ORDER_API_URL}/carts/create`
-    return (await axios.post(getUrl, { "userID": userId},{headers: {
+    return (await axios.post(getUrl, {"userID": userId}, {
+        headers: {
             "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
-        }})).data
+        }
+    })).data
 
 }
 
 //add item to cart
-const addItem = async (bookId,quantity,cartId) => {
+const addItem = async (bookId, quantity, cartId) => {
 
     //http://localhost:8082/api/carts/cart/11/addItem
     const getUrl = `${ORDER_API_URL}/carts/cart/${cartId}/addItem`
-    return (await axios.post(getUrl, { "bookID": bookId,
-        "quantity": quantity},{headers: {
+    return (await axios.post(getUrl, {
+        "bookID": bookId,
+        "quantity": quantity
+    }, {
+        headers: {
             "Accept": "*/*",
             "Access-Control-Allow-Origin": "*"
-        }})).data
+        }
+    })).data
 
 }
 
@@ -84,6 +99,17 @@ const getCartByUserID = async (userId) => {
     const getUrl = `${ORDER_API_URL}/carts/getAll?column=userid&value=${userId}`
     return (await axios.get(getUrl)).data
 }
- export {createOrder,getOrderByUserID,getAllOrders,deleteOrder,deleteItem,deleteCart,updateOrder,addItem,createCart,getCartByUserID}
+export {
+    createOrder,
+    getOrderByUserID,
+    getAllOrders,
+    deleteOrder,
+    deleteItem,
+    deleteCart,
+    updateOrder,
+    addItem,
+    createCart,
+    getCartByUserID
+}
 
 

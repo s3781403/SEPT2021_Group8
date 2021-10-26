@@ -106,7 +106,7 @@ export default function UserManagement() {
                             <StyledTableCell align="left">{row.username}</StyledTableCell>
                             <StyledTableCell align="left">{row.role}</StyledTableCell>
                             <StyledTableCell align="left">{row.address}</StyledTableCell>
-                            <StyledTableCell align="left">{row.phoneNo}</StyledTableCell>
+                            <StyledTableCell align="left">{row.phoneNumber}</StyledTableCell>
                             <StyledTableCell align="left">{<IconButton color="primary">
                                 <EditIcon />
                             </IconButton>}
@@ -114,6 +114,7 @@ export default function UserManagement() {
                             <StyledTableCell align="left">{<IconButton color="secondary" onClick={()=>{
                                 setLoading(true)
                                 deleteUser(row.id).then(() => fetchAvailableUsers()).finally(setLoading(false))
+                                alert(`${row.fullName} is deleted from the database`)
 
                             }}>
                                 <DeleteForeverIcon />

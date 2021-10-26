@@ -2,19 +2,20 @@ import axios from "axios";
 
 const roleRequestURL = "http://localhost:8080/api/rolerequests"
 const usersURL = "http://localhost:8080/api/users"
-
+//http://localhost:8080/api/rolerequests/getAll?column=all
 export const getAllRoleRequests = async () => {
     const getUrl = `${roleRequestURL}/getAll?column=all`
+    console.log(getUrl)
     const requestsData = (await axios.get(getUrl)).data
-console.log(requestsData)
-     const finalData = requestsData.map(async requestData=>{
-     let userInfo = await getUserByID(requestData.userID);
-     console.log(userInfo)
-     let output = {...userInfo, ...requestData};
-     console.log(output)
-     return output
- })
+    console.log("🤷‍♀️",requestsData)
+    const finalData = requestsData.map(async requestData=>{
+        let userInfo = await getUserByID(requestData.userID);
+        let output = {...userInfo, ...requestData};
+        console.log(output)
+        return output
+    })
     return Promise.all(finalData)
+    // [Promise<>, Promise<>, Promise<>, ] -> [{}, {}, {}]
 }
 
 export const getUserByID = async (id) => {

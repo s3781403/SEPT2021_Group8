@@ -1,7 +1,16 @@
-import React, { useRef, useEffect } from "react";
+import React, {useRef, useEffect, useContext} from "react";
+import {useHistory} from "react-router";
+import {createCart, createOrder} from "../../api/Orders";
+import {AppContext} from "../../context/AppContext";
 
-export default function PayPal() {
+export default function PayPal({totalPrice}) {
     const paypal = useRef();
+    const history = useHistory();
+
+    const {cartItem} = useContext(AppContext) //[] //[{}]
+
+    const userId=cartItem.userID
+    const cartId=cartItem.id
 
     useEffect(() => {
         window.paypal.Buttons({
@@ -13,15 +22,19 @@ export default function PayPal() {
                                 description: "Subtotal for the books",
                                 amount: {
                                     currency_code: "AUD",
-                                    value: 650.0,
+                                    value: totalPrice,
                                 },
                             },
                         ],
                     });
                 },
                 onApprove: async (data, actions) => {
-                    const order = await actions.order.capture();
-                    console.log(order);
+                     await actions.order.capture();
+                    history.push("/ordersuccess")
+                    console.log("🔥",userId,totalPrice,cartId)
+                    const res = await createOrder(userId,totalPrice,cartId)
+                    console.log("✅🛒🛍",res)
+                    await createCart(userId)
                 },
                 onError: (err) => {
                     console.log(err);

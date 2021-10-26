@@ -12,6 +12,7 @@ import RegistrationPage from "./ui/pages/Registration";
 import ShoppingCart from "./ui/pages/ShoppingCart";
 import AddEditBook from "./ui/components/AdminDashboardComp/AddEditBook";
 import OrderHistory from "./ui/pages/OrderHistory";
+import OrderSuccess from "./ui/pages/OrderSuccess";
 
 const appTheme = createTheme({
     palette: {
@@ -52,6 +53,8 @@ function App() {
                             <Route path={"/admin/book/add"} exact={true} component={AddEditBook}/>
                             <Route path={"/admin/book/edit/:bookid"} exact={true} component={AddEditBook }/>
                             <Route path={"/orderhistory"} exact={true} component={OrderHistory }/>
+                            <Route path={"/ordersuccess"} exact={true} component={OrderSuccess }/>
+
                         </Switch>
                     </BrowserRouter>
 

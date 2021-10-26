@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import Button from "@mui/material/Button";
-import downloadBooks from "../../api/exportdata";
+import {downloadBooks, downloadOrders} from "../../api/exportdata";
 import {AppContext} from "../../context/AppContext";
 
 export default function ReportsManagement() {
@@ -10,7 +10,11 @@ export default function ReportsManagement() {
     return (
         <div>
             <Button variant={'outlined'} color={'secondary'}
-                    style={{maxWidth: '30', height: '30', padding: '2%', margin: '4%'}}> Download Transactions CSV
+                    style={{maxWidth: '50', height: '30', padding: '2%', margin: '4%'}} onClick={async () => {
+                setLoading(true)
+                await downloadOrders()
+                setLoading(false)
+            }}> Download Transactions CSV
                 Report</Button>
 
             <Button variant={'outlined'} color={'secondary'}

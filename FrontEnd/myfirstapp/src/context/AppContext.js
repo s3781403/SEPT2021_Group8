@@ -79,7 +79,9 @@ export const AppProvider = (props) => {
 
             const cartData = await getCartByUserID(user.userInfo.id)
             console.log("🛒 cart data is ", cartData)
-            if (cartData.length > 0)
+            if (cartData.length > 0){
+                cartData.sort((k,a) => a.id-k.id)
+            }
                 setCartItem(cartData[0])
         } else {
             console.log("No cart for a user as they are not logged in.")

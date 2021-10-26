@@ -76,8 +76,13 @@ const getAllReviews = async () => {
     return (await axios.get(getUrl)).data
 }
 
+const getReviewsById = async (bookid) =>{
+    const getUrl = `http://localhost:8081/api/reviews/getAll?column=bookid&value=${bookid}`
+    return (await axios.get(getUrl)).data
+}
 
-export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi,addReview,getAllReviews}
+
+export {getAllBooks, getBookByID, updateBook, deleteBook,createBook,FileUploadToApi,addReview,getAllReviews,getReviewsById}
 
 
 

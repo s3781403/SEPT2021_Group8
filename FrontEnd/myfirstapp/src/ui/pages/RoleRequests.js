@@ -44,6 +44,7 @@ export default function RoleRequests() {
 
     const fetchApprovalRequests = async () => {
         setLoading(true)
+        console.log("fetchingg")
         const requests = await getAllRoleRequests()
         console.log("✅🛑 requests: ", requests)
         setRows(requests)
