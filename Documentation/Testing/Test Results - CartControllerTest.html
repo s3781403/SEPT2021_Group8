@@ -2,7 +2,7 @@
 <html xmlns:str="http://exslt.org/strings" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Test Results &mdash; App.test.js</title>
+        <title>Test Results &mdash; CartControllerTest</title>
         <style type="text/css">
           html {
             height: 100%
@@ -572,9 +572,9 @@ jQuery.cookie = function(name, value, options) {
     <body>
         <div id="container">
             <div id="header">
-                <div class="time" xmlns="">191 ms</div>
+                <div class="time" xmlns="">536 ms</div>
                 <h1>
-                    App.test.js: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">6 total, </span><span class="passed">6 passed</span></strong>
+                    CartControllerTest: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">3 total, </span><span class="passed">3 passed</span></strong>
                 </h1>
                 <div id="treecontrol">
                     <ul>
@@ -593,78 +593,52 @@ jQuery.cookie = function(name, value, options) {
                 <ul id="tree">
                     <li xmlns="" class="level top open">
                         <span><em class="time">
-                                <div class="time">191 ms</div>
-                            </em>App.test.js</span>
+                                <div class="time">526 ms</div>
+                            </em>JUnit Vintage</span>
                         <ul>
                             <li class="level suite open">
                                 <span><em class="time">
-                                        <div class="time">54 ms</div>
-                                    </em>In the book cards of the home page, the book title is shown</span>
+                                        <div class="time">526 ms</div>
+                                    </em>CartControllerTest</span>
                                 <ul>
                                     <li class="level test">
                                         <span><em class="time">
-                                                <div class="time">54 ms</div>
-                                            </em><em class="status">passed</em>renders BookCardMaterial component</span>
+                                                <div class="time">434 ms</div>
+                                            </em><em class="status">passed</em>should_CreateCart_When_OrderValid</span>
+                                        <ul>
+                                            <li class="text">
+                                                <span class="stdout">2021-10-27 12:59:00.262  INFO 36764 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@77825085 testClass = CartControllerTest, testInstance = com.rmit.sept.ordersmicroservice.web.CartControllerTest@7a55fb81, testMethod = should_CreateCart_When_OrderValid@CartControllerTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3568f9d2 testClass = CartControllerTest, locations = '{}', classes = '{class com.rmit.sept.ordersmicroservice.OrdersmicroserviceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@175c2241, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@776aec5c, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@815b41f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3857f613, org.springframework.boot.test.context.SpringBootTestArgs@1], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@52d0f583]; rollback [true]<br/>2021-10-27 12:59:00.373  INFO 36764 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''<br/>2021-10-27 12:59:00.373  INFO 36764 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''<br/>2021-10-27 12:59:00.386  INFO 36764 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 13 ms<br/>Hibernate: <br/>    insert <br/>    into<br/>        cart<br/>        (create_at, status, update_at, userid) <br/>    values<br/>        (?, ?, ?, ?)<br/>2021-10-27 12:59:00.618  INFO 36764 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@77825085 testClass = CartControllerTest, testInstance = com.rmit.sept.ordersmicroservice.web.CartControllerTest@7a55fb81, testMethod = should_CreateCart_When_OrderValid@CartControllerTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3568f9d2 testClass = CartControllerTest, locations = '{}', classes = '{class com.rmit.sept.ordersmicroservice.OrdersmicroserviceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@175c2241, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@776aec5c, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@815b41f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3857f613, org.springframework.boot.test.context.SpringBootTestArgs@1], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]<br/></span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="level test">
+                                        <span><em class="time">
+                                                <div class="time">92 ms</div>
+                                            </em><em class="status">passed</em>shouldnt_CreateCart_When_OrderInValid</span>
+                                        <ul>
+                                            <li class="text">
+                                                <span class="stdout">2021-10-27 12:59:00.642  INFO 36764 --- [           main] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@77825085 testClass = CartControllerTest, testInstance = com.rmit.sept.ordersmicroservice.web.CartControllerTest@763b0996, testMethod = shouldnt_CreateCart_When_OrderInValid@CartControllerTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3568f9d2 testClass = CartControllerTest, locations = '{}', classes = '{class com.rmit.sept.ordersmicroservice.OrdersmicroserviceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@175c2241, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@776aec5c, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@815b41f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3857f613, org.springframework.boot.test.context.SpringBootTestArgs@1], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@52d0f583]; rollback [true]<br/>2021-10-27 12:59:00.643  INFO 36764 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''<br/>2021-10-27 12:59:00.643  INFO 36764 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''<br/>2021-10-27 12:59:00.644  INFO 36764 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms<br/>Hibernate: <br/>    insert <br/>    into<br/>        cart<br/>        (create_at, status, update_at, userid) <br/>    values<br/>        (?, ?, ?, ?)<br/>2021-10-27 12:59:00.713  INFO 36764 --- [           main] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@77825085 testClass = CartControllerTest, testInstance = com.rmit.sept.ordersmicroservice.web.CartControllerTest@763b0996, testMethod = shouldnt_CreateCart_When_OrderInValid@CartControllerTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3568f9d2 testClass = CartControllerTest, locations = '{}', classes = '{class com.rmit.sept.ordersmicroservice.OrdersmicroserviceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@175c2241, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@776aec5c, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@815b41f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3857f613, org.springframework.boot.test.context.SpringBootTestArgs@1], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -> true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -> true]]<br/></span>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">10 ms</div>
+                            </em>JUnit Jupiter</span>
+                        <ul>
                             <li class="level suite open">
                                 <span><em class="time">
-                                        <div class="time">72 ms</div>
-                                    </em>In the Login page, Sign In is shown</span>
+                                        <div class="time">10 ms</div>
+                                    </em>CartControllerTest</span>
                                 <ul>
                                     <li class="level test">
                                         <span><em class="time">
-                                                <div class="time">72 ms</div>
-                                            </em><em class="status">passed</em>renders login component</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="level suite open">
-                                <span><em class="time">
-                                        <div class="time">18 ms</div>
-                                    </em>For the admin page, the book title is shown</span>
-                                <ul>
-                                    <li class="level test">
-                                        <span><em class="time">
-                                                <div class="time">18 ms</div>
-                                            </em><em class="status">passed</em>renders AdminBookCard component</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="level suite open">
-                                <span><em class="time">
-                                        <div class="time">12 ms</div>
-                                    </em>For the admin page, the book price is shown</span>
-                                <ul>
-                                    <li class="level test">
-                                        <span><em class="time">
-                                                <div class="time">12 ms</div>
-                                            </em><em class="status">passed</em>renders AdminBookCard component</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="level suite open">
-                                <span><em class="time">
-                                        <div class="time">24 ms</div>
-                                    </em>For the Admin Page,in the bottom navigation Users is shown</span>
-                                <ul>
-                                    <li class="level test">
-                                        <span><em class="time">
-                                                <div class="time">24 ms</div>
-                                            </em><em class="status">passed</em>renders AdminDashboard component</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="level suite open">
-                                <span><em class="time">
-                                        <div class="time">11 ms</div>
-                                    </em>For the Admin Page,in the bottom navigation Transactions button is shown</span>
-                                <ul>
-                                    <li class="level test">
-                                        <span><em class="time">
-                                                <div class="time">11 ms</div>
-                                            </em><em class="status">passed</em>renders AdminDashboard component</span>
+                                                <div class="time">10 ms</div>
+                                            </em><em class="status">passed</em>contextLoads()</span>
                                     </li>
                                 </ul>
                             </li>
@@ -674,7 +648,7 @@ jQuery.cookie = function(name, value, options) {
             </div>
         </div>
         <div id="footer">
-            <p>Generated by IntelliJ IDEA on 9/25/21, 10:30 PM</p>
+            <p>Generated by IntelliJ IDEA on 10/27/21, 12:59 PM</p>
         </div>
     </body>
 </html>
